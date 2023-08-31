@@ -1,0 +1,130 @@
+{% extends './shared/site_base.html' %}
+
+{% block title%}
+    Załóż konto
+{% endblock %}
+
+{% block content %}
+    <div class="v-center">
+        <div class="container log card px-3 px-sm-5 py-5">
+            <form class="m-0 p-0" method="POST" action="">
+                <div class="form-logo">
+                    <div class="f-ico-con">
+                        <img src="{{ url_for('static', filename="graph/icon2.svg") }}" class="img-fluid  mx-auto d-block form-icon">
+                    </div>
+                    <div class="form-logo-lab">
+                        <h4 class="text-center pt-3">Załóż konto</h4>
+                    </div>
+                </div>
+                <div class="forms-inputs mb-2 mx-3">
+                    <div class="form-floating ">
+                            <input type="text" class="form-control custom_input
+                            {% if errors %}
+                                {{ "error" if errors.email else "" }}
+                            {% endif %}
+                            " placeholder=" " name="email" value="{{ request.form.email | trim}}">
+                            <label class="ps-3 formlab
+                            {% if errors %}
+                                {{ "error" if errors.email else "" }}
+                            {% endif %}
+                            ">Email</label>
+                    </div>
+                    <span class="error-span error">
+                        {% if errors %}
+                            {{ errors.email if errors.email else "" }}
+                        {% endif %}
+                    </span>
+                </div>
+
+                <div class="forms-inputs mb-2 mx-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control custom_input
+                        {% if errors %}
+                            {{ "error" if errors.name else "" }}
+                        {% endif %}
+                        " placeholder=" " name="name" maxlength="24" value="{{ request.form.name | trim}}">
+                        <label class="ps-3 formlab
+                        {% if errors %}
+                            {{ "error" if errors.name else "" }}
+                        {% endif %}
+                        ">Login</label>
+                    </div>
+                    <span class="error-span error">
+                        {% if errors %}
+                            {{ errors.name if errors.name else "" }}
+                        {% endif %}
+                    </span>
+                </div>
+
+
+                <div class="forms-inputs mb-2 mx-3">
+                    <div class="form-floating">
+                        <input type="password" class="form-control custom_input
+                        {% if errors %}
+                            {{ "error" if errors.password else "" }}
+                        {% endif %}
+                        " placeholder=" " name="password">
+                        <label class="ps-3 formlab
+                        {% if errors %}
+                            {{ "error" if errors.password else "" }}
+                        {% endif %}
+                        ">Hasło</label>
+                    </div>
+                    <span class="error-span error">
+                        {% if errors %}
+                            {{ errors.password if errors.password else "" }}
+                        {% endif %}
+                    </span>
+                </div>
+
+                <div class="forms-inputs mb-2 mx-3">
+                    <div class="form-floating">
+                        <input type="password" class="form-control custom_input
+                         {% if errors %}
+                            {{ "error" if errors.confirm_password else "" }}
+                        {% endif %}
+                        " placeholder=" " name="confirm_password">
+                        <label class="ps-3 formlab
+                         {% if errors %}
+                            {{ "error" if errors.confirm_password else "" }}
+                        {% endif %}
+                        ">Potwierdź hasło</label>
+                    </div>
+                    <span class="error-span error">
+                         {% if errors %}
+                            {{ errors.confirm_password if errors.confirm_password else "" }}
+                        {% endif %}
+                    </span>
+                </div>
+
+                <div class="forms-inputs mb-2 mx-3">
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                           <input class="form-check-input check-input" type="checkbox" id="flexCheckDefault" name="rules"
+                           {{"checked" if request.form.rules else ""}}>
+                          <span
+                          {% if errors %}
+                            {{ "class=error" if errors.rules else "" }}
+                         {% endif %}>
+                              Akceptuję regulamin serwisu</span>
+                       </label>
+                    </div>
+                    <span class="error-span error">
+                        {% if errors %}
+                            {{ errors.rules if errors.rules else "" }}
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="forms-inputs mb-2 mx-3">
+                    <input type="submit" class="btn btn-dark sub-button py-3" value="Zarejestruj">
+                </div>
+            </form>
+            <a class="text-center my-2" href="{{url_for('auth.login')}}">Masz już konto? Zaloguj się</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{url_for('static',filename='js/auth.js')}}">
+    </script>
+{% endblock %}

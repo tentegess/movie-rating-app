@@ -1,0 +1,21 @@
+{% extends './shared/site_base.html' %}
+
+{% block title%}
+    Strona główna
+{% endblock %}
+
+{% block content %}
+    <div class="container log-alert px-0">
+             {% for category, message in get_flashed_messages(with_categories=true) %}
+                <div class="{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+{% if session.user_name %}
+    {{  session.user_name }}
+{% else %}
+    zaloguj sie
+{% endif %}
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends './shared/site_base.html' %}
+
+{% block title%}
+    Zaloguj się
+{% endblock %}
+
+{% block content %}
+    <div class="v-center">
+        <div class="container log-alert px-0">
+             {% for category, message in get_flashed_messages(with_categories=true) %}
+                <div class="{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="container log card px-3 px-sm-5 py-5">
+            <form class="m-0 p-0" method="POST" action="">
+                <div class="form-logo">
+                    <div class="f-ico-con">
+                        <img src="{{ url_for('static', filename="graph/icon2.svg") }}" class="img-fluid  mx-auto d-block form-icon">
+                    </div>
+                    <div class="form-logo-lab">
+                        <h4 class="text-center pt-3">Zaloguj się</h4>
+                    </div>
+                </div>
+                <div class="forms-inputs mb-2 mx-3">
+                    <div class="form-floating">
+                            <input type="text" class="form-control custom_input
+                            {% if errors %}
+                                {{ "error" if errors.name else "" }}
+                                {{ "error" if errors.validation else "" }}
+                            {% endif %}"
+                               placeholder=" " name="name" maxlength="24"
+                               value="{{ request.form.name | trim}}">
+                        <label class="ps-3 formlab
+                        {% if errors %}
+                            {{ "error" if errors.name else "" }}
+                            {{ "error" if errors.validation else "" }}
+                        {% endif %}
+                        ">Login lub Email</label>
+                    </div>
+
+                    <span class="error-span error">
+                        {% if errors %}
+                            {{ errors.name if errors.name else "" }}
+                        {% endif %}
+                    </span>
+                </div>
+
+            <div class="forms-inputs mb-2 mx-3">
+                    <div class="form-floating">
+                        <input type="password" class="form-control custom_input
+                        {% if errors %}
+                            {{ "error" if errors.password else "" }}
+                            {{ "error" if errors.validation else "" }}
+                        {% endif %}
+                        " placeholder=" " name="password">
+                        <label class="ps-3 formlab
+                        {% if errors %}
+                            {{ "error" if errors.password else "" }}
+                            {{ "error" if errors.validation else "" }}
+                        {% endif %}
+                        ">Hasło</label>
+                    </div>
+                    <span class="error-span error">
+                        {% if errors %}
+                            {{ errors.password if errors.password else "" }}
+                            {{ errors.validation if errors.validation else "" }}
+                        {% endif %}
+                    </span>
+                </div>
+
+                <div class="forms-inputs mb-2 mx-3">
+                    <input type="submit" class="btn btn-dark sub-button py-3" value="Zaloguj się">
+                </div>
+            </form>
+
+            <a class="text-center my-2" href="{{url_for('auth.register')}}">Nie masz konta? Zarejestruj się</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{url_for('static',filename='js/auth.js')}}">
+    </script>
+{% endblock %}

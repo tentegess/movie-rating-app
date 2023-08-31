@@ -1,0 +1,141 @@
+:root{
+    --input-color: #818080;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0  30px white inset !important;
+
+}
+
+
+
+body{
+    background-color: #fdfdfd;
+    background-image: url("../graph/logo.svg");
+    background-size: 15%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: left -25px bottom -15px;
+}
+
+@media screen and (max-width: 992px){
+ body{
+     background-size: 25%;
+ }
+}
+
+@media screen and (max-width: 576px){
+ body{
+     background-size: 35%;
+ }
+}
+
+input:focus{
+     outline: none !important;
+    box-shadow: none !important;
+}
+
+a{
+    text-decoration: None;
+}
+
+.v-center{
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.log-alert{
+    max-width: 500px !important;
+}
+
+.alert{
+    width: 100% !important;
+    box-shadow: -3px 3px 5px darkgray !important;
+}
+
+.log{
+    max-width: 500px !important;
+    box-shadow: -3px 3px 5px darkgray;
+    border-radius: 0 !important;
+    border: 0 !important;
+}
+
+.formlab{
+    color: var(--input-color) !important;
+    opacity: 1 !important;
+    border: 0 !important;
+}
+
+.custom_input, .custom_input:-webkit-autofill{
+     width: 100%;
+     border: 0;
+     border-radius: 0;
+     border-bottom: 2px solid var(--input-color);
+     outline: 0;
+     font-size: 1rem;
+     padding-left: 5px !important;
+     padding-right: 5px !important;
+     padding-bottom: 7px !important;
+     color: var(--input-color) !important;
+    -webkit-text-fill-color: var(--input-color);
+     background-color: transparent;
+     transition: border-color 0.2s, color 0.2s;
+}
+
+.custom_input:focus, .custom_input:-webkit-autofill:focus{
+    color: black !important;
+    -webkit-text-fill-color:black;
+    border-bottom: 2px solid black;
+}
+
+.sub-button{
+    border-radius: 0 !important;
+    width: 100%;
+}
+
+.check-input{
+    border-radius: 0 !important;
+    border-color: var(--input-color) !important;
+
+}
+
+.check-input:checked{
+    background-color: var(--input-color) !important;
+
+}
+
+.error-span{
+    display: inline-block;
+    height: 1rem;
+}
+
+.error, .error:focus{
+    color: red !important;
+    border-color: red !important;
+    -webkit-text-fill-color: red !important;
+}
+
+.form-icon{
+    max-width: 50px;
+}
+
+.form-logo{
+    display: flex;
+        align-items: center;
+        justify-content: center
+}
+
+.f-ico-con{
+    flex-basis: 10%;
+
+}
+
+.form-logo-lab{
+    order: 2;
+}
