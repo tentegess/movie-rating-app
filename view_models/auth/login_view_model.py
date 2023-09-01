@@ -8,6 +8,7 @@ class LoginViewModel(BaseViewModel):
         super().__init__()
         self.name = str(self.req_dict.name)
         self.password = str(self.req_dict.password)
+        self.remember = True if self.req_dict.remember else False
 
     def validation(self):
         super().validation()

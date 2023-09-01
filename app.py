@@ -1,8 +1,8 @@
 import os
 from flask import Flask
+from flask_login import LoginManager
 from dotenv import load_dotenv
 from datetime import timedelta
-from flask_session import Session
 
 from utils.db_config import db, migrate
 
@@ -16,7 +16,16 @@ load_dotenv()
 
 
 def create_app():
+    """
 
+    create_app()
+
+    This method creates and configures a Flask application.
+
+    Returns:
+        Flask: The created Flask application.
+
+    """
     app = Flask(__name__)
     app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "notSecretKey")
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_CONN", "mysql://root:@localhost/inz")
@@ -37,6 +46,16 @@ def create_app():
 
     migrate.init_app(app, db)
 
+    login_manager = LoginManager()
+    login_manager.login_view = "auth.login"
+    login_manager.init_app(app)
+
+    from models.Users import Users
+
+    @login_manager.user_loader
+    def load_user(id):
+        return Users.query.get(int(id))
+
     app.jinja_env.globals['current_year'] = datetime.now().year
 
     app.register_blueprint(auth)
@@ -47,13 +66,11 @@ def create_app():
 
 app = create_app()
 
-with app.app_context():
-    Session(app)
-
 
 @app.errorhandler(404)
 def not_found(e):
     return "Page not found"
+
 
 if __name__ == "__main__":
     app.run(debug=True)

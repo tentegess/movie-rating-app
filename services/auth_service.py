@@ -1,6 +1,7 @@
 import secrets
 import string
 from datetime import timedelta
+from flask_login import login_user
 from datetime import datetime
 from utils.db_config import db
 from models.Users import Users
@@ -9,7 +10,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask import flash, redirect, session, render_template, request
 from utils import LANG
 from utils.mail_service import mail_sender
-
 
 def add_user(user_vm):
     user = Users()
@@ -40,7 +40,7 @@ def add_user(user_vm):
         db.session.rollback()
 
 
-def login_user(user_vm):
+def login(user_vm):
     errors = {}
     user = Users.query.filter((Users.name == user_vm.name) | (Users.email == user_vm.name)).one_or_none()
 
@@ -48,16 +48,17 @@ def login_user(user_vm):
         errors["validation"] = LANG.WRONG_DATA
     elif not check_password_hash(user.password, user_vm.password):
         errors["validation"] = LANG.WRONG_DATA
+    elif not user.is_active:
+        errors["validation"] = LANG.NOT_ACTIVATED_ACCOUNT
 
     if errors:
         return render_template("auth/login.html", errors=errors)
 
-    session["user_name"] = user.name
-    session["user_id"] = user.id
+    login_user(user, remember=user_vm.remember)
     return redirect("/")
 
 
-def confirm_account(token : str) :
+def confirm_account(token : str):
     user = Users.query.join(Tokens, Users.tokens).filter(Tokens.token == token, Tokens.used == False, Tokens.type == "confirm" ,Tokens.expire_at >= datetime.now()).one_or_none()
     if user:
         try:

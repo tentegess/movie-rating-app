@@ -19,6 +19,8 @@ UNEXPECTED_ERROR = "wystąpił błąd, spróbuj ponownie później"
 CONFIRM_LINK_SEND = "Pomyślnie założono konto, na twój adres przysłano link aktywacyjny"
 
 INVALID_TOKEN = "Twój link jest nieprawidłowy lub stracił ważność"
-ACC_CONFIRMED = "Twoje konto jest już aktywne, możesz się zalogować"
+ACC_CONFIRMED = "Twoje konto jest już aktywne, możesz się <a class='link-dark' href='/login'><u>zalogować</u></a>"
+
+NOT_ACTIVATED_ACCOUNT = "Musisz aktywować konto, zanim się zalogujesz"
 
 

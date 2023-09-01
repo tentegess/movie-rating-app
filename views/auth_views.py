@@ -1,4 +1,6 @@
 from flask import Blueprint, render_template, redirect, request
+from flask_login import login_required, logout_user
+
 from view_models.auth.regiser_view_model import RegisterViewModel
 from view_models.auth.login_view_model import LoginViewModel
 from services import auth_service
@@ -15,10 +17,9 @@ def login():
 def login_post():
     user_vm = LoginViewModel.validate()
     if user_vm.errors:
-        print(user_vm.to_dict())
         return render_template("auth/login.html", errors=user_vm.to_dict().get("errors"))
 
-    return auth_service.login_user(user_vm)
+    return auth_service.login(user_vm)
 
 
 @auth.get("/register")
@@ -38,6 +39,14 @@ def register_post():
 
 @auth.get("/confirm_account/<token>")
 def confirm_acc(token=""):
-    return auth_service.confirm_account(token)
+    return auth_service.confirm_account(str(token))
 
+@auth.get("/forgot_password")
+def forgot_password():
+    return render_template("auth/forgot_password.html")
 
+@auth.get("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect('login')
