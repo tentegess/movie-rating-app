@@ -3,6 +3,7 @@ from flask_login import login_required, logout_user
 
 from view_models.auth.regiser_view_model import RegisterViewModel
 from view_models.auth.login_view_model import LoginViewModel
+from view_models.auth.forgot_psd_view_model import ForgotPsdViewModel
 from services import auth_service
 
 auth = Blueprint("auth", __name__, static_folder="static", template_folder="templates")
@@ -41,9 +42,19 @@ def register_post():
 def confirm_acc(token=""):
     return auth_service.confirm_account(str(token))
 
+
 @auth.get("/forgot_password")
 def forgot_password():
     return render_template("auth/forgot_password.html")
+
+
+@auth.post("/forgot_password")
+def forgot_password_post():
+    user_vm = ForgotPsdViewModel.validate()
+    if user_vm.errors:
+        return render_template("auth/forgot_password.html", errors=user_vm.to_dict().get("errors"))
+    auth_service.sent_reset_link(user_vm)
+    return redirect("/")
 
 @auth.get("/logout")
 @login_required

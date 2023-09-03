@@ -31,7 +31,7 @@
                                 {{ "error" if errors.name else "" }}
                                 {{ "error" if errors.validation else "" }}
                             {% endif %}"
-                               placeholder=" " name="name" maxlength="24"
+                               placeholder=" " name="name" maxlength="360"
                                value="{{ request.form.name | trim}}">
                         <label class="ps-3 formlab
                         {% if errors %}
@@ -55,7 +55,7 @@
                             {{ "error" if errors.password else "" }}
                             {{ "error" if errors.validation else "" }}
                         {% endif %}
-                        " placeholder=" " name="password">
+                        " placeholder=" " name="password"  maxlength="32">
                         <label class="ps-3 formlab
                         {% if errors %}
                             {{ "error" if errors.password else "" }}

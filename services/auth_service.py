@@ -11,6 +11,7 @@ from flask import flash, redirect, session, render_template, request
 from utils import LANG
 from utils.mail_service import mail_sender
 
+
 def add_user(user_vm):
     user = Users()
     user.email = user_vm.email
@@ -73,6 +74,32 @@ def confirm_account(token : str):
     else:
         flash(LANG.INVALID_TOKEN, "alert alert-danger")
     return redirect("/")
+
+
+def sent_reset_link(user_vm):
+
+    try:
+        user = Users.query.filter((Users.name == user_vm.name) | (Users.email == user_vm.name)).one_or_none()
+        if user:
+            gen = generate_token(32)
+            token = Tokens()
+            token.token = gen
+            token.type = "reset_psd"
+            token.user = user
+            token.expire_at = datetime.now() + timedelta(hours=48)
+            db.session.add(token)
+            db.session.commit()
+
+            reset_link = f"{request.url_root}reset_password/{gen}"
+
+            cf = render_template("email_templates/forgot_password.html", name=user.name, ct="48", link=reset_link)
+            mail_sender(user.email, "Resetowanie hasła", cf)
+        flash(LANG.RESET_MAIL_SEND, "alert alert-success")
+    except Exception as e:
+        flash(LANG.UNEXPECTED_ERROR, "alert alert-danger")
+        print(e)
+        db.session.rollback()
+
 
 def generate_token(ln : int) -> str:
     base = string.ascii_lowercase + string.digits

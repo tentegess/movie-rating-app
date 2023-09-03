@@ -22,7 +22,7 @@
                             {% if errors %}
                                 {{ "error" if errors.email else "" }}
                             {% endif %}
-                            " placeholder=" " name="email" value="{{ request.form.email | trim}}">
+                            " placeholder=" " name="email" value="{{ request.form.email | trim}}"  maxlength="360">
                             <label class="ps-3 formlab
                             {% if errors %}
                                 {{ "error" if errors.email else "" }}
@@ -63,7 +63,7 @@
                         {% if errors %}
                             {{ "error" if errors.password else "" }}
                         {% endif %}
-                        " placeholder=" " name="password">
+                        " placeholder=" " name="password"  maxlength="32">
                         <label class="ps-3 formlab
                         {% if errors %}
                             {{ "error" if errors.password else "" }}
@@ -83,7 +83,7 @@
                          {% if errors %}
                             {{ "error" if errors.confirm_password else "" }}
                         {% endif %}
-                        " placeholder=" " name="confirm_password">
+                        " placeholder=" " name="confirm_password"  maxlength="32">
                         <label class="ps-3 formlab
                          {% if errors %}
                             {{ "error" if errors.confirm_password else "" }}

@@ -7,6 +7,7 @@ WRONG_EMAIL_FORMAT = "Podano nieprawidłowy email"
 EMAIL_EXIST = "Ten email już istnieje"
 WRONG_LOGIN_FORMAT = "Login może zawierać tylko litery i cyfry"
 WRONG_LOGIN_LEN = "Login może zawierać od 3 do 24 znaków"
+WRONG_EMAIL_LEN = "Email jest za długi"
 LOGIN_EXIST = "Ten Login już istnieje"
 EMPTY_PASSWORD = "Hasło nie może być puste"
 WRONG_PASSWORD_LEN = "Hasło musi zawierać od 8 do 32 znaków"
@@ -22,5 +23,7 @@ INVALID_TOKEN = "Twój link jest nieprawidłowy lub stracił ważność"
 ACC_CONFIRMED = "Twoje konto jest już aktywne, możesz się <a class='link-dark' href='/login'><u>zalogować</u></a>"
 
 NOT_ACTIVATED_ACCOUNT = "Musisz aktywować konto, zanim się zalogujesz"
+
+RESET_MAIL_SEND = "Gotowe, jeśli konto istnieje, na twój email przyjdzie wiadomość z linkiem resetującym"
 
 
