@@ -44,7 +44,7 @@ class RegisterViewModel(BaseViewModel):
 
         if self.password != self.confirm_password:
             self.errors["confirm_password"] = LANG.NOT_EQUAL_PASSWORD
-        if not self.confirm_password and self.password:
+        if (not self.confirm_password and self.password) or (self.confirm_password and not self.password):
             self.errors["confirm_password"] = LANG.NOT_REPEAT_PASSWORD
 
         if not self.rules:

@@ -26,4 +26,6 @@ NOT_ACTIVATED_ACCOUNT = "Musisz aktywować konto, zanim się zalogujesz"
 
 RESET_MAIL_SEND = "Gotowe, jeśli konto istnieje, na twój email przyjdzie wiadomość z linkiem resetującym"
 
+PASSWORD_CHANGED = "Twoje hasło zostało zmienione, możesz się zalogować"
+
 

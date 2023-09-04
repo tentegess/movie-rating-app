@@ -43,7 +43,7 @@ def add_user(user_vm):
 
 def login(user_vm):
     errors = {}
-    user = Users.query.filter((Users.name == user_vm.name) | (Users.email == user_vm.name)).one_or_none()
+    user = Users.query.filter((Users.name == user_vm.name) | (Users.email == user_vm.name)).first()
 
     if not user:
         errors["validation"] = LANG.WRONG_DATA
@@ -60,11 +60,16 @@ def login(user_vm):
 
 
 def confirm_account(token : str):
-    user = Users.query.join(Tokens, Users.tokens).filter(Tokens.token == token, Tokens.used == False, Tokens.type == "confirm" ,Tokens.expire_at >= datetime.now()).one_or_none()
-    if user:
+    q = (db.session.query(Tokens).join(Users).filter(Tokens.token == token, Tokens.used == False,
+                                                Tokens.type == "confirm",
+                                                Tokens.expire_at >= datetime.now())).first()
+
+    if q:
         try:
+            user = q.user
+            qtoken = q
             user.is_active = True
-            user.tokens[0].used = True
+            qtoken.used = True
             db.session.commit()
             flash(LANG.ACC_CONFIRMED, "alert alert-success")
         except Exception as e:
@@ -79,7 +84,7 @@ def confirm_account(token : str):
 def sent_reset_link(user_vm):
 
     try:
-        user = Users.query.filter((Users.name == user_vm.name) | (Users.email == user_vm.name)).one_or_none()
+        user = Users.query.filter((Users.name == user_vm.name) | (Users.email == user_vm.name)).first()
         if user:
             gen = generate_token(32)
             token = Tokens()
@@ -99,6 +104,37 @@ def sent_reset_link(user_vm):
         flash(LANG.UNEXPECTED_ERROR, "alert alert-danger")
         print(e)
         db.session.rollback()
+
+
+def verify_token(token):
+    isToken = Tokens.query.filter(Tokens.token == token, Tokens.used == False, Tokens.type == "reset_psd", Tokens.expire_at >= datetime.now()).first()
+    if not isToken:
+        flash(LANG.INVALID_TOKEN, "alert alert-danger")
+    return isToken
+
+
+def reset_password(token, user_vm):
+    q = (db.session.query(Tokens).join(Users).filter(Tokens.token == token, Tokens.used == False,
+                                                     Tokens.type == "reset_psd",
+                                                     Tokens.expire_at >= datetime.now())).first()
+
+    if q:
+        try:
+            user = q.user
+            qtoken = q
+            user.password = generate_password_hash(user_vm.password)
+            qtoken.used = True
+            db.session.commit()
+            flash(LANG.PASSWORD_CHANGED, "alert alert-success")
+            return redirect("/login")
+        except Exception as e:
+            flash(LANG.UNEXPECTED_ERROR, "alert alert-danger")
+            print(e)
+            db.session.rollback()
+            return redirect("/")
+    flash(LANG.INVALID_TOKEN, "alert alert-danger")
+    return redirect("/")
+
 
 
 def generate_token(ln : int) -> str:
