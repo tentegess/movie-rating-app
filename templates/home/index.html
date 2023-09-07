@@ -4,7 +4,12 @@
     Strona główna
 {% endblock %}
 
+{% block nav %}
+    {%  include './shared/navbar.html' %}
+{% endblock %}
+
 {% block content %}
+    <div class="content-wrapper">
     <div class="container log-alert px-0">
              {% for category, message in get_flashed_messages(with_categories=true) %}
                 <div class="{{ category }} alert-dismissible fade show" role="alert">
@@ -13,9 +18,7 @@
                 </div>
             {% endfor %}
         </div>
-{% if current_user.id %}
-    {{  current_user.name }}
-{% else %}
-    zaloguj sie
-{% endif %}
+strona główna
+
+    </div>
 {% endblock %}

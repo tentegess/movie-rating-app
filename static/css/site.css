@@ -21,6 +21,15 @@ body{
     background-position: left -25px bottom -15px;
 }
 
+.content-wrapper{
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+}
+
 @media screen and (max-width: 992px){
  body{
      background-size: 25%;
@@ -43,7 +52,7 @@ a{
 }
 
 .v-center{
-  min-height: 100vh;
+  min-height: calc(100vh - 40px);
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -139,3 +148,4 @@ a{
 .form-logo-lab{
     order: 2;
 }
+
