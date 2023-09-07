@@ -11,13 +11,19 @@ input:-webkit-autofill:active{
 }
 
 .navbar{
-    background: black !important;
+    background: #212529 !important;
 
 }
 
 .nav-link{
     color: white !important;
 }
+
+.navbar-toggler{
+    border: none !important;
+}
+
+
 
 body{
     background-color: #fdfdfd;
@@ -55,10 +61,12 @@ body{
  }
 }
 
-input:focus{
+a:focus, button:focus, input:focus{
      outline: none !important;
     box-shadow: none !important;
 }
+
+
 
 a{
     text-decoration: None;
