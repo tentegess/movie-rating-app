@@ -10,7 +10,14 @@ input:-webkit-autofill:active{
 
 }
 
+.navbar{
+    background: black !important;
 
+}
+
+.nav-link{
+    color: white !important;
+}
 
 body{
     background-color: #fdfdfd;
@@ -39,6 +46,12 @@ body{
 @media screen and (max-width: 576px){
  body{
      background-size: 35%;
+ }
+}
+
+@media screen and (max-width: 570px){
+ body{
+     background-position: left -25px bottom 30px;
  }
 }
 
