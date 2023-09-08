@@ -2,17 +2,15 @@ import os
 from flask import Flask
 from flask_login import LoginManager
 from dotenv import load_dotenv
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from utils.db_config import db, migrate
 
 from views.auth_views import auth
 from views.home_views import home
-
-from datetime import datetime
+from views.admin_views import admin
 
 load_dotenv()
-
 
 
 def create_app():
@@ -60,6 +58,7 @@ def create_app():
 
     app.register_blueprint(auth)
     app.register_blueprint(home)
+    app.register_blueprint(admin, url_prefix="/admin")
 
     return app
 
