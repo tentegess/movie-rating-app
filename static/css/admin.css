@@ -48,6 +48,8 @@ a {
         cursor: pointer;
       }
 
+
+
       .header_img {
         width: 35px;
         height: 35px;
@@ -95,8 +97,9 @@ a {
       }
 
       .nav_logo-icon {
-        font-size: 1.25rem;
+        font-size: 1.5rem;
         color: var(--white-color);
+        cursor: pointer;
       }
 
       .nav_logo-name {
@@ -121,6 +124,7 @@ a {
 
       .show {
         left: 0;
+        width: calc(var(--nav-width) + 156px);
       }
 
       .body-pd {
@@ -152,7 +156,7 @@ a {
 
         .header {
           height: calc(var(--header-height) + 1rem);
-          padding: 0 2rem 0 calc(var(--nav-width) + 2rem);
+
         }
 
         .header_img {
@@ -169,9 +173,10 @@ a {
           padding: 1rem 1rem 0 0;
         }
 
-        .show {
-          width: calc(var(--nav-width) + 156px);
-        }
+        /*.show {*/
+        /*  width: calc(var(--nav-width) + 156px);*/
+        /*}*/
+
 
         .body-pd {
           padding-left: calc(var(--nav-width) + 188px);

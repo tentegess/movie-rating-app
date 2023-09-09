@@ -30,8 +30,8 @@
           <div class="l-navbar" id="nav-bar">
       <nav class="nav">
         <div>
-          <a href="#" class="nav_logo">
-            <i class="bx bx-chart nav_logo-icon"></i>
+          <a href="#" class="nav_logo" id="nav_toggle">
+            <i class="bx bx-menu nav_logo-icon" id="nav_icon"></i>
             <span class="nav_logo-name">Admin</span>
           </a>
           <div class="nav_list">
@@ -61,24 +61,31 @@
     </body>
     <script>
          document.addEventListener("DOMContentLoaded", function (event) {
-        const showNavbar = (toggleId, navId, bodyId, headerId) => {
+        const showNavbar = (toggleId, navId, bodyId, navtoggle, navicon) => {
+          const nvtoggle = document.getElementById(navtoggle);
           const toggle = document.getElementById(toggleId),
             nav = document.getElementById(navId),
             bodypd = document.getElementById(bodyId),
-            headerpd = document.getElementById(headerId);
+            nav_icon = document.getElementById(navicon)
+
+
+            nav_expanders = [toggle, nvtoggle];
 
           // Validate that all variables exist
-          if (toggle && nav && bodypd && headerpd) {
-            toggle.addEventListener("click", () => {
-              nav.classList.toggle("show");
-              toggle.classList.toggle("bx-x");
-              bodypd.classList.toggle("body-pd");
-              headerpd.classList.toggle("body-pd");
-            });
+          if (toggle && nav && bodypd && nvtoggle) {
+            nav_expanders.forEach(btn=>{
+                  btn.addEventListener("click", () => {
+                  nav.classList.toggle("show");
+                  toggle.classList.toggle("bx-x");
+                  nav_icon.classList.toggle("bx-x");
+                  bodypd.classList.toggle("body-pd");
+
+                })
+            ;})
           }
         };
 
-        showNavbar("header-toggle", "nav-bar", "body-pd", "header");
+        showNavbar("header-toggle", "nav-bar", "body-pd", "nav_toggle", "nav_icon");
         const linkColor = document.querySelectorAll(".nav_link");
 
         function colorLink() {
