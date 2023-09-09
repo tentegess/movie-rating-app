@@ -7,8 +7,8 @@
           <h4 class="mb-0 pb-0"><a class="text-light" href="{{url_for('home.index')}}">WatchScore</a></h4>
 
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <i class='bx bx-menu hamburger'></i>
+        <button class="navbar-toggler" id="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <i class='bx bx-menu hamburger' id="toggle-menu"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ms-auto">
@@ -27,3 +27,14 @@
       </div>
     </nav>
 </header>
+
+<script>
+    let togglenav = document.getElementById("navbar-toggler");
+    togglenav.addEventListener("click", ()=>{
+        if(togglenav.getAttribute("aria-expanded")==="true") {
+            document.getElementById("toggle-menu").classList.add("bx-x");
+        }else{
+            document.getElementById("toggle-menu").classList.remove("bx-x")
+        }
+    })
+</script>
