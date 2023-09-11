@@ -24,9 +24,11 @@
                 <i class="bx bx-menu" id="header-toggle"></i>
             </div>
             <div class="dropdown">
-            <div class="header_img" data-bs-toggle="dropdown">
-                <img src="https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg" alt="" />
-            </div>
+                <a class="nav-link"  role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">
+                <div class="header_img" >
+                    <img src="https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg" alt="" />
+                </div>
+                </a>
              <ul class="dropdown-menu dropdown-menu-end slideIn">
                     <li><a class="dropdown-item" href="{{url_for('auth.logout')}}">Wyloguj się</a></li>
                     <li><hr class="dropdown-divider"></li>
