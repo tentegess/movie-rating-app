@@ -1,10 +1,11 @@
 import os
-from flask import Flask
+from flask import Flask, flash, redirect
 from flask_login import LoginManager
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
 
 from utils.db_config import db, migrate
+from utils import LANG
 
 from views.auth_views import auth
 from views.home_views import home
@@ -53,6 +54,11 @@ def create_app():
     @login_manager.user_loader
     def load_user(id):
         return Users.query.get(int(id))
+
+    @login_manager.unauthorized_handler
+    def login_required():
+        flash(LANG.LOGIN_REQUIRED, "alert alert-primary")
+        return redirect("/login")
 
     app.jinja_env.globals['current_year'] = datetime.now().year
 

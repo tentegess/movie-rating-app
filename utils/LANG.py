@@ -28,4 +28,6 @@ RESET_MAIL_SEND = "Gotowe, jeśli konto istnieje, na twój email przyjdzie wiado
 
 PASSWORD_CHANGED = "Twoje hasło zostało zmienione, możesz się zalogować"
 
+LOGIN_REQUIRED = "Zaloguj się, aby uzyskać dostęp do tej treści"
+
 
