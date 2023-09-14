@@ -4,6 +4,22 @@
     Strona główna
 {% endblock %}
 
+{% block page %}
+    Strona główna
+{% endblock %}
+
 {% block content %}
-    <h1>test</h1>
+
+    <div class="row">
+        <div class="col-md-4 col-xl-3">
+            <div class="card admin-card">
+                <div class="card-header card-h-1"><h6 class="m-0 text-white">Użytkownicy</h6></div>
+                <div class="card-body">
+                    <h2 class="text-end"><i class="bx bx-user f-left"></i><span >486</span></h2>
+                    <p class="m-b-0">Zablokowani<span class="f-right">351</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

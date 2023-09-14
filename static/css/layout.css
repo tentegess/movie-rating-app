@@ -1,0 +1,73 @@
+:root{
+    --input-color: #818080;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0  30px white inset !important;
+
+}
+
+.slideIn{
+    animation-duration: 0.3s;
+   -webkit-animation-duration: 0.3s;
+   animation-fill-mode: both;
+   -webkit-animation-fill-mode: both;
+   -webkit-animation-name: slideIn;
+   animation-name: slideIn;
+}
+
+a:focus, button:focus, input:focus{
+     outline: none !important;
+    box-shadow: none !important;
+}
+
+a{
+    text-decoration: None;
+}
+
+.custom_input, .custom_input:-webkit-autofill{
+     width: 100%;
+     border: 0;
+     border-radius: 0;
+     border-bottom: 2px solid var(--input-color);
+     outline: 0;
+     font-size: 1rem;
+     padding-left: 5px !important;
+     padding-right: 5px !important;
+     padding-bottom: 7px !important;
+     color: var(--input-color) !important;
+    -webkit-text-fill-color: var(--input-color);
+     background-color: transparent;
+     transition: border-color 0.2s, color 0.2s;
+}
+
+.custom_input:focus, .custom_input:-webkit-autofill:focus{
+    color: black !important;
+    -webkit-text-fill-color:black;
+    border-bottom: 2px solid black;
+}
+
+.error-span{
+    display: inline-block;
+    height: 1rem;
+}
+
+.error, .error:focus{
+    color: red !important;
+    border-color: red !important;
+    -webkit-text-fill-color: red !important;
+}
+
+.check-input{
+    border-radius: 0 !important;
+    border-color: var(--input-color) !important;
+
+}
+
+.check-input:checked{
+    background-color: var(--input-color) !important;
+
+}
