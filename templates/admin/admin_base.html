@@ -53,11 +53,11 @@
             <span class="nav_logo-name">Admin</span>
           </a>
           <div class="nav_list">
-                <a href="#" class="nav_link active">
+                <a href="{{ url_for('admin.admin_main') }}" class="nav_link" id="main_link">
                   <i class='bx bx-home-alt-2 nav_icon'></i>
                   <span class="nav_name">Strona główna</span>
                 </a>
-                <a href="#" class="nav_link">
+                <a href="{{ url_for('admin.user_list') }}" class="nav_link" id="users_link">
                   <i class='bx bx-user nav_icon' ></i>
                   <span class="nav_name">Użytkownicy</span>
                 </a>
@@ -77,60 +77,11 @@
             {% endblock %}
         </main>
     </body>
+    <script src="{{url_for('static',filename='js/admin_nav.js')}}">
+    </script>
     <script>
-         document.addEventListener("DOMContentLoaded", function (event) {
-        const showNavbar = (toggleId, navId, bodyId, navtoggle, navicon, mainD, pageTitle) => {
-          const nvtoggle = document.getElementById(navtoggle);
-          const toggle = document.getElementById(toggleId),
-            main = document.getElementById(mainD),
-            nav = document.getElementById(navId),
-            bodypd = document.getElementById(bodyId),
-            nav_icon = document.getElementById(navicon),
-            p_title = document.getElementById(pageTitle)
-
-
-            nav_expanders = [toggle, nvtoggle];
-
-          // Validate that all variables exist
-          if (toggle && nav && bodypd && nvtoggle) {
-            nav_expanders.forEach(btn=>{
-                  btn.addEventListener("click", () => {
-                  nav.classList.toggle("show");
-                  toggle.classList.toggle("bx-x");
-                  nav_icon.classList.toggle("bx-x");
-                  bodypd.classList.toggle("body-pd");
-                  p_title.classList.toggle("title-pd");
-                })
-            ;})
-
-            if(main){
-             main.addEventListener("click", () => {
-                 let win_width = window.innerWidth;
-                 if (win_width < 768) {
-                     nav.classList.remove("show");
-                     toggle.classList.remove("bx-x");
-                     nav_icon.classList.remove("bx-x");
-                     bodypd.classList.remove("body-pd");
-                     p_title.classList.remove("title-pd");
-                 }
-             })
-            }
-          }
-        };
-
+        document.addEventListener("DOMContentLoaded", function (event) {
         showNavbar("header-toggle", "nav-bar", "body-pd", "nav_toggle", "nav_icon", "main", "page-title");
-        const linkColor = document.querySelectorAll(".nav_link");
-
-
-
-        function colorLink() {
-          if (linkColor) {
-            linkColor.forEach((l) => l.classList.remove("active"));
-            this.classList.add("active");
-          }
-        }
-        linkColor.forEach((l) => l.addEventListener("click", colorLink));
-
       });
     </script>
     {% block script %}

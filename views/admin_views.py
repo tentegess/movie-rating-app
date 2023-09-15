@@ -40,4 +40,8 @@ def admin_main():
     return render_template("admin/adm_index.html", stats=stats)
 
 
+@admin.get("/users")
+def user_list():
+    return render_template("admin/adm_users.html")
+
 

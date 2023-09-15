@@ -17,6 +17,7 @@
     box-sizing: border-box;
 }
 
+
 body {
     background-color: #fdfdfd;
     position: relative;
@@ -130,9 +131,7 @@ a {
     color: var(--white-color);
 }
 
-.nav_link.active:hover{
-    transform: none;
-}
+
 
 .nav_icon {
     font-size: 1.25rem;
@@ -158,6 +157,8 @@ a {
 
 .active {
     color: var(--white-color);
+    transform: translateY(-4px);
+    transition: none;
 }
 
 .active::before {
