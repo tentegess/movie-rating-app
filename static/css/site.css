@@ -162,4 +162,5 @@ body{
 .nav-link:hover {
     transform: translateY(-2px);
     color: var(--white-color);
+    text-decoration: underline;
 }

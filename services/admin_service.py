@@ -4,7 +4,6 @@ from models.user_tokens import Tokens
 from flask import flash, redirect, session, render_template, request
 from utils import LANG
 
-
 def get_site_stats():
     stats = {
         "user_count": Users.query.count(),
