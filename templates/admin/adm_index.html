@@ -11,12 +11,15 @@
 {% block content %}
 
     <div class="row">
-        <div class="col-md-4 col-xl-3">
-            <div class="card admin-card">
-                <div class="card-header card-h-1"><h6 class="m-0 text-white">Użytkownicy</h6></div>
-                <div class="card-body">
-                    <h2 class="text-end"><i class="bx bx-user f-left"></i><span >486</span></h2>
-                    <p class="m-b-0">Zablokowani<span class="f-right">351</span></p>
+        <div class="col-md-6 col-lg-4 col-xl-3 card-col">
+            <div class="card admin-card card-color-1">
+                <div class="card-header"><h6 class="m-0">Użytkownicy</h6></div>
+                <div class="card-body pt-0">
+                    <h2 class="text-end"><i class="bx bx-user f-left"></i><span >{{ stats.user_count }}0000000</span></h2>
+                </div>
+                <div class="card-body pt-0">
+                    <p class="mb-1">Administratorzy<span class="f-right">{{ stats.admins }}0000000</span></p>
+                    <p class="mb-0">Zablokowani<span class="f-right">{{ stats.banned }}00000000</span></p>
                 </div>
             </div>
         </div>
