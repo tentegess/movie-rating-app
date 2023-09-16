@@ -1,3 +1,4 @@
+import flask
 from flask import Blueprint, render_template, redirect, request
 from flask_login import login_required, logout_user
 
@@ -18,6 +19,8 @@ def login():
 @auth.post("/login")
 def login_post():
     user_vm = LoginViewModel.validate()
+    if not auth_service.validate_captcha():
+        flask.abort(401)
     if user_vm.errors:
         return render_template("auth/login.html", errors=user_vm.to_dict().get("errors"))
 
@@ -32,6 +35,8 @@ def register():
 @auth.post("/register")
 def register_post():
     user_vm = RegisterViewModel().validate()
+    if not auth_service.validate_captcha():
+        flask.abort(401)
     if user_vm.errors:
         return render_template("auth/register.html", errors=user_vm.to_dict().get("errors"))
     auth_service.add_user(user_vm)
@@ -52,6 +57,8 @@ def forgot_password():
 @auth.post("/forgot_password")
 def forgot_password_post():
     user_vm = ForgotPsdViewModel.validate()
+    if not auth_service.validate_captcha():
+        flask.abort(401)
     if user_vm.errors:
         return render_template("auth/forgot_password.html", errors=user_vm.to_dict().get("errors"))
     auth_service.sent_reset_link(user_vm)

@@ -17,8 +17,8 @@
                   <ul class="dropdown-menu dropdown-menu-end slideIn">
                     {% if current_user.is_admin %}
                       <li><a class="dropdown-item" href="{{url_for('admin.admin_main')}}">Panel Administratora</a></li>
+                        <li><hr class="dropdown-divider"></li>
                     {% endif %}
-                    <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="{{url_for('auth.logout')}}">Wyloguj się</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Something else here</a></li>

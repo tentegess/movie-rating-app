@@ -16,7 +16,6 @@ class LoginViewModel(BaseViewModel):
 
         if not self.name:
             self.errors["name"] = LANG.EMPTY_LOGIN
-
         if not self.password:
             self.errors["password"] = LANG.EMPTY_PASSWORD
 

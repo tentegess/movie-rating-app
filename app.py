@@ -37,6 +37,8 @@ def create_app():
     app.config['MAIL_USERNAME'] = os.environ.get("MAIL_USERNAME")
     app.config['MAIL_PASSWORD'] = os.environ.get("MAIL_PASSW0RD")
 
+    app.config['CAPTCHA_SECRET_KEY'] = os.environ.get("CAPTCHA_SECRET_KEY")
+
     app.permanent_session_lifetime = timedelta(days=7)
 
     db.init_app(app)
@@ -61,6 +63,7 @@ def create_app():
         return redirect("/login")
 
     app.jinja_env.globals['current_year'] = datetime.now().year
+    app.jinja_env.globals['site_key'] = os.environ.get("SITE_KEY")
 
     app.register_blueprint(auth)
     app.register_blueprint(home)

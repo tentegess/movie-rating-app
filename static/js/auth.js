@@ -9,3 +9,7 @@
           $(input).closest(".form-check-label").find("span").removeClass("error")
       });
     });
+
+    function onSubmit(token) {
+         document.getElementById("auth-form").submit();
+       }

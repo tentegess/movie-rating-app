@@ -7,7 +7,7 @@
 {% block content %}
     <div class="v-center">
         <div class="container log card px-3 px-sm-5 py-5">
-            <form class="m-0 p-0" method="POST" action="">
+            <form class="m-0 p-0" method="POST" id="auth-form" action="">
                 <div class="form-logo">
                     <div class="f-ico-con">
                         <a class="m-0 p-0"  href="{{url_for('home.index')}}"> <img src="{{ url_for('static', filename="graph/icon2.svg") }}" class="img-fluid  mx-auto d-block form-icon"> </a>
@@ -116,7 +116,9 @@
                     </span>
                 </div>
                 <div class="forms-inputs mb-2 mx-3">
-                    <input type="submit" class="btn btn-dark sub-button py-3" value="Zarejestruj">
+                    <button class="g-recaptcha btn btn-dark sub-button py-3" data-sitekey="{{ site_key }}"
+                    data-callback='onSubmit'
+                    data-action='submit'> Zarejestruj </button>
                 </div>
             </form>
             <a class="text-center my-2" href="{{url_for('auth.login')}}">Masz już konto? Zaloguj się</a>
@@ -125,6 +127,8 @@
 {% endblock %}
 
 {% block script %}
+    <script src="https://www.google.com/recaptcha/api.js"></script>
     <script src="{{url_for('static',filename='js/auth.js')}}">
     </script>
+
 {% endblock %}

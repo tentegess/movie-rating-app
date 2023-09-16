@@ -1,5 +1,6 @@
 import secrets
 import string
+import requests
 from datetime import timedelta
 from flask_login import login_user
 from datetime import datetime
@@ -7,7 +8,7 @@ from utils.db_config import db
 from models.Users import Users
 from models.user_tokens import Tokens
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import flash, redirect, session, render_template, request
+from flask import flash, redirect, session, render_template, request, current_app
 from utils import LANG
 from utils.mail_service import mail_sender
 
@@ -143,3 +144,12 @@ def generate_token(ln : int) -> str:
     while Tokens.query.filter_by(token=token).first():
         token = ''.join(secrets.choice(base) for i in range(ln))
     return token
+
+
+def validate_captcha():
+    captcha_res = request.form.get("g-recaptcha-response")
+    captcha_key = current_app.config.get('CAPTCHA_SECRET_KEY')
+    captcha_request = f'https://www.google.com/recaptcha/api/siteverify?secret={captcha_key}&response={captcha_res}'
+    verify_res = requests.post(captcha_request).json()
+
+    return verify_res['success']
