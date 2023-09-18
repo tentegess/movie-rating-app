@@ -1,5 +1,6 @@
 :root{
     --input-color: #818080;
+    --shadow: -3px 3px 5px rgba(100, 100, 100, 0.55) !important;
 }
 
 
@@ -43,15 +44,14 @@ body{
  }
 }
 
-@media screen and (max-width: 576px){
- body{
-     background-size: 35%;
- }
-}
 
 @media screen and (max-width: 570px){
  body{
      background-position: left -25px bottom 30px;
+     background-size: 35%;
+ }
+ .v-center{
+     padding: 0px 0.75rem;
  }
 }
 
@@ -71,13 +71,12 @@ body{
 
 .alert{
     width: 100% !important;
-    box-shadow: -3px 3px 5px darkgray !important;
-
+    box-shadow: var(--shadow);
 }
 
 .log{
     max-width: 500px !important;
-    box-shadow: -3px 3px 5px darkgray;
+    box-shadow: var(--shadow);
     border-radius: 1.25rem !important;
     border: 0 !important;
 }
@@ -151,7 +150,7 @@ body{
 
 @media screen and (min-width: 992px) {
     .dropdown-menu {
-        box-shadow: -3px 3px 5px darkgray !important;
+        box-shadow: var(--shadow);
     }
 }
 
