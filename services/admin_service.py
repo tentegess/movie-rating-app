@@ -11,3 +11,7 @@ def get_site_stats():
         "banned": Users.query.filter_by(suspended=True).count(),
     }
     return stats
+
+def get_users():
+    result = Users.query.with_entities(Users.id, Users.name, Users.email, Users.suspended, Users.is_admin).all()
+    return result

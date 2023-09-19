@@ -42,6 +42,7 @@ def admin_main():
 
 @admin.get("/users")
 def user_list():
-    return render_template("admin/adm_users.html")
+    users = admin_service.get_users()
+    return render_template("admin/adm_users.html", users=users)
 
 

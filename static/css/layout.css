@@ -10,6 +10,10 @@ input:-webkit-autofill:active{
 
 }
 
+body{
+    background-color: rgba(249, 250, 251);
+}
+
 .slideIn{
     animation-duration: 0.3s;
    -webkit-animation-duration: 0.3s;
@@ -70,4 +74,10 @@ a{
 .check-input:checked{
     background-color: var(--input-color) !important;
 
+}
+
+.formlab{
+    color: var(--input-color) !important;
+    opacity: 1 !important;
+    border: 0 !important;
 }

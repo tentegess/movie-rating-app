@@ -9,6 +9,21 @@
 {% endblock %}
 
 {% block content %}
+    <div class="container-fluid px-0 px-md-3">
+        <div class="mx-md-2 content-box mb-3 pt-1">
+            <div class="form-floating">
+                <input type="text" class="form-control custom_input "
+                   placeholder=" " name="search_user" maxlength="360"
+                    hx-get="/admin/users" hx-target="#user_table"
+                    hx-trigger="keyup changed delay:250ms">
+                <label class="ms-3 formlab">Znajdź użytkownika</label>
+            </div>
+        </div>
+
+        <div class="my-3 mx-md-2 content-box" id="user_table">
+        {{ render_partial('admin/partials/users/__user_list.html', users=users) }}
+        </div>
+    </div>
 
 
 {% endblock %}

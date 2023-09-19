@@ -1,0 +1,24 @@
+{% if users %}
+    <table class="table table-responsive table-sm text-center">
+      <thead>
+        <tr>
+          <td>Login</td>
+          <td>Email</td>
+          <td class="d-none d-sm-table-cell px-0">Zawieszony</td>
+          <td class="d-none d-sm-table-cell">Administrator</td>
+        </tr>
+      </thead>
+      <tbody>
+            {% for user in users %}
+                <tr>
+                    <td> {{ user.name }} </td>
+                    <td> {{ user.email }} </td>
+                    <td class="d-none d-sm-table-cell px-0"> <i class="bx bx-{{ 'check' if user.suspended else 'x' }}"></i> </td>
+                    <td class="d-none d-sm-table-cell px-0"> <i class="bx bx-{{ 'check' if user.is_admin else 'x' }}" ></i> </td>
+                </tr>
+            {% endfor %}
+      </tbody>
+    </table>
+{% else %}
+    <h3>Brak użytkowników</h3>
+{% endif %}

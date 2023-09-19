@@ -1,6 +1,6 @@
 :root{
     --input-color: #818080;
-    --shadow: -3px 3px 5px rgba(100, 100, 100, 0.55) !important;
+    --shadow: -1px 1px 2px rgba(129, 128, 128, 0.55) !important;
 }
 
 
@@ -21,7 +21,6 @@
 
 
 body{
-    background-color: #fdfdfd;
     background-image: url("../graph/logo.svg");
     background-size: 15%;
     background-repeat: no-repeat;
@@ -81,11 +80,7 @@ body{
     border: 0 !important;
 }
 
-.formlab{
-    color: var(--input-color) !important;
-    opacity: 1 !important;
-    border: 0 !important;
-}
+
 
 
 
