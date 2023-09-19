@@ -1,3 +1,4 @@
+import flask
 from flask import request
 from werkzeug.datastructures import MultiDict
 
@@ -8,6 +9,7 @@ class BaseViewModel:
         self.req = request
         self.req_dict = create_dict("")
         self.errors = {}
+        self.htmx_req = 'HX-Request' in flask.request.headers
 
     @classmethod
     def validate(cls):

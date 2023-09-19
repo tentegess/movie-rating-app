@@ -12,6 +12,9 @@ def get_site_stats():
     }
     return stats
 
-def get_users():
-    result = Users.query.with_entities(Users.id, Users.name, Users.email, Users.suspended, Users.is_admin).all()
+def get_users(query_model):
+
+    query = f'%{query_model.query}%'
+    result = (Users.query.with_entities(Users.id, Users.name, Users.email, Users.suspended, Users.is_admin)
+              .filter(Users.name.like(query) | Users.email.like(query)).all())
     return result

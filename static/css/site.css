@@ -1,6 +1,7 @@
 :root{
     --input-color: #818080;
-    --shadow: -1px 1px 2px rgba(129, 128, 128, 0.55) !important;
+    --shadow: -0.075rem 0.125rem 0.25rem rgba(0, 0, 0, 0.12) !important;
+    --white-color: #fdfdfd;
 }
 
 
@@ -11,7 +12,7 @@
 }
 
 .nav-link{
-    color: white !important;
+    color: var(--white-color) !important;
 }
 
 .navbar-toggler{
@@ -110,7 +111,7 @@ body{
 }
 
 .hamburger{
-    color: white;
+    color: var(--white-color);
     font-size: 2rem;
 }
 
@@ -145,7 +146,7 @@ body{
 
 @media screen and (min-width: 992px) {
     .dropdown-menu {
-        box-shadow: var(--shadow);
+        box-shadow: -0.06rem 0.06rem 0.2rem rgba(0, 0, 0, 0.3) !important;
     }
 }
 

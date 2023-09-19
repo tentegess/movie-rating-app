@@ -15,7 +15,7 @@
             <div class="card admin-card card-color-1">
                 <div class="card-header"><h6 class="m-0">Użytkownicy</h6></div>
                 <div class="card-body pt-0">
-                    <h2 class="text-end"><i class="bx bx-user f-left"></i><span >{{ stats.user_count }}</span></h2>
+                    <h2 class="text-end"><a href="{{ url_for("admin.admin_users") }}"><i class="bx bx-user f-left"></i></a><span >{{ stats.user_count }}</span></h2>
                 </div>
                 <div class="card-body pt-0">
                     <p class="mb-1">Administratorzy<span class="f-right">{{ stats.admins }}</span></p>

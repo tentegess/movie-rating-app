@@ -4,6 +4,8 @@ from services import admin_service
 from functools import wraps
 from flask_login import current_user
 
+from view_models.admin.search_user_view_model import SearchUserViewModel
+
 admin = Blueprint("admin", __name__, static_folder="static", template_folder="templates")
 
 
@@ -41,8 +43,13 @@ def admin_main():
 
 
 @admin.get("/users")
-def user_list():
-    users = admin_service.get_users()
+def admin_users():
+    query_vm = SearchUserViewModel()
+    users = admin_service.get_users(query_vm)
+
+    if query_vm.htmx_req:
+        return render_template("admin/partials/users/__user_list.html", users=users)
+
     return render_template("admin/adm_users.html", users=users)
 
 
