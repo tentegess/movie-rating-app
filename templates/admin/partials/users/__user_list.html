@@ -13,8 +13,10 @@
                 <tr>
                     <td> {{ user.name }} </td>
                     <td> {{ user.email }} </td>
-                    <td class="d-none d-sm-table-cell px-0"> <i class="bx bx-{{ 'check' if user.suspended else 'x' }}"></i> </td>
-                    <td class="d-none d-sm-table-cell px-0"> <i class="bx bx-{{ 'check' if user.is_admin else 'x' }}" ></i> </td>
+                    <td class="d-none d-sm-table-cell px-0"> <i class="bx bx-{{ 'check' if user.suspended else 'x' }}"
+                        style="font-size: 1.5rem"></i> </td>
+                    <td class="d-none d-sm-table-cell px-0"> <i class="bx bx-{{ 'check' if user.is_admin else 'x' }}"
+                        style="font-size: 1.5rem"></i> </td>
                 </tr>
             {% endfor %}
       </tbody>

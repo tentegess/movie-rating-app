@@ -6,8 +6,7 @@
     --first-color-light: #757575;
     --white-color: #fdfdfd;
     --normal-font-size: 1rem;
-    --z-fixed: 999;
-    --shadow: -0.075rem 0.125rem 0.25rem rgba(0, 0, 0, 0.12) !important;
+    --shadow: -1px 2px 3px rgba(0, 0, 0, 0.08) !important;
   }
 
 
@@ -72,6 +71,7 @@
     font-size: 35px;
     border-radius: 90px;
     cursor: pointer;
+    box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.28) !important;
 }
 
 .admin-card i:hover{
@@ -104,6 +104,15 @@
     box-shadow: var(--shadow);
     border-radius: 0.25rem !important;
     border: 0 !important;
+}
+
+.search-icon{
+    font-size: 1.5rem;
+    color: black;
+    right: 10px;
+    bottom: 5px;
+    cursor: pointer;
+    z-index: 2000
 }
 
 @media screen and (min-width: 768px) {

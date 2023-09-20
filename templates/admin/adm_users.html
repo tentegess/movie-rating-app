@@ -11,12 +11,18 @@
 {% block content %}
     <div class="container-fluid px-0 px-md-3">
         <div class="mx-md-2 content-box mb-3 pt-1">
-            <div class="form-floating">
-                <input type="text" class="form-control custom_input "
-                   placeholder=" " name="query" maxlength="360"
-                    hx-get="/admin/users" hx-target="#user_table"
-                    hx-trigger="keyup changed delay:250ms">
-                <label class="ms-3 formlab">Znajdź użytkownika</label>
+            <div class="row">
+                <div class="input-group position-relative d-inline-flex align-items-center">
+                    <div class="form-floating">
+                        <input type="text" class="form-control custom_input" id="search-box"
+                           placeholder=" " name="query" maxlength="360"
+                            hx-get="/admin/users" hx-target="#user_table"
+                            hx-trigger="keyup changed delay:250ms">
+                        <label class="ms-3 formlab">Znajdź użytkownika</label>
+                    </div>
+                    <i class="bx bx-x position-absolute d-none search-icon" id="search-icon">
+                    </i>
+                </div>
             </div>
         </div>
 
@@ -29,7 +35,24 @@
 {% endblock %}
 
 {% block script %}
+    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
     <script>
         color_link("users_link")
+        const searchBox = document.getElementById("search-box")
+        const searchIcon = document.getElementById("search-icon")
+        searchBox.addEventListener("keyup", function(){
+            if(this.value!==""){
+                searchIcon.classList.remove("d-none")
+            }else{
+                searchIcon.classList.add("d-none")
+            }
+        })
+
+        searchIcon.addEventListener("click", function(){
+            searchBox.value = "";
+            this.classList.add("d-none")
+            htmx.ajax('GET', '/admin/users', "#user_table")
+        })
+
     </script>
 {% endblock %}
