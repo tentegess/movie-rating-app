@@ -4,6 +4,7 @@ from services import admin_service
 from functools import wraps
 from flask_login import current_user
 
+
 from view_models.admin.search_user_view_model import SearchUserViewModel
 
 admin = Blueprint("admin", __name__, static_folder="static", template_folder="templates")
@@ -51,5 +52,18 @@ def admin_users():
         return render_template("admin/partials/users/__user_list.html", users=users)
 
     return render_template("admin/adm_users.html", users=users)
+
+@admin.get("/users/page/<int:page>")
+def users_page(page):
+    query_vm = SearchUserViewModel()
+    if query_vm.htmx_req:
+        users = admin_service.get_users(query_vm, page)
+        return render_template("admin/partials/users/__users_next_page.html", users=users)
+
+    return flask.abort(404)
+
+# @admin.get("/debug1")
+# def aaa():
+#     admin_service.db_filler()
 
 
