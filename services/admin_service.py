@@ -25,11 +25,11 @@ def get_users(query_model, page=1):
     return result if result.items else None
 
 
-# def db_filler():
-#     for i in range(100):
-#         user=Users()
-#         user.email = f'tester{i}@jdjd.com'
-#         user.name = f'tester{i}'
-#         user.password = generate_password_hash(user.name)
-#         db.session.add(user)
-#     db.session.commit()
+def db_filler():
+    for i in range(100):
+        user=Users()
+        user.email = f'tester{i}@jdjd.com'
+        user.name = f'tester{i}'
+        user.password = generate_password_hash(user.name)
+        db.session.add(user)
+    db.session.commit()
