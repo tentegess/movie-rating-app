@@ -6,6 +6,7 @@
           <td>Email</td>
           <td class="d-none d-sm-table-cell px-0">Zawieszony</td>
           <td class="d-none d-sm-table-cell">Administrator</td>
+           <td></td>
         </tr>
       </thead>
       <tbody>
@@ -18,7 +19,7 @@
                  hx-trigger="revealed"
                  hx-swap="outerHTML"
                  hx-target="this"
-                 hx-include="[name='query']">
+                 hx-include="[name='query'], [name='only_admins'], [name='only_suspended']">
                 <td class="m-0 p-0 border-0" colspan="100%">
                     <div class="dot dot-div"></div>
                 </td>

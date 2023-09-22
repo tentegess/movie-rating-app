@@ -44,6 +44,7 @@ def admin_main():
 
 
 @admin.get("/users")
+#@admin_required
 def admin_users():
     query_vm = SearchUserViewModel()
     users = admin_service.get_users(query_vm)
@@ -54,6 +55,7 @@ def admin_users():
     return render_template("admin/adm_users.html", users=users)
 
 @admin.get("/users/page/<int:page>")
+#@admin_required
 def users_page(page):
     query_vm = SearchUserViewModel()
     if query_vm.htmx_req:

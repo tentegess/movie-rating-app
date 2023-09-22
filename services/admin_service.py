@@ -19,9 +19,14 @@ def get_site_stats():
 def get_users(query_model, page=1):
 
     query = f'%{query_model.query}%'
+    filters = {}
+
+    if query_model.admins : filters["is_admin"] = True
+
+    if query_model.suspended : filters["suspended"] = True
 
     result = Users.query.with_entities(Users.id, Users.name, Users.email, Users.suspended, Users.is_admin) \
-        .filter(Users.name.ilike(query) | Users.email.ilike(query)).paginate(per_page=20, page=page)
+        .filter(Users.name.ilike(query) | Users.email.ilike(query)).filter_by(**filters).paginate(per_page=20, page=page)
     return result if result.items else None
 
 

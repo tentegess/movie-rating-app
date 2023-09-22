@@ -115,6 +115,11 @@
     z-index: 2000
 }
 
+.table-icon{
+    font-size: 1.5rem;
+    transform: translateY(3px);
+}
+
 @media screen and (min-width: 768px) {
 
     .card-body ~ .card-body{

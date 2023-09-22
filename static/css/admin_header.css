@@ -44,6 +44,7 @@ a {
     background-color: var(--header-color);
     z-index: var(--z-fixed);
     transition: 0.5s;
+
   }
 
 .header > span{
@@ -86,7 +87,7 @@ a {
     padding: 0.5rem 1rem 0 0;
     transition: 0.5s;
     z-index: var(--z-fixed);
-    box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.28) !important;
+    box-shadow: 1.6px 0px  3.6px rgba(0, 0, 0, 0.24) ,0.3px 0px  0.9px rgba(0, 0, 0, 0.45)!important;
 }
 
 .nav {
