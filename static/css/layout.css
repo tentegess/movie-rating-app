@@ -48,6 +48,7 @@ a{
      transition: border-color 0.2s, color 0.2s;
 }
 
+/*inputs customization*/
 .custom_input:focus, .custom_input:-webkit-autofill:focus{
     color: black !important;
     -webkit-text-fill-color:black;
@@ -80,4 +81,44 @@ a{
     color: var(--input-color) !important;
     opacity: 1 !important;
     border: 0 !important;
+}
+
+/*loading animation*/
+.dot, .dot:before, .dot:after {
+  border-radius: 90px;
+  width: 2em;
+  height: 2em;
+  animation-fill-mode: both;
+  animation: wave 0.75s infinite ease-in-out;}
+
+
+.dot {
+  color: #484747;
+  font-size: 7px;
+  position: relative;
+  animation-delay: -0.15s;
+    top: -5px;
+}
+
+.dot-div{
+  margin: auto;
+}
+
+.dot:before,
+.dot:after {
+  content: '';
+  position: absolute;
+}
+
+.dot:before {
+  left: -3em;
+  animation-delay: -0.3s;
+}
+.dot:after {
+    left: 3em;
+}
+
+@keyframes wave {
+    0%, 100% { box-shadow: 0 2em 0 -0.8em }
+    50% { box-shadow: 0 2em 0 0 }
 }

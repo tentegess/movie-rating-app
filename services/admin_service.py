@@ -17,6 +17,7 @@ def get_site_stats():
 
 
 def get_users(query_model, page=1):
+
     query = f'%{query_model.query}%'
 
     result = Users.query.with_entities(Users.id, Users.name, Users.email, Users.suspended, Users.is_admin) \
