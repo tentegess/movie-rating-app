@@ -57,8 +57,8 @@ def admin_users():
 def users_page(page):
     query_vm = SearchUserViewModel()
     if query_vm.htmx_req:
-        import time
-        time.sleep(2)
+        # import time
+        # time.sleep(2)
         users = admin_service.get_users(query_vm, page)
         return render_template("admin/partials/users/__users_next_page.html", users=users)
 
