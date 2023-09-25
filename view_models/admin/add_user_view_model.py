@@ -5,18 +5,19 @@ from models.Users import Users
 import re
 
 
-class RegisterViewModel(BaseViewModel):
+class AddUserViewModel(BaseViewModel):
 
     def __init__(self):
         super().__init__()
         self.email = self.req_dict.email.lower()
         self.name = str(self.req_dict.name)
         self.password = str(self.req_dict.password)
-        self.confirm_password = str(self.req_dict.confirm_password)
-        self.rules = self.req_dict.rules
+        self.admin = True if self.req_dict.admin else False
+        self.active = True if self.req_dict.active else False
 
     def validation(self):
         super().validation()
+
         if not self.email:
             self.errors["email"] = LANG.EMPTY_EMAIL
         elif not re.match(EMAIL_PT, self.email):
@@ -42,13 +43,6 @@ class RegisterViewModel(BaseViewModel):
         elif not re.match(PASS_PT, self.password):
             self.errors["password"] = LANG.WRONG_PASSWORD_FORMAT
 
-        if self.password != self.confirm_password:
-            self.errors["confirm_password"] = LANG.NOT_EQUAL_PASSWORD
-        if (not self.confirm_password and self.password) or (self.confirm_password and not self.password):
-            self.errors["confirm_password"] = LANG.NOT_REPEAT_PASSWORD
-
-        if not self.rules:
-            self.errors["rules"] = LANG.NOT_ACCEPTED_RULES
 
 
 

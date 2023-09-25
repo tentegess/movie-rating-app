@@ -7,7 +7,7 @@ class Users(UserMixin, db.Model):
 
     id = db.Column(db.BigInteger, primary_key=True)
     name = db.Column(db.String(32), unique=True, nullable=False)
-    email = db.Column(db.String(320), unique=True, nullable=False)
+    email = db.Column(db.String(64), unique=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
     is_active = db.Column(db.Boolean, server_default=text('FALSE'))
     is_admin = db.Column(db.Boolean, server_default=text('FALSE'))

@@ -120,6 +120,72 @@
     transform: translateY(3px);
 }
 
+.lower-col{
+    transform: translateY(8px);
+}
+
+label.btn-outline-dark{
+    border-color: var(--first-color)!important;
+}
+
+input[type=checkbox]:checked + label.btn-outline-dark{
+    background: var(--first-color);
+}
+
+label.btn-outline-dark:hover{
+    color: var(--white-color)!important;
+    background: #3a3a3a !important;
+}
+
+.custom-group label:first-of-type{
+    border-radius: 25px 0 0 25px!important;
+}
+
+.custom-group label:last-of-type{
+    border-radius: 0 25px 25px 0!important;
+}
+
+.search-bar{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 0 1rem;
+    flex-wrap: wrap;
+}
+
+.search-bar > div:nth-of-type(1){
+
+    flex-grow: 1;
+}
+
+.search-bar > div:nth-of-type(2){
+    padding-left: 10px;
+
+    flex-grow: 1;
+}
+
+
+
+.search-bar > span{
+
+  flex-grow:1;
+}
+
+#dialog > .modal-content{
+    border-radius: 1.25rem !important;
+}
+
+#dialog > .modal-content > .modal-header{
+    border-bottom: None;
+    padding-bottom: 0;
+}
+
+#dialog > .modal-content > .modal-footer{
+    border-top: None;
+    padding-top: 0;
+}
+
+
 @media screen and (min-width: 768px) {
 
     .card-body ~ .card-body{

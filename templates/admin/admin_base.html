@@ -84,6 +84,11 @@
 
             {% endblock %}
         </main>
+
+        <div id="modal" class="modal fade">
+          <div id="dialog" class="modal-dialog " hx-target="this"></div>
+        </div>
+
     </body>
     <script src="{{url_for('static',filename='js/admin_nav.js')}}">
     </script>
@@ -91,6 +96,20 @@
         document.addEventListener("DOMContentLoaded", function (event) {
         showNavbar("header-toggle", "nav-bar", "body-pd", "nav_toggle", "nav_icon", "main", "page-title");
       });
+        (function(){
+            const modal = new bootstrap.Modal(document.getElementById('modal'))
+
+            htmx.on('htmx:afterSwap', (e) => {
+                if (e.detail.target.id === 'dialog')
+                    modal.show()
+            })
+
+            htmx.on('htmx:beforeSwap', (e) => {
+                if (e.detail.target.id === 'dialog' && !e.detail.xhr.response)
+                    modal.hide()
+            })
+        })()
+
     </script>
     {% block script %}
     {% endblock %}

@@ -4,8 +4,8 @@ from services import admin_service
 from functools import wraps
 from flask_login import current_user
 
-
 from view_models.admin.search_user_view_model import SearchUserViewModel
+from view_models.admin.add_user_view_model import AddUserViewModel
 
 admin = Blueprint("admin", __name__, static_folder="static", template_folder="templates")
 
@@ -26,6 +26,7 @@ def admin_required(f):
             # code for admin dashboard
             pass
     """
+
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if not current_user.is_authenticated:
@@ -33,18 +34,29 @@ def admin_required(f):
         if not current_user.is_admin:
             return flask.abort(404)
         return f(*args, **kwargs)
+
+    return decorated_function
+
+
+def htmx_request(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if "Hx-Request" in request.headers:
+            return f(*args, **kwargs)
+        return flask.abort(404)
+
     return decorated_function
 
 
 @admin.get("/")
-#@admin_required
+# @admin_required
 def admin_main():
     stats = admin_service.get_site_stats()
     return render_template("admin/adm_index.html", stats=stats)
 
 
 @admin.get("/users")
-#@admin_required
+# @admin_required
 def admin_users():
     query_vm = SearchUserViewModel()
     users = admin_service.get_users(query_vm)
@@ -54,8 +66,9 @@ def admin_users():
 
     return render_template("admin/adm_users.html", users=users)
 
+
 @admin.get("/users/page/<int:page>")
-#@admin_required
+# @admin_required
 def users_page(page):
     query_vm = SearchUserViewModel()
     if query_vm.htmx_req:
@@ -66,8 +79,20 @@ def users_page(page):
 
     return flask.abort(404)
 
+
+@admin.get("/add_user")
+@htmx_request
+def add_user():
+    return render_template("admin/partials/users/__add_user_form.html")
+
+@admin.post("/add_user")
+@htmx_request
+def add_user_post():
+    user_vm = AddUserViewModel.validate()
+    if user_vm.errors:
+        return render_template("admin/partials/users/__add_user_form.html", errors=user_vm.to_dict().get("errors"))
+
+
 # @admin.get("/debug1")
 # def aaa():
 #     admin_service.db_filler()
-
-

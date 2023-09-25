@@ -118,6 +118,11 @@ a{
     left: 3em;
 }
 
+.sub-button{
+    border-radius: 45px !important;
+    width: 100%;
+}
+
 @keyframes wave {
     0%, 100% { box-shadow: 0 2em 0 -0.8em }
     50% { box-shadow: 0 2em 0 0 }

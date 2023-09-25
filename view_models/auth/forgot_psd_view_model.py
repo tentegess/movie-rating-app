@@ -13,5 +13,5 @@ class ForgotPsdViewModel(BaseViewModel):
 
         if not self.name:
             self.errors["name"] = LANG.EMPTY_LOGIN
-        elif len(self.name) < 3 or len(self.name) > 360:
+        elif len(self.name) < 3 or len(self.name) > 64:
             self.errors["name"] = LANG.WRONG_LOGIN_LEN
