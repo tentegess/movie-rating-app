@@ -1,5 +1,5 @@
 import flask
-from flask import Blueprint, render_template, redirect, request
+from flask import Blueprint, render_template, redirect, request, Response
 from services import admin_service
 from functools import wraps
 from flask_login import current_user
@@ -85,13 +85,15 @@ def users_page(page):
 def add_user():
     return render_template("admin/partials/users/__add_user_form.html")
 
+
 @admin.post("/add_user")
 @htmx_request
 def add_user_post():
     user_vm = AddUserViewModel.validate()
     if user_vm.errors:
         return render_template("admin/partials/users/__add_user_form.html", errors=user_vm.to_dict().get("errors"))
-
+    admin_service.add_user(user_vm)
+    return Response(status=204)
 
 # @admin.get("/debug1")
 # def aaa():

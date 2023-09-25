@@ -9,8 +9,8 @@ class AddUserViewModel(BaseViewModel):
 
     def __init__(self):
         super().__init__()
-        self.email = self.req_dict.email.lower()
-        self.name = str(self.req_dict.name)
+        self.email = self.req_dict.aemail.lower()
+        self.name = str(self.req_dict.aname)
         self.password = str(self.req_dict.password)
         self.admin = True if self.req_dict.admin else False
         self.active = True if self.req_dict.active else False
@@ -18,12 +18,13 @@ class AddUserViewModel(BaseViewModel):
     def validation(self):
         super().validation()
 
+
         if not self.email:
             self.errors["email"] = LANG.EMPTY_EMAIL
         elif not re.match(EMAIL_PT, self.email):
             self.errors["email"] = LANG.WRONG_EMAIL_FORMAT
         elif len(self.email) < 3 or len(self.email) > 64:
-            self.errors["name"] = LANG.WRONG_EMAIL_LEN
+            self.errors["email"] = LANG.WRONG_EMAIL_LEN
         elif Users.query.filter_by(email=self.email).first():
             self.errors["email"] = LANG.EMAIL_EXIST
 

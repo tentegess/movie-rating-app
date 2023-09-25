@@ -22,7 +22,7 @@ class RegisterViewModel(BaseViewModel):
         elif not re.match(EMAIL_PT, self.email):
             self.errors["email"] = LANG.WRONG_EMAIL_FORMAT
         elif len(self.email) < 3 or len(self.email) > 64:
-            self.errors["name"] = LANG.WRONG_EMAIL_LEN
+            self.errors["email"] = LANG.WRONG_EMAIL_LEN
         elif Users.query.filter_by(email=self.email).first():
             self.errors["email"] = LANG.EMAIL_EXIST
 

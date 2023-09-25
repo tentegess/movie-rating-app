@@ -1,5 +1,4 @@
-import secrets
-import string
+
 import requests
 from datetime import timedelta
 from flask_login import login_user
@@ -11,6 +10,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask import flash, redirect, session, render_template, request, current_app
 from utils import LANG
 from utils.mail_service import mail_sender
+from utils.other_utilities import generate_token
 
 
 def add_user(user_vm):
@@ -137,13 +137,6 @@ def reset_password(token, user_vm):
     return redirect("/")
 
 
-
-def generate_token(ln : int) -> str:
-    base = string.ascii_lowercase + string.digits
-    token = ''.join(secrets.choice(base) for i in range(ln))
-    while Tokens.query.filter_by(token=token).first():
-        token = ''.join(secrets.choice(base) for i in range(ln))
-    return token
 
 
 def validate_captcha():

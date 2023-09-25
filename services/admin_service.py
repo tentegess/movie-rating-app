@@ -1,8 +1,13 @@
+from datetime import datetime, timedelta
+
 from werkzeug.security import generate_password_hash
 
 from utils.db_config import db
 from models.Users import Users
 from models.user_tokens import Tokens
+from utils.mail_service import mail_sender
+from utils.other_utilities import generate_token
+
 from flask import flash, redirect, session, render_template, request
 from utils import LANG
 
@@ -28,6 +33,35 @@ def get_users(query_model, page=1):
     result = Users.query.with_entities(Users.id, Users.name, Users.email, Users.suspended, Users.is_admin) \
         .filter(Users.name.ilike(query) | Users.email.ilike(query)).filter_by(**filters).paginate(per_page=20, page=page)
     return result if result.items else None
+
+def add_user(user_vm):
+    user = Users()
+    user.email = user_vm.email
+    user.name = user_vm.name
+    user.password = generate_password_hash(user_vm.password)
+    user.is_active = user_vm.active
+    user.is_admin = user_vm.admin
+
+    try:
+        db.session.add(user)
+        if not user_vm.active:
+            gen = generate_token(32)
+            token = Tokens()
+            token.token = gen
+            token.type = "confirm"
+            token.user = user
+            token.expire_at = datetime.now() + timedelta(hours=48)
+            db.session.add(token)
+        db.session.commit()
+
+        activation_link = f"{request.url_root}confirm_account/{gen}"
+        cf = render_template("email_templates/add_account.html", name=user_vm.name, ct="48", link=activation_link, passwd=user_vm.password)
+        mail_sender(user_vm.email, "Potwierdzenie rejestracji", cf)
+    except Exception as e:
+        flash(LANG.UNEXPECTED_ERROR, "alert alert-danger")
+        print(e)
+        db.session.rollback()
+
 
 
 def db_filler():
