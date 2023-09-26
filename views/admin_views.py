@@ -55,29 +55,18 @@ def admin_main():
     return render_template("admin/adm_index.html", stats=stats)
 
 
+@admin.get("/users/page/<int:page>")
 @admin.get("/users")
 # @admin_required
-def admin_users():
+def admin_users(page=1):
     query_vm = SearchUserViewModel()
-    users = admin_service.get_users(query_vm)
+    users = admin_service.get_users(query_vm, page)
 
     if query_vm.htmx_req:
         return render_template("admin/partials/users/__user_list.html", users=users)
 
     return render_template("admin/adm_users.html", users=users)
 
-
-@admin.get("/users/page/<int:page>")
-# @admin_required
-def users_page(page):
-    query_vm = SearchUserViewModel()
-    if query_vm.htmx_req:
-        # import time
-        # time.sleep(2)
-        users = admin_service.get_users(query_vm, page)
-        return render_template("admin/partials/users/__users_next_page.html", users=users)
-
-    return flask.abort(404)
 
 
 @admin.get("/add_user")

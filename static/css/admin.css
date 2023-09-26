@@ -185,6 +185,27 @@ label.btn-outline-dark:hover{
     padding-top: 0;
 }
 
+.paginator{
+    border-radius:25px!important;
+    padding: 6px 14px;
+    margin-left: 5px; margin-right: 5px;
+    border: none;
+    background: var(--header-color);
+    color: var(--first-color);
+}
+
+.page-nav{
+    padding: 6px 19px;
+}
+
+.paginator:hover, .paginator.curr-page{
+    background: var(--first-color);
+    color: var(--white-color)
+}
+
+.page-item.disabled > .page-nav{
+    color: #cecece;
+}
 
 @media screen and (min-width: 768px) {
 

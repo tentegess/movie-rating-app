@@ -61,8 +61,8 @@
             </div>
         </div>
 
-        <div class="my-3 mx-md-2 content-box" id="user_table" hx-get="/admin/users" hx-trigger="load">
-            <div class="dot dot-div"></div>
+        <div class="my-3 mx-md-2 content-box" id="user_table">
+            {{ render_partial("admin/partials/users/__user_list.html", users=users) }}
         </div>
     </div>
 

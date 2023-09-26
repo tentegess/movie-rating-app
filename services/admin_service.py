@@ -31,7 +31,7 @@ def get_users(query_model, page=1):
     if query_model.suspended : filters["suspended"] = True
 
     result = Users.query.with_entities(Users.id, Users.name, Users.email, Users.suspended, Users.is_admin) \
-        .filter(Users.name.ilike(query) | Users.email.ilike(query)).filter_by(**filters).paginate(per_page=20, page=page)
+        .filter(Users.name.ilike(query) | Users.email.ilike(query)).filter_by(**filters).paginate(per_page=20, page=page, error_out=False)
     return result if result.items else None
 
 def add_user(user_vm):

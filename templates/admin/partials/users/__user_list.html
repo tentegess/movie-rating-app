@@ -13,20 +13,53 @@
             {% for user in users %}
                 {{ render_partial('admin/partials/users/__user_row.html', user=user) }}
             {% endfor %}
-            {% if users.has_next %}
-            <tr class="scroll-trigger htmx-settling"
-                 hx-get="/admin/users/page/{{(users.page+1)}}"
-                 hx-trigger="revealed"
-                 hx-swap="outerHTML"
-                 hx-target="this"
-                 hx-include="[name='query'], [name='only_admins'], [name='only_suspended']">
-                <td class="m-0 p-0 border-0" colspan="100%">
-                    <div class="dot dot-div"></div>
-                </td>
-            </tr>
-            {% endif %}
       </tbody>
     </table>
+    <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center mb-1">
+                <li class="page-item {{ 'disabled' if not users.has_prev else ''}}"
+                    {% if users.has_prev %}
+                        hx-get="/admin/users/page/{{ (users.page-1) }}"
+                        hx-trigger="click" hx-swap="innerHTML" hx-target="#user_table"
+                        hx-push-url="true" hx-include="[name='query'], [name='only_admins'], [name='only_suspended']"
+                    {% endif %}>
+                  <a class="page-link paginator page-nav" href="#" tabindex="-1"><i class='bx bx-arrow-back'></i></a>
+                </li>
+
+             {% for page in users.iter_pages(left_edge=1, left_current=1, right_current=1, right_edge=1) %}
+                 {% if page %}
+                    <li class="page-item" hx-get="/admin/users/page/{{ page }}"
+                        hx-trigger="click" hx-swap="innerHTML" hx-target="#user_table"
+                        hx-push-url="true" hx-include="[name='query'], [name='only_admins'], [name='only_suspended']">
+                        <a class="page-link paginator {{ 'curr-page' if users.page == page else ''}}" href="#">{{ page }}</a></li>
+
+                 {% endif %}
+
+             {% endfor %}
+            <li class="page-item {{ 'disabled' if not users.has_next else ''}}"
+                {% if users.has_next %}
+                    hx-get="/admin/users/page/{{ (users.page+1) }}"
+                    hx-trigger="click" hx-swap="innerHTML" hx-target="#user_table"
+                    hx-push-url="true" hx-include="[name='query'], [name='only_admins'], [name='only_suspended']"
+                {% endif %}>
+              <a class="page-link paginator page-nav" href="#"><i class='bx bx-arrow-back bx-rotate-180'></i></a>
+            </li>
+          </ul>
+    </nav>
 {% else %}
     <h5 class="text-center text-muted mb-0">Brak użytkowników</h5>
 {% endif %}
+
+
+{#{% if users.has_next %}#}
+{#            <tr class="scroll-trigger htmx-settling"#}
+{#                 hx-get="/admin/users/page/{{(users.page+1)}}"#}
+{#                 hx-trigger="revealed"#}
+{#                 hx-swap="outerHTML"#}
+{#                 hx-target="this"#}
+{#                 hx-include="[name='query'], [name='only_admins'], [name='only_suspended']">#}
+{#                <td class="m-0 p-0 border-0" colspan="100%">#}
+{#                    <div class="dot dot-div"></div>#}
+{#                </td>#}
+{#            </tr>#}
+{#            {% endif %}#}
