@@ -61,12 +61,13 @@
             </div>
         </div>
 
-        <div class="my-3 mx-md-2 content-box" id="user_table">
-            {{ render_partial("admin/partials/users/__user_list.html", users=users) }}
+        <div class="my-3 mx-md-2 content-box" id="user_table" hx-get="/admin/users/page/{{users.page}}"
+             hx-trigger="load" hx-include="[name='query'], [name='only_admins'], [name='only_suspended']">
+            <div class="dot dot-div"></div>
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>
 
 
 {% endblock %}
@@ -97,7 +98,19 @@
 
         })
 
+        function genPass(output) {
+                const length = Math.floor(Math.random()*(24))+8;
+                let password = "";
+                let charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
+                password += charset.charAt(Math.floor(Math.random() * 26) + 26); // Uppercase
+                password += charset.charAt(Math.floor(Math.random() * 26)); // Lowercase
+                password += charset.charAt(Math.floor(Math.random() * 10) + 52); // Number
+                for (let i = 3; i < length; i++)
+                    password += charset.charAt(Math.floor(Math.random() * charset.length));
 
+                password = password.split('').sort(() => 0.5 - Math.random()).join('');
+                document.getElementById(output).value = password;
+            }
     </script>
 {% endblock %}

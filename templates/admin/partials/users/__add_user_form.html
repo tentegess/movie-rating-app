@@ -54,7 +54,7 @@
 
                 <div class="forms-inputs mb-2 mx-3">
                     <div class="form-floating">
-                        <input type="password" class="form-control custom_input
+                        <input type="password" id="passInput" class="form-control custom_input
                         {% if errors %}
                             {{ "error" if errors.password else "" }}
                         {% endif %}
@@ -72,6 +72,11 @@
                     </span>
                 </div>
 
+                <div class="forms-inputs mb-2 mx-3">
+                    <label onclick="genPass('passInput')">
+                        <i class='bx bx-refresh table-icon' ></i> Wygeneruj losowe hasło
+                    </label>
+                </div>
 
                 <div class="forms-inputs mb-2 mx-3">
                     <div class="form-check">
@@ -91,10 +96,10 @@
                     <div class="form-check">
                         <label class="form-check-label" for="active_user">
                            <input class="form-check-input check-input" type="checkbox" id="active_user" name="active"
-                           {{"checked" if request.form.activated else ""}}>
+                           {{"checked" if request.form.active else ""}}>
                           <span
                           {% if errors %}
-                            {{ "class=error" if errors.activated else "" }}
+                            {{ "class=error" if errors.active else "" }}
                          {% endif %}>
                               Użytkownik aktywny</span>
                        </label>

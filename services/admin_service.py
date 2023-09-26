@@ -53,10 +53,11 @@ def add_user(user_vm):
             token.expire_at = datetime.now() + timedelta(hours=48)
             db.session.add(token)
         db.session.commit()
-
-        activation_link = f"{request.url_root}confirm_account/{gen}"
-        cf = render_template("email_templates/add_account.html", name=user_vm.name, ct="48", link=activation_link, passwd=user_vm.password)
-        mail_sender(user_vm.email, "Potwierdzenie rejestracji", cf)
+        if not user_vm.active:
+            activation_link = f"{request.url_root}confirm_account/{gen}"
+            cf = render_template("email_templates/add_account.html", name=user_vm.name, ct="48", link=activation_link, passwd=user_vm.password)
+            mail_sender(user_vm.email, "Potwierdzenie rejestracji", cf)
+        flash(LANG.USER_ADDED.format(user_vm.name), "alert alert-success")
     except Exception as e:
         flash(LANG.UNEXPECTED_ERROR, "alert alert-danger")
         print(e)

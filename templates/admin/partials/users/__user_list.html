@@ -1,3 +1,16 @@
+<div class="d-none" hx-get="/admin/users/page/{{users.page}}"
+     hx-trigger="listRefresh from:body"
+     hx-include="[name='query'], [name='only_admins'], [name='only_suspended']"
+     hx-target="#user_table">
+</div>
+
+{% for category, message in get_flashed_messages(with_categories=true) %}
+    <div class="{{ category }} alert-dismissible fade show" role="alert">
+        {{ message | safe }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+
 {% if users %}
     <table class="table table-responsive text-center">
       <thead>

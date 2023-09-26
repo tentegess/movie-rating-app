@@ -56,6 +56,7 @@ def admin_main():
 
 
 @admin.get("/users/page/<int:page>")
+@admin.get("/users/page/")
 @admin.get("/users")
 # @admin_required
 def admin_users(page=1):
@@ -82,7 +83,9 @@ def add_user_post():
     if user_vm.errors:
         return render_template("admin/partials/users/__add_user_form.html", errors=user_vm.to_dict().get("errors"))
     admin_service.add_user(user_vm)
-    return Response(status=204)
+    response = Response(status = 204)
+    response.headers["HX-Trigger"] = "listRefresh"
+    return response
 
 # @admin.get("/debug1")
 # def aaa():

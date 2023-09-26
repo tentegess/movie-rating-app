@@ -30,4 +30,6 @@ PASSWORD_CHANGED = "Twoje hasło zostało zmienione, możesz się zalogować"
 
 LOGIN_REQUIRED = "Zaloguj się, aby uzyskać dostęp do tej treści"
 
+USER_ADDED = "Użytkownik {} został pomyślnie dodany"
+
 
