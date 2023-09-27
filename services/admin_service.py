@@ -64,6 +64,9 @@ def add_user(user_vm):
         db.session.rollback()
 
 
+def get_user(user_id):
+    user = Users.query.filter(Users.id==user_id).first()
+    return user
 
 def db_filler():
     for i in range(100):

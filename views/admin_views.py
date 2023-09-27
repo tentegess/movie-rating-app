@@ -72,12 +72,14 @@ def admin_users(page=1):
 
 @admin.get("/add_user")
 @htmx_request
+# @admin_required
 def add_user():
     return render_template("admin/partials/users/__add_user_form.html")
 
 
 @admin.post("/add_user")
 @htmx_request
+# @admin_required
 def add_user_post():
     user_vm = AddUserViewModel.validate()
     if user_vm.errors:
@@ -86,6 +88,12 @@ def add_user_post():
     response = Response(status = 204)
     response.headers["HX-Trigger"] = "listRefresh"
     return response
+
+
+@admin.get("/get_user/<int:user_id>")
+def get_user(user_id):
+    user = admin_service.get_user(user_id)
+    return render_template("admin/partials/users/__user_profile.html", user=user)
 
 # @admin.get("/debug1")
 # def aaa():
