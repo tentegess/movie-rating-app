@@ -116,8 +116,11 @@
 }
 
 .table-icon{
-    font-size: 1.5rem;
     transform: translateY(3px);
+}
+
+.ti-big{
+    font-size: 1.2rem;
 }
 
 .lower-col{
@@ -149,26 +152,38 @@ label.btn-outline-dark:hover{
     display: flex;
     align-items: center;
     justify-content: start;
-    padding: 0 1rem;
     flex-wrap: wrap;
+    gap: 5px 15px;
 }
 
-.search-bar > div:nth-of-type(1){
-
-    flex-grow: 1;
+.animated-icon{
+    transition: 0.3s;
+    cursor: pointer;
 }
 
-.search-bar > div:nth-of-type(2){
-    padding-left: 10px;
-
-    flex-grow: 1;
+.animated-icon:hover{
+    transform: translateY(-3px);
 }
-
-
 
 .search-bar > span{
 
   flex-grow:1;
+}
+
+.search-box{
+    flex-basis: 25%;
+}
+
+@media screen and (max-width: 1280px) {
+    .search-box{
+        flex-basis: 50%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .search-box{
+        flex-basis: 100%;
+    }
 }
 
 #dialog > .modal-content{

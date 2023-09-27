@@ -11,10 +11,9 @@
 {% block content %}
     <div class="container-fluid px-0 px-md-3 pb-1">
         <div class="mx-md-2 content-box mb-3 pt-1 search-bar">
-            <div class="row align-items-center">
 
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="input-group position-relative col-12 col-md-6 col-lg-4">
+                <div class="search-box">
+                    <div class="input-group ">
                         <div class="form-floating">
                             <input type="text" class="form-control custom_input" id="search-box"
                                placeholder=" " name="query" maxlength="360"
@@ -33,7 +32,7 @@
                     </div>
                 </div>
 
-                <div class="col-8 col-sm-5 col-md-3 col-lg-2 lower-col">
+                <div class="lower-col">
                     <div class="btn-group custom-group" role="group">
                         <input type="checkbox" id="onlyadmins" name="only_admins" class="btn-check"
                         {{"checked" if request.args.only_admins else ""}}
@@ -51,14 +50,13 @@
                     </div>
                 </div>
 
-                <div class="col-2 col-sm-1 col-md-2 col-lg-1 lower-col">
-                    <i class='bx bx-user-plus' style="font-size: 3rem"
+                <div class="lower-col">
+                    <i class='bx bx-user-plus animated-icon' style="font-size: 3rem"
                     hx-get="/admin/add_user" hx-target="#dialog"
                     hx-trigger="click"
                     ></i>
                 </div>
 
-            </div>
         </div>
 
         <div class="my-3 mx-md-2 content-box" id="user_table" hx-get="/admin/users/page/{{users.page}}"
