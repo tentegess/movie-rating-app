@@ -123,6 +123,10 @@ a{
     width: 100%;
 }
 
+input[type="checkbox"]{
+    cursor: pointer;
+}
+
 @keyframes wave {
     0%, 100% { box-shadow: 0 2em 0 -0.8em }
     50% { box-shadow: 0 2em 0 0 }

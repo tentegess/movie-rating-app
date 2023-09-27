@@ -1,5 +1,6 @@
 
-    const inputs = document.querySelectorAll('.custom_input, .form-check-input');
+
+    inputs = document.querySelectorAll('.custom_input, .form-check-input');
 
     inputs.forEach(input => {
       input.addEventListener('click', function handleClick(event) {
@@ -9,6 +10,7 @@
           $(input).closest(".form-check-label").find("span").removeClass("error")
       });
     });
+
 
     function onSubmit(token) {
          document.getElementById("auth-form").submit();
