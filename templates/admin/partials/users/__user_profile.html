@@ -1,7 +1,7 @@
 <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Profil użytkownika</h1>
-        <i class='bx bx-pencil float-end'></i>
+        <i class='bx bx-pencil float-end ti-big animated-icon'></i>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -12,8 +12,24 @@
             </div>
         {% endfor %}
 
-        {{ user.name }}
-        {{ user.email }}
+        <div class="row">
+            <div class="col-6">
+                <!--placeholder-->
+                <i class='bx bxs-user-rectangle' style="font-size: 200px"></i>
+            </div>
+            <div class="col-6">
+                <h6>Informacje o użytkowniku</h6>
+                <p>Login: {{ user.name }}</p>
+                <p>Email: {{ user.email }}</p>
+                <p>Administrator: {{'Tak' if user.is_admin else 'Nie' }}</p>
+                <p>Aktywny: {{'Tak' if user.is_active else 'Nie' }} </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <h6>Dodatkowe informacje</h6>
+            <p>Zawieszony: {{'Tak' if user.suspended else 'Nie' }}</p>
+        </div>
 
       </div>
     </div>

@@ -162,7 +162,11 @@ label.btn-outline-dark:hover{
 }
 
 .animated-icon:hover{
-    transform: translateY(-3px);
+    transform: translateY(-2px);
+}
+
+.table-icon.animated-icon:hover{
+     transform: translateY(0px);
 }
 
 .search-bar > span{
