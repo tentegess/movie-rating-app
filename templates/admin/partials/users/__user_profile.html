@@ -1,9 +1,5 @@
 <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Profil użytkownika</h1>
-        <i class='bx bx-pencil float-end ti-big animated-icon'></i>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
+        {{ render_partial('admin/partials/users/__user_modal_header.html', user=user, hd="Profil użytkownika") }}
       <div class="modal-body">
          {% for category, message in get_flashed_messages(with_categories=true) %}
             <div class="{{ category }} alert-dismissible fade show" role="alert">
@@ -16,6 +12,7 @@
             <div class="col-6">
                 <!--placeholder-->
                 <i class='bx bxs-user-rectangle' style="font-size: 200px"></i>
+
             </div>
             <div class="col-6">
                 <h6>Informacje o użytkowniku</h6>
@@ -28,6 +25,7 @@
 
         <div class="row">
             <h6>Dodatkowe informacje</h6>
+            <p>Dołączył: {{ user.created_at }}</p>
             <p>Zawieszony: {{'Tak' if user.suspended else 'Nie' }}</p>
         </div>
 

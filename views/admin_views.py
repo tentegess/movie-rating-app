@@ -95,6 +95,12 @@ def get_user(user_id):
     user = admin_service.get_user(user_id)
     return render_template("admin/partials/users/__user_profile.html", user=user)
 
-# @admin.get("/debug1")
-# def aaa():
-#     admin_service.db_filler()
+@admin.get("/suspend_user/<int:user_id>")
+def suspend_user(user_id):
+    user = admin_service.get_user(user_id)
+    return render_template("admin/partials/users/__suspend_user.html", user=user)
+
+@admin.get("/debug1")
+def aaa():
+    admin_service.db_filler()
+    return redirect("admin/users")

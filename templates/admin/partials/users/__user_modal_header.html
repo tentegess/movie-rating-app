@@ -1,0 +1,12 @@
+<div class="modal-header">
+        <h1 class="modal-title fs-5 pe-2" id="exampleModalLabel">{{hd}}</h1>
+        <i class='bx bx-user ti-big animated-icon' hx-get="/admin/get_user/{{ user.id }}" hx-target="#dialog" hx-trigger="click"></i>
+        <i class='bx bx-pencil float-end ti-big animated-icon'></i>
+        {% if user.suspended %}
+            <i class='bx bx-lock-open-alt ti-big animated-icon'></i>
+        {% else %}
+            <i class='bx bx-lock-alt ti-big animated-icon'
+            hx-get="/admin/suspend_user/{{ user.id }}" hx-target="#dialog" hx-trigger="click"></i>
+        {% endif %}
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>

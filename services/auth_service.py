@@ -28,12 +28,12 @@ def add_user(user_vm):
         token.user = user
         token.expire_at = datetime.now() + timedelta(hours=48)
         db.session.add(token)
-        db.session.commit()
 
         activation_link = f"{request.url_root}confirm_account/{gen}"
 
         cf = render_template("email_templates/confirm_account.html" ,name=user_vm.name, ct="48", link=activation_link)
         mail_sender(user_vm.email, "Potwierdzenie rejestracji", cf)
+        db.session.commit()
         flash(LANG.CONFIRM_LINK_SEND, "alert alert-success")
         return Users()
     except Exception as e:

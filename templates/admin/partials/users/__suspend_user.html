@@ -1,0 +1,33 @@
+<div class="modal-content">
+        {{ render_partial('admin/partials/users/__user_modal_header.html', user=user, hd="Zablokuj użytkownika") }}
+      <div class="modal-body">
+         {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="{{ category }} alert-dismissible fade show" role="alert">
+                {{ message | safe }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+
+        <div class="row mb-3">
+           <div class="col-6">
+                <input id="ban_time" class="form-control custom_input" type="date">
+           </div>
+             <div class="col-6">
+                <input type="checkbox" id="permanent" class="btn-check" onclick="disable_date()">
+                    <label class="btn btn-outline-dark" for="permanent">Permanentie</label>
+           </div>
+        </div>
+
+        <div class="row px-2">
+            <label for="reason">Powód blokady</label>
+            <textarea id="reason" class="form-control custom_input"></textarea>
+        </div>
+      </div>
+    </div>
+
+<script>
+    function disable_date(){
+        ban_time = document.getElementById("ban_time")
+        ban_time.disabled = ! ban_time.disabled
+    }
+</script>
