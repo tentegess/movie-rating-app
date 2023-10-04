@@ -6,6 +6,7 @@ from flask_login import current_user
 
 from view_models.admin.search_user_view_model import SearchUserViewModel
 from view_models.admin.add_user_view_model import AddUserViewModel
+from view_models.admin.suspend_user_view_model import SuspendUserViewModel
 
 admin = Blueprint("admin", __name__, static_folder="static", template_folder="templates")
 
@@ -99,6 +100,17 @@ def get_user(user_id):
 def suspend_user(user_id):
     user = admin_service.get_user(user_id)
     return render_template("admin/partials/users/__suspend_user.html", user=user)
+
+@admin.post("/suspend_user/<int:user_id>")
+def suspend_user_post(user_id):
+    user_vm = SuspendUserViewModel.validate()
+    if user_vm.errors:
+        user = admin_service.get_user(user_id)
+        return render_template("admin/partials/users/__suspend_user.html", user=user, errors=user_vm.to_dict().get("errors"))
+    admin_service.suspend_user(user_id, user_vm)
+    response = Response(status=204)
+    response.headers["HX-Trigger"] = "listRefresh"
+    return response
 
 @admin.get("/debug1")
 def aaa():

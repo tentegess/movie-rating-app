@@ -65,8 +65,26 @@ def add_user(user_vm):
 
 
 def get_user(user_id):
-    user = Users.query.filter(Users.id==user_id).first()
+    user = Users.query.filter(Users.id == user_id).first()
     return user
+
+def suspend_user(user_id, user_vm):
+    user = Users.query.filter(Users.id == user_id).first()
+    if user:
+        try:
+            user.suspended = True
+            if user_vm.permanent:
+                user.suspended_to = None
+            else:
+                user.suspended_to = user_vm.ban_time
+            user.suspension_reason = user_vm.reason
+            db.session.commit()
+            flash(LANG.USER_SUSPENDED.format(user.name), "alert alert-success")
+        except Exception as e:
+            print(e)
+            flash(LANG.UNEXPECTED_ERROR, "alert alert-danger")
+            db.session.rollback()
+
 
 def db_filler():
     for i in range(100):

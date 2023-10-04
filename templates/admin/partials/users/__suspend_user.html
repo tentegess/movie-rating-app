@@ -7,25 +7,45 @@
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% endfor %}
+        <form hx-post="/admin/suspend_user/{{ user.id }}" autocomplete="off">
+            <div class="row mb-3 mx-3">
+               <div class="col-6">
+                    <input id="ban_time" name="ban_time" class="form-control custom_input {% if errors %}
+                                {{ "error" if errors.ban else "" }}
+                            {% endif %}" type="date">
+               </div>
+                 <div class="col-6">
+                    <input type="checkbox" id="permanent" name="permanent" class="btn-check" onclick="disable_date()">
+                        <label class="btn btn-outline-dark" for="permanent">Permanentie</label>
+               </div>
+            <span class="error-span error">
+                        {% if errors %}
+                            {{ errors.ban if errors.ban else "" }}
+                        {% endif %}
+                    </span>
+            </div>
 
-        <div class="row mb-3">
-           <div class="col-6">
-                <input id="ban_time" class="form-control custom_input" type="date">
-           </div>
-             <div class="col-6">
-                <input type="checkbox" id="permanent" class="btn-check" onclick="disable_date()">
-                    <label class="btn btn-outline-dark" for="permanent">Permanentie</label>
-           </div>
-        </div>
+            <div class="row px-2 mb-3 mx-3">
+                <label for="reason">Powód blokady</label>
+                <textarea id="reason" name="reason" class="form-control custom_input"></textarea>
+            </div>
 
-        <div class="row px-2">
-            <label for="reason">Powód blokady</label>
-            <textarea id="reason" class="form-control custom_input"></textarea>
-        </div>
+          <div class="forms-inputs mb-2 mx-3">
+                <input type="submit" class="btn btn-dark sub-button py-3" value="Zawieś użytkownika">
+            </div>
+
+            <div class="forms-inputs mb-2 mx-3">
+                <input type="button" class="btn btn-secondary sub-button py-3"
+                   hx-get="/admin/get_user/{{ user.id }}" hx-target="#dialog" hx-trigger="click" value="Anuluj">
+            </div>
+        </form>
       </div>
     </div>
 
+<script src="{{url_for('static',filename='js/auth.js')}}"></script>
 <script>
+
+    document.getElementById("ban_time").min = new Date().toISOString().split("T")[0];
     function disable_date(){
         ban_time = document.getElementById("ban_time")
         ban_time.disabled = ! ban_time.disabled

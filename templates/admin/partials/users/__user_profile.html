@@ -23,10 +23,21 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mx-3">
             <h6>Dodatkowe informacje</h6>
             <p>Dołączył: {{ user.created_at }}</p>
             <p>Zawieszony: {{'Tak' if user.suspended else 'Nie' }}</p>
+            {% if user.suspended %}
+                {% if user.suspended_to %}
+                    <p>Zawieszony do: {{ user.suspended_to }}</p>
+                {% else %}
+                    <p>Zawieszony permanentie</p>
+                {% endif %}
+
+                {% if user.suspension_reason %}
+                   <p> Powód zawieszenia: {{ user.suspension_reason }}</p>
+                {% endif %}
+            {% endif %}
         </div>
 
       </div>

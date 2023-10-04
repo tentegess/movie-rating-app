@@ -107,7 +107,19 @@
             htmx.on('htmx:beforeSwap', (e) => {
                 if (e.detail.target.id === 'dialog' && !e.detail.xhr.response)
                     modal.hide()
+                if (e.detail.xhr.status === 500){
+                    modal.hide()
+                    let content = document.getElementById("user_table")
+                    content.insertAdjacentHTML('afterbegin', `
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                       Wystąpił błąd po stronie serwera
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    `);
+                }
             })
+
+
 
             htmx.on('hidden.bs.modal', (e) => {
                 document.getElementById('dialog').innerHTML = ''
