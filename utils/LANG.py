@@ -35,5 +35,7 @@ USER_ADDED = "Użytkownik {} został pomyślnie dodany"
 USER_SUSPENDED = "Użytkownik {} został zawieszony"
 BAN_TIME_REQUIRED = "Należy wybrać czas zawieszenia lub blokadę permanentą"
 
+ACCOUNT_SUSPENDED = "twoje konto zostało zawieszone {} {}"
+
 
 

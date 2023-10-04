@@ -53,7 +53,9 @@ def login(user_vm):
     elif not user.is_active:
         errors["validation"] = LANG.NOT_ACTIVATED_ACCOUNT
     elif user.suspended:
-        errors["validation"] = "konto zawieszone"
+        ban_time ="do "+str(user.suspended_to) if user.suspended_to else "permanentie"
+        reason = "z powodu: "+user.suspension_reason if user.suspension_reason else ""
+        errors["validation"] = LANG.ACCOUNT_SUSPENDED.format(ban_time, reason)
 
     if errors:
         return render_template("auth/login.html", errors=errors)
