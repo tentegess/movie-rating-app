@@ -1,5 +1,5 @@
 <div class="modal-content">
-        {{ render_partial('admin/partials/users/__user_modal_header.html', user=user, hd="Zablokuj użytkownika") }}
+        {{ render_partial('admin/partials/users/__user_modal_header.html', user=user, hd="Zawieś użytkownika") }}
       <div class="modal-body">
          {% for category, message in get_flashed_messages(with_categories=true) %}
             <div class="{{ category }} alert-dismissible fade show" role="alert">

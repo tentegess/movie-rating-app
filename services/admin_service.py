@@ -86,6 +86,16 @@ def suspend_user(user_id, user_vm):
             db.session.rollback()
 
 
+def unban_user(user_id):
+    user = Users.query.filter(Users.id == user_id).first()
+    if user:
+        user.suspended = False
+        user.suspended_to = None
+        user.suspension_reason = None
+        db.session.commit()
+        flash(LANG.USER_UNSUSPENDED.format(user.name), "alert alert-success")
+
+
 def db_filler():
     for i in range(100):
         user=Users()

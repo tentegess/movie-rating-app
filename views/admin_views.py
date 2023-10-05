@@ -112,6 +112,21 @@ def suspend_user_post(user_id):
     response.headers["HX-Trigger"] = "listRefresh"
     return response
 
+
+@admin.get("/unban_user/<int:user_id>")
+def unban_user(user_id):
+    user = admin_service.get_user(user_id)
+    return render_template("admin/partials/users/__unban_user.html", user=user)
+
+
+@admin.post("/unban_user/<int:user_id>")
+def unban_user_post(user_id):
+    admin_service.unban_user(user_id)
+    response = Response(status=204)
+    response.headers["HX-Trigger"] = "listRefresh"
+    return response
+
+
 @admin.get("/debug1")
 def aaa():
     admin_service.db_filler()
