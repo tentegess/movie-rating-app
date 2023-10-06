@@ -96,6 +96,49 @@ def unban_user(user_id):
         flash(LANG.USER_UNSUSPENDED.format(user.name), "alert alert-success")
 
 
+def edit_user(user_id, user_vm):
+    errors = {}
+    user = Users.query.filter(Users.id == user_id).first()
+
+    if user_name_exist(user_id, user_vm):
+        errors["name"] = LANG.LOGIN_EXIST
+
+    if user_email_exist(user_id, user_vm):
+        errors["email"] = LANG.EMAIL_EXIST
+
+    if errors:
+        return errors
+
+    try:
+        user.name = user_vm.name
+        user.email = user_vm.email
+        if user_vm.password:
+            user.password = generate_password_hash(user_vm.password)
+        user.is_active = user_vm.active
+        user.is_admin = user_vm.admin
+        flash(LANG.USER_EDITED.format(user_vm.name), "alert alert-success")
+        db.session.commit()
+    except Exception as e:
+        pass
+
+
+def user_name_exist(user_id, user_vm):
+    user = Users.query.filter(Users.name == user_vm.name).first()
+    if user:
+        if user.id == user_id:
+            return False
+        return True
+    return False
+
+
+def user_email_exist(user_id, user_vm):
+    user = Users.query.filter(Users.email == user_vm.email).first()
+    if user:
+        if user.id == user_id:
+            return False
+        return True
+    return False
+
 def db_filler():
     for i in range(100):
         user=Users()

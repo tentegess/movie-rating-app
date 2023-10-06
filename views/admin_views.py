@@ -7,6 +7,7 @@ from flask_login import current_user
 from view_models.admin.search_user_view_model import SearchUserViewModel
 from view_models.admin.add_user_view_model import AddUserViewModel
 from view_models.admin.suspend_user_view_model import SuspendUserViewModel
+from view_models.admin.edit_user_viev_model import EditUserViewModel
 
 admin = Blueprint("admin", __name__, static_folder="static", template_folder="templates")
 
@@ -122,6 +123,32 @@ def unban_user(user_id):
 @admin.post("/unban_user/<int:user_id>")
 def unban_user_post(user_id):
     admin_service.unban_user(user_id)
+    response = Response(status=204)
+    response.headers["HX-Trigger"] = "listRefresh"
+    return response
+
+
+@admin.get("/edit_user/<int:user_id>")
+def edit_user(user_id):
+    user = admin_service.get_user(user_id)
+    return render_template("admin/partials/users/__edit_user.html", user=user)
+
+
+@admin.post("/edit_user/<int:user_id>")
+def edit_user_post(user_id):
+    user_vm = EditUserViewModel.validate()
+    if user_vm.errors:
+        user = admin_service.get_user(user_id)
+        return render_template("admin/partials/users/__edit_user.html", user=user,
+                               errors=user_vm.to_dict().get("errors"))
+
+    errors = admin_service.edit_user(user_id, user_vm)
+
+    if errors:
+        user = admin_service.get_user(user_id)
+        return render_template("admin/partials/users/__edit_user.html", user=user,
+                               errors=errors)
+
     response = Response(status=204)
     response.headers["HX-Trigger"] = "listRefresh"
     return response

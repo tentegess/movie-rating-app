@@ -1,0 +1,124 @@
+<div class="modal-content">
+        {{ render_partial('admin/partials/users/__user_modal_header.html', user=user, hd="Edytuj użytkownika") }}
+      <div class="modal-body">
+         {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="{{ category }} alert-dismissible fade show" role="alert">
+                {{ message | safe }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+        <form hx-post="/admin/edit_user/{{ user.id }}" autocomplete="off">
+          <div class="forms-inputs mb-2 mx-3">
+                    <div class="form-floating ">
+                            <input type="text" class="form-control custom_input
+                            {% if errors %}
+                                {{ "error" if errors.email else "" }}
+                            {% endif %}
+                            " placeholder=" " name="aemail" value="{{ user.email | trim}}"  maxlength="64">
+                            <label class="ps-3 formlab
+                            {% if errors %}
+                                {{ "error" if errors.email else "" }}
+                            {% endif %}
+                            ">Email</label>
+                    </div>
+                    <span class="error-span error">
+                        {% if errors %}
+                            {{ errors.email if errors.email else "" }}
+                        {% endif %}
+                    </span>
+                </div>
+
+                <div class="forms-inputs mb-2 mx-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control custom_input
+                        {% if errors %}
+                            {{ "error" if errors.name else "" }}
+                        {% endif %}
+                        " placeholder=" " name="aname" maxlength="24" value="{{ user.name | trim}}">
+                        <label class="ps-3 formlab
+                        {% if errors %}
+                            {{ "error" if errors.name else "" }}
+                        {% endif %}
+                        ">Login</label>
+                    </div>
+                    <span class="error-span error">
+                        {% if errors %}
+                            {{ errors.name if errors.name else "" }}
+                        {% endif %}
+                    </span>
+                </div>
+
+
+                <div class="forms-inputs mb-2 mx-3">
+                    <div class="form-floating">
+                        <input type="password" id="passInput" class="form-control custom_input
+                        {% if errors %}
+                            {{ "error" if errors.password else "" }}
+                        {% endif %}
+                        " placeholder=" " name="password"  maxlength="32">
+                        <label class="ps-3 formlab
+                        {% if errors %}
+                            {{ "error" if errors.password else "" }}
+                        {% endif %}
+                        ">Hasło</label>
+                    </div>
+                    <span class="error-span error">
+                        {% if errors %}
+                            {{ errors.password if errors.password else "" }}
+                        {% endif %}
+                    </span>
+                </div>
+
+                <div class="forms-inputs mb-2 mx-3">
+                    <p class="text-muted">W przypadku pozostawienia pustego pola hasło pozostanie niezmienione</p>
+                </div>
+
+                <div class="forms-inputs mb-2 mx-3">
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                           <input class="form-check-input check-input" type="checkbox" id="flexCheckDefault" name="admin"
+                           {{"checked" if user.is_admin else ""}}>
+                          <span
+                          {% if errors %}
+                            {{ "class=error" if errors.admin else "" }}
+                         {% endif %}>
+                              Administrator</span>
+                       </label>
+                    </div>
+                </div>
+
+                <div class="forms-inputs mb-3 mx-3">
+                    <div class="form-check">
+                        <label class="form-check-label" for="active_user">
+                           <input class="form-check-input check-input" type="checkbox" id="active_user" name="active"
+                           {{"checked" if user.is_active else ""}}>
+                          <span
+                          {% if errors %}
+                            {{ "class=error" if errors.active else "" }}
+                         {% endif %}>
+                              Użytkownik aktywny</span>
+                       </label>
+                    </div>
+                </div>
+
+                <div class="forms-inputs mb-2 mx-3">
+                    <input type="submit" class="btn btn-dark sub-button py-3" value="Edytuj użytkownika">
+                </div>
+
+                <div class="forms-inputs mb-2 mx-3">
+                    <input type="button" class="btn btn-secondary sub-button py-3"
+                       hx-get="/admin/get_user/{{ user.id }}" hx-target="#dialog" hx-trigger="click" value="Anuluj">
+                </div>
+        </form>
+      </div>
+    </div>
+
+<script src="{{url_for('static',filename='js/auth.js')}}"></script>
+<script>
+
+    document.getElementById("ban_time").min = new Date().toISOString().split("T")[0];
+    function disable_date(){
+        ban_time = document.getElementById("ban_time")
+        ban_time.disabled = ! ban_time.disabled
+    }
+</script>

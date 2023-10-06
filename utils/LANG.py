@@ -32,6 +32,8 @@ LOGIN_REQUIRED = "Zaloguj się, aby uzyskać dostęp do tej treści"
 
 USER_ADDED = "Użytkownik {} został pomyślnie dodany"
 
+USER_EDITED = "Użytkownik {} został zaktualizowany"
+
 USER_SUSPENDED = "Użytkownik {} został zawieszony"
 USER_UNSUSPENDED = "Użytkownik {} został odblokowany"
 BAN_TIME_REQUIRED = "Należy wybrać czas zawieszenia lub blokadę permanentą"

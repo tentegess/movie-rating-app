@@ -2,7 +2,7 @@
         <h1 class="modal-title fs-5 pe-2" id="exampleModalLabel">{{hd}}</h1>
         <span style="float: right">
             <i class='bx bx-user ti-big animated-icon' hx-get="/admin/get_user/{{ user.id }}" hx-target="#dialog" hx-trigger="click"></i>
-            <i class='bx bx-pencil ti-big animated-icon'></i>
+            <i class='bx bx-pencil ti-big animated-icon'  hx-get="/admin/edit_user/{{ user.id }}" hx-target="#dialog" hx-trigger="click"></i>
             {% if user.suspended %}
                 <i class='bx bx-lock-open-alt ti-big animated-icon'
                 hx-get="/admin/unban_user/{{ user.id }}" hx-target="#dialog" hx-trigger="click"></i>
