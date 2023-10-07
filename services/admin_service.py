@@ -122,6 +122,13 @@ def edit_user(user_id, user_vm):
         pass
 
 
+def delete_user(user_id):
+    user = Users.query.filter(Users.id == user_id).first()
+    if user:
+        db.session.delete(user)
+        flash(LANG.USER_DELETED.format(user.name), "alert alert-success")
+        db.session.commit()
+
 def user_name_exist(user_id, user_vm):
     user = Users.query.filter(Users.name == user_vm.name).first()
     if user:
@@ -138,6 +145,7 @@ def user_email_exist(user_id, user_vm):
             return False
         return True
     return False
+
 
 def db_filler():
     for i in range(100):

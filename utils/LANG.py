@@ -34,6 +34,8 @@ USER_ADDED = "Użytkownik {} został pomyślnie dodany"
 
 USER_EDITED = "Użytkownik {} został zaktualizowany"
 
+USER_DELETED = "Użytkownik {} został usunięty"
+
 USER_SUSPENDED = "Użytkownik {} został zawieszony"
 USER_UNSUSPENDED = "Użytkownik {} został odblokowany"
 BAN_TIME_REQUIRED = "Należy wybrać czas zawieszenia lub blokadę permanentą"

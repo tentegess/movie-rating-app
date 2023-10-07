@@ -10,6 +10,8 @@
                 <i class='bx bx-lock-alt ti-big animated-icon'
                 hx-get="/admin/suspend_user/{{ user.id }}" hx-target="#dialog" hx-trigger="click"></i>
             {% endif %}
+            <i class='bx bx-trash ti-big animated-icon text-danger'
+             hx-get="/admin/delete_user/{{ user.id }}" hx-target="#dialog" hx-trigger="click"></i>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="margin-left: 10px"></button>
         </span>
       </div>

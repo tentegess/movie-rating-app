@@ -153,6 +153,19 @@ def edit_user_post(user_id):
     response.headers["HX-Trigger"] = "listRefresh"
     return response
 
+@admin.get("/delete_user/<int:user_id>")
+def delete_user(user_id):
+    user = admin_service.get_user(user_id)
+    return render_template("admin/partials/users/__delete_user.html", user=user)
+
+
+@admin.post("/delete_user/<int:user_id>")
+def delete_user_post(user_id):
+    admin_service.delete_user(user_id)
+    response = Response(status=204)
+    response.headers["HX-Trigger"] = "listRefresh"
+    return response
+
 
 @admin.get("/debug1")
 def aaa():
