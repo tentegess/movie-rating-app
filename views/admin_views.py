@@ -171,3 +171,15 @@ def delete_user_post(user_id):
 def aaa():
     admin_service.db_filler()
     return redirect("admin/users")
+
+
+@admin.get("/movies")
+# @admin_required
+def admin_movies(page=1):
+    query_vm = SearchUserViewModel()
+    users = admin_service.get_users(query_vm, page)
+
+    if query_vm.htmx_req:
+        return render_template("admin/partials/users/__user_list.html", users=users)
+
+    return render_template("admin/adm_movies.html", users=users)
