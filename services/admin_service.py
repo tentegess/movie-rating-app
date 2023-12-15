@@ -1,3 +1,4 @@
+import os
 from datetime import datetime, timedelta
 
 from werkzeug.security import generate_password_hash
@@ -5,6 +6,7 @@ from werkzeug.security import generate_password_hash
 from utils.db_config import db
 from models.Users import Users
 from models.user_tokens import Tokens
+from models.Movies import Movies
 from utils.mail_service import mail_sender
 from utils.other_utilities import generate_token
 
@@ -21,6 +23,10 @@ def get_site_stats():
     return stats
 
 
+##################################################
+# users
+##################################################
+
 def get_users(query_model, page=1):
 
     query = f'%{query_model.query}%'
@@ -33,6 +39,7 @@ def get_users(query_model, page=1):
     result = Users.query.with_entities(Users.id, Users.name, Users.email, Users.suspended, Users.is_admin) \
         .filter(Users.name.ilike(query) | Users.email.ilike(query)).filter_by(**filters).paginate(per_page=20, page=page, error_out=False)
     return result if result.items else None
+
 
 def add_user(user_vm):
     user = Users()
@@ -155,3 +162,28 @@ def db_filler():
         user.password = generate_password_hash(user.name)
         db.session.add(user)
     db.session.commit()
+
+
+#############################################################
+# movies
+#############################################################
+
+def add_movie(movie_vm):
+    movie = Movies()
+    movie.title = movie_vm.title
+    movie.desc = movie_vm.desc
+    movie.release = movie_vm.release
+
+
+    try:
+        db.session.add(movie)
+        db.session.commit()
+
+        if movie_vm.poster:
+            movie_vm.poster.save(os.path.join("static/media/posters", f"{movie.id}.png"))
+
+        flash(LANG.MOVIE_ADDED.format(movie_vm.title), "alert alert-success")
+    except Exception as e:
+        flash(LANG.UNEXPECTED_ERROR, "alert alert-danger")
+        print(e)
+        db.session.rollback()

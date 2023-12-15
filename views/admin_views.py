@@ -9,6 +9,8 @@ from view_models.admin.add_user_view_model import AddUserViewModel
 from view_models.admin.suspend_user_view_model import SuspendUserViewModel
 from view_models.admin.edit_user_viev_model import EditUserViewModel
 
+from view_models.admin.add_movie_view_model import AddMovieViewModel
+
 admin = Blueprint("admin", __name__, static_folder="static", template_folder="templates")
 
 
@@ -183,3 +185,23 @@ def admin_movies(page=1):
         return render_template("admin/partials/users/__user_list.html", users=users)
 
     return render_template("admin/adm_movies.html", users=users)
+
+
+@admin.get("/add_movie")
+@htmx_request
+# @admin_required
+def add_movie():
+    return render_template("admin/partials/movies/__add_movie_form.html")
+
+
+@admin.post("/add_movie")
+@htmx_request
+# @admin_required
+def add_movie_post():
+    movie_vm = AddMovieViewModel.validate()
+    if movie_vm.errors:
+        return render_template("admin/partials/movies/__add_movie_form.html", errors=movie_vm.to_dict().get("errors"))
+    admin_service.add_movie(movie_vm)
+    response = Response(status = 204)
+    response.headers["HX-Trigger"] = "listRefresh"
+    return response

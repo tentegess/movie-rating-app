@@ -243,3 +243,7 @@ label.btn-outline-dark:hover{
     }
 }
 
+.custom-file::-webkit-file-upload-button {
+  display: none;
+}
+

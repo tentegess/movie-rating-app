@@ -73,10 +73,16 @@ def create_dict(def_val=None, **kwargs):
     if isinstance(req.args, MultiDict):
         form = req.form.to_dict()
 
+    files = req.files
+    if isinstance(req.files, MultiDict):
+        files = req.files.to_dict()
+
+
     data = {
         **args,
         **req.headers,
         **form,
+        **files,
         **kwargs
     }
 

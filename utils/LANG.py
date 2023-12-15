@@ -42,6 +42,12 @@ BAN_TIME_REQUIRED = "Należy wybrać czas zawieszenia lub blokadę permanentą"
 
 ACCOUNT_SUSPENDED = "twoje konto zostało zawieszone {} {}"
 
+TITLE_REQUIRED = "Należy podać tytuł filmu"
+
+WRONG_PHOTO_FORMAT = "Obraz należy przesłać w formacie jpg lub png"
+
+MOVIE_ADDED = "Film {} został dodany"
+
 
 
 
