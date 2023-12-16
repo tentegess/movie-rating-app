@@ -95,6 +95,7 @@ def add_user_post():
 
 
 @admin.get("/get_user/<int:user_id>")
+@htmx_request
 def get_user(user_id):
     user = admin_service.get_user(user_id)
     return render_template("admin/partials/users/__user_profile.html", user=user)
@@ -175,16 +176,18 @@ def aaa():
     return redirect("admin/users")
 
 
+@admin.get("/movies/page/<int:page>")
+@admin.get("/movies/page/")
 @admin.get("/movies")
 # @admin_required
 def admin_movies(page=1):
     query_vm = SearchUserViewModel()
-    users = admin_service.get_users(query_vm, page)
+    movies = admin_service.get_movies(query_vm, page)
 
     if query_vm.htmx_req:
-        return render_template("admin/partials/users/__user_list.html", users=users)
+        return render_template("admin/partials/movies/__movie_list.html", movies=movies)
 
-    return render_template("admin/adm_movies.html", users=users)
+    return render_template("admin/adm_movies.html", movies=movies)
 
 
 @admin.get("/add_movie")
@@ -205,3 +208,9 @@ def add_movie_post():
     response = Response(status = 204)
     response.headers["HX-Trigger"] = "listRefresh"
     return response
+
+@admin.get("/get_movie/<int:movie_id>")
+@htmx_request
+def get_movie(movie_id):
+    movie = admin_service.get_movie(movie_id)
+    return render_template("admin/partials/movies/__movie_profile.html", movie=movie)

@@ -1,0 +1,34 @@
+<div class="modal-content">
+        {{ render_partial('admin/partials/movies/__movie_modal_header.html', hd="Film") }}
+      <div class="modal-body">
+         {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="{{ category }} alert-dismissible fade show" role="alert">
+                {{ message | safe }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+
+        <div class="row">
+            <div class="col-6">
+                <!--placeholder-->
+                <i class='bx bxs-user-rectangle' style="font-size: 200px"></i>
+
+            </div>
+            <div class="col-6">
+                <h6>Informacje o użytkowniku</h6>
+                <p>Tytuł: {{ movie.title }}</p>
+                <p>Premiera: {{ movie.release if  movie.release else 'TBA'}}</p>
+
+            </div>
+        </div>
+
+        <div class="row mx-3">
+
+            {% if movie.desc %}
+                <h6>Opis</h6>
+                <p>{{ movie.desc }}</p>
+            {% endif %}
+        </div>
+
+      </div>
+    </div>

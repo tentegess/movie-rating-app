@@ -75,6 +75,7 @@ def get_user(user_id):
     user = Users.query.filter(Users.id == user_id).first()
     return user
 
+
 def suspend_user(user_id, user_vm):
     user = Users.query.filter(Users.id == user_id).first()
     if user:
@@ -187,3 +188,17 @@ def add_movie(movie_vm):
         flash(LANG.UNEXPECTED_ERROR, "alert alert-danger")
         print(e)
         db.session.rollback()
+
+
+def get_movies(query_model, page=1):
+
+    query = f'%{query_model.query}%'
+
+    result = Movies.query.with_entities(Movies.id, Movies.title, Movies.release) \
+        .filter(Movies.title.ilike(query)).paginate(per_page=20, page=page, error_out=False)
+    return result if result.items else None
+
+
+def get_movie(movie_id):
+    movie = Movies.query.filter(Movies.id == movie_id).first()
+    return movie

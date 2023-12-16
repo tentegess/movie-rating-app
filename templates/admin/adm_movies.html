@@ -18,11 +18,15 @@
                             <input type="text" class="form-control custom_input" id="search-box"
                                placeholder=" " name="query" maxlength="360"
                                value = "{{ request.args.query }}"
-                                hx-get="/admin/users" hx-target="#user_table"
-                                hx-trigger="keyup changed delay:250ms" hx-push-url="true"
-                                hx-include="[name='only_admins'], [name='only_suspended']">
+                                hx-get="/admin/movies" hx-target="#user_table"
+                                hx-trigger="keyup changed delay:250ms" hx-push-url="true">
                             <label class="ms-3 formlab">Znajdź Film</label>
                         </div>
+                        <i class="bx bx-x position-absolute d-none search-icon"
+                           hx-get="/admin/movies" hx-target="#user_table"
+                           hx-trigger="click" hx-push-url="true"
+                           id="search-icon">
+                        </i>
                     </div>
                 </div>
 
@@ -32,6 +36,10 @@
                     hx-trigger="click"
                     ></i>
                 </div>
+        </div>
+        <div class="my-3 mx-md-2 content-box" id="user_table" hx-get="/admin/movies/page/{{movies.page}}" hx-include="[name='query']"
+             hx-trigger="load">
+            <div class="dot dot-div"></div>
         </div>
     </div>
 
