@@ -1,3 +1,5 @@
+import os
+
 import flask
 from flask import Blueprint, render_template, redirect, request, Response
 from services import admin_service
@@ -213,4 +215,10 @@ def add_movie_post():
 @htmx_request
 def get_movie(movie_id):
     movie = admin_service.get_movie(movie_id)
-    return render_template("admin/partials/movies/__movie_profile.html", movie=movie)
+    image_path = os.path.join('static', 'media', 'posters', f'{movie_id}.png')
+    if not os.path.isfile(image_path):
+        image_path = "/static/media/placeholder.png"
+    else:
+        image_path = "/"+image_path
+
+    return render_template("admin/partials/movies/__movie_profile.html", movie=movie, image=image_path)
