@@ -48,6 +48,8 @@ WRONG_PHOTO_FORMAT = "Obraz należy przesłać w formacie jpg lub png"
 
 MOVIE_ADDED = "Film {} został dodany"
 
+MOVIE_DELETED = "Film {} został usunięty"
+
 MOVIE_EDITED = "Film {} został zaktualizowany"
 
 

@@ -256,3 +256,25 @@ def edit_movie_post(movie_id):
     response = Response(status=204)
     response.headers["HX-Trigger"] = "listRefresh"
     return response
+
+
+@admin.get("/delete_movie/<int:movie_id>")
+def delete_movie(movie_id):
+    movie = admin_service.get_movie(movie_id)
+
+    image_path = os.path.join('static', 'media', 'posters', f'{movie_id}.png')
+    if not os.path.isfile(image_path):
+        image_path = "/static/media/placeholder.png"
+    else:
+        image_path = "/" + image_path
+
+    return render_template("admin/partials/movies/__delete_movie.html", movie=movie, image=image_path)
+
+
+
+@admin.post("/delete_movie/<int:movie_id>")
+def delete_movie_post(movie_id):
+    admin_service.delete_movie(movie_id)
+    response = Response(status=204)
+    response.headers["HX-Trigger"] = "listRefresh"
+    return response

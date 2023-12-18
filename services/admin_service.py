@@ -225,3 +225,14 @@ def edit_movie(movie_id, movie_vm):
         flash(LANG.UNEXPECTED_ERROR, "alert alert-danger")
         print(e)
         db.session.rollback()
+
+
+def delete_movie(movie_id):
+    movie = Movies.query.filter(Movies.id == movie_id).first()
+    if movie:
+        db.session.delete(movie)
+        flash(LANG.MOVIE_DELETED.format(movie.title), "alert alert-success")
+        poster_path = os.path.join("static/media/posters", f"{movie_id}.png")
+        if os.path.isfile(poster_path):
+            os.remove(poster_path)
+        db.session.commit()

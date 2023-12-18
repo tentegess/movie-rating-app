@@ -63,13 +63,14 @@
             </div>
 
 
-                <div class="forms-inputs mb-2 mx-3">
+                <div class="forms-inputs mb-2 mx-3 mt-3">
                     <input type="submit" class="btn btn-dark sub-button py-3" value="Edytuj film">
                 </div>
 
                 <div class="forms-inputs mb-2 mx-3">
-                    <input type="button" class="btn btn-secondary sub-button py-3" data-bs-dismiss="modal" value="Anuluj">
-                </div>
+                <input type="button" class="btn btn-secondary sub-button py-3"
+                   hx-get="/admin/get_movie/{{ movie.id }}" hx-target="#dialog" hx-trigger="click" value="Anuluj">
+            </div>
         </form>
       </div>
     </div>
