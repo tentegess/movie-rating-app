@@ -222,3 +222,37 @@ def get_movie(movie_id):
         image_path = "/"+image_path
 
     return render_template("admin/partials/movies/__movie_profile.html", movie=movie, image=image_path)
+
+
+@admin.get("/edit_movie/<int:movie_id>")
+@htmx_request
+def edit_movie(movie_id):
+    movie = admin_service.get_movie(movie_id)
+    image_path = os.path.join('static', 'media', 'posters', f'{movie_id}.png')
+    if not os.path.isfile(image_path):
+        image_path = "/static/media/placeholder.png"
+    else:
+        image_path = "/"+image_path
+
+    return render_template("admin/partials/movies/__edit_movie.html", movie=movie, image=image_path)
+
+
+@admin.post("/edit_movie/<int:movie_id>")
+def edit_movie_post(movie_id):
+    movie_vm = AddMovieViewModel.validate()
+    if movie_vm.errors:
+        movie = admin_service.get_movie(movie_id)
+        image_path = os.path.join('static', 'media', 'posters', f'{movie_id}.png')
+        if not os.path.isfile(image_path):
+            image_path = "/static/media/placeholder.png"
+        else:
+            image_path = "/" + image_path
+        return render_template("admin/partials/movies/__edit_movie.html", movie=movie,
+                               errors=movie_vm.to_dict().get("errors"), image=image_path)
+
+    admin_service.edit_movie(movie_id, movie_vm)
+
+
+    response = Response(status=204)
+    response.headers["HX-Trigger"] = "listRefresh"
+    return response

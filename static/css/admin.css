@@ -86,8 +86,17 @@
     border-color: #2d8afd !important;
 }
 
+
 .card-color-1 i{
     background: #2d8afd;
+}
+
+.card-color-2 .card-header{
+    border-color: #1b9500 !important;
+}
+
+.card-color-2 i{
+    background: #1b9500 !important;
 }
 
 .f-left {

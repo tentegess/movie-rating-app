@@ -10,53 +10,58 @@
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% endfor %}
+
         <form hx-post="/admin/add_movie" autocomplete="off" enctype="multipart/form-data">
-          <div class="forms-inputs mb-2 mx-3">
-                    <div class="form-floating ">
-                            <input type="text" class="form-control custom_input
-                            {% if errors %}
-                                {{ "error" if errors.title else "" }}
-                            {% endif %}
-                            " placeholder=" " name="title" value="{{ request.form.title | trim}}"  maxlength="64">
-                            <label class="ps-3 formlab
-                            {% if errors %}
-                                {{ "error" if errors.title else "" }}
-                            {% endif %}
-                            ">Tytuł filmu</label>
+        <div class="row">
+        <div class="col-6 pe-0">
+            <img id="preview" src="/static/media/placeholder.png" class="img-fluid" alt="your image"/>
+        </div>
+
+            <div class="col-6 ps-0">
+                  <div class="forms-inputs mb-2 mx-3">
+                            <div class="form-floating ">
+                                    <input type="text" class="form-control custom_input
+                                    {% if errors %}
+                                        {{ "error" if errors.title else "" }}
+                                    {% endif %}
+                                    " placeholder=" " name="title" value="{{ request.form.title | trim}}"  maxlength="64">
+                                    <label class="ps-3 formlab
+                                    {% if errors %}
+                                        {{ "error" if errors.title else "" }}
+                                    {% endif %}
+                                    ">Tytuł filmu</label>
+                            </div>
+                            <span class="error-span error">
+                                {% if errors %}
+                                    {{ errors.title if errors.title else "" }}
+                                {% endif %}
+                            </span>
+                        </div>
+
+                    <div class="row px-2 mb-3 mx-3">
+                        <label for="release">Premiera</label>
+                        <input id="release" name="release" class="form-control custom_input {% if errors %}
+                                    {{ "error" if errors.release else "" }}
+                                {% endif %}" value="{{ request.form.release | trim}}" type="date">
+                       </div>
+
+                    <div class="row px-2 mb-3 mx-3">
+                        <label for="desc">Opis filmu</label>
+                        <textarea id="desc" name="desc" class="form-control custom_input" >{{ request.form.desc | trim}}</textarea>
                     </div>
-                    <span class="error-span error">
-                        {% if errors %}
-                            {{ errors.title if errors.title else "" }}
-                        {% endif %}
-                    </span>
-                </div>
 
-            <div class="row px-2 mb-3 mx-3">
-                <label for="release">Premiera</label>
-                <input id="release" name="release" class="form-control custom_input {% if errors %}
-                            {{ "error" if errors.release else "" }}
-                        {% endif %}" value="{{ request.form.release | trim}}" type="date">
-               </div>
+                    <div class="row px-2 mb-3 mx-3">
+                        <label for="poster">Plakat</label>
+                        <input type="file" id="poster" class="btn btn-dark sub-button custom-file text-center" name="poster" accept="image/png, image/jpeg"
+                         onchange="preview_event(event)"/>
 
-            <div class="row px-2 mb-3 mx-3">
-                <label for="desc">Opis filmu</label>
-                <textarea id="desc" name="desc" class="form-control custom_input" >{{ request.form.desc | trim}}</textarea>
+                        <span class="error-span error">
+                                {% if errors %}
+                                    {{ errors.poster if errors.poster else "" }}
+                                {% endif %}
+                            </span>
+                    </div>
             </div>
-
-            <div class="row px-2 mb-3 mx-3">
-                <label for="poster">Plakat</label>
-                <input type="file" id="poster" class="btn btn-dark sub-button custom-file text-center" name="poster" accept="image/png, image/jpeg"
-                 onchange="preview_event(event)"/>
-
-                <span class="error-span error">
-                        {% if errors %}
-                            {{ errors.poster if errors.poster else "" }}
-                        {% endif %}
-                    </span>
-            </div>
-
-            <div class="row px-2 mb-3 mx-3">
-                <img id="preview" style="display: none" alt="your image"/>
             </div>
 
                 <div class="forms-inputs mb-2 mx-3">

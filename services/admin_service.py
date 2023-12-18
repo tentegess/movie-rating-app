@@ -19,6 +19,7 @@ def get_site_stats():
         "user_count": Users.query.count(),
         "admins": Users.query.filter_by(is_admin=True).count(),
         "banned": Users.query.filter_by(suspended=True).count(),
+        "movie_count": Movies.query.count(),
     }
     return stats
 
@@ -202,3 +203,25 @@ def get_movies(query_model, page=1):
 def get_movie(movie_id):
     movie = Movies.query.filter(Movies.id == movie_id).first()
     return movie
+
+
+def edit_movie(movie_id, movie_vm):
+    movie = Movies.query.filter(Movies.id == movie_id).first()
+
+    movie.title = movie_vm.title
+    movie.desc = movie_vm.desc
+    movie.release = movie_vm.release
+
+
+    try:
+        db.session.add(movie)
+        db.session.commit()
+
+        if movie_vm.poster:
+            movie_vm.poster.save(os.path.join("static/media/posters", f"{movie.id}.png"))
+
+        flash(LANG.MOVIE_EDITED.format(movie_vm.title), "alert alert-success")
+    except Exception as e:
+        flash(LANG.UNEXPECTED_ERROR, "alert alert-danger")
+        print(e)
+        db.session.rollback()

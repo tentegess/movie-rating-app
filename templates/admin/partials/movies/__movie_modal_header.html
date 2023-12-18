@@ -1,8 +1,8 @@
 <div class="modal-header">
         <h1 class="modal-title fs-5 pe-2" id="exampleModalLabel">{{hd}}</h1>
         <span style="float: right">
-            <i class='bx bx-user ti-big animated-icon' ></i>
-            <i class='bx bx-pencil ti-big animated-icon'  ></i>
+            <i class='bx bx-movie ti-big animated-icon'  hx-get="/admin/get_movie/{{ movie.id }}" hx-target="#dialog" hx-trigger="click"></i>
+            <i class='bx bx-pencil ti-big animated-icon' hx-get="/admin/edit_movie/{{ movie.id }}" hx-target="#dialog" hx-trigger="click" ></i>
             <i class='bx bx-trash ti-big animated-icon text-danger'></i>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="margin-left: 10px"></button>
         </span>

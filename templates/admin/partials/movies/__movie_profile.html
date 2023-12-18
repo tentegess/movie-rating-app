@@ -1,5 +1,5 @@
 <div class="modal-content">
-        {{ render_partial('admin/partials/movies/__movie_modal_header.html', hd="Film") }}
+        {{ render_partial('admin/partials/movies/__movie_modal_header.html', movie=movie, image=image, hd="Film") }}
       <div class="modal-body">
          {% for category, message in get_flashed_messages(with_categories=true) %}
             <div class="{{ category }} alert-dismissible fade show" role="alert">
@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <div class="row mx-3">
+        <div class="row mx-3 mt-3">
 
             {% if movie.desc %}
                 <h6>Opis</h6>
