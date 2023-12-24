@@ -52,18 +52,18 @@
                 <input type="file" id="poster" class="btn btn-dark sub-button custom-file text-center" name="poster" accept="image/png, image/jpeg"
                  onchange="preview_event(event)"/>
 
-                <span class="error-span error">
-                        {% if errors %}
-                            {{ errors.poster if errors.poster else "" }}
-                        {% endif %}
-                    </span>
+
             </div>
 
                         </div>
             </div>
+            <span class="error-span error">
+                        {% if errors %}
+                            {{ errors.poster if errors.poster else "" }}
+                        {% endif %}
+                    </span>
 
-
-                <div class="forms-inputs mb-2 mx-3 mt-3">
+                <div class="forms-inputs mb-2 mx-3 mt-1">
                     <input type="submit" class="btn btn-dark sub-button py-3" value="Edytuj film">
                 </div>
 

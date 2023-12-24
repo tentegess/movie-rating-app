@@ -1,0 +1,31 @@
+{% if movies %}
+    {% for movie in movies %}
+        <a class="m-0 p-0 text-dark" href="https://www.youtube.com/watch?v=033Z3Flb58A">
+            <div class="row my-2 p-0">
+
+                <div class="col-auto">
+                    <img  src="{{ images[loop.index0]}}" width="120px">
+                </div>
+                <div class="col-auto">
+                    <h5>{{ movie.title }}</h5>
+                    <p>Premiera {{ movie.release if  movie.release else 'TBA'}} </p>
+                </div>
+
+            </div>
+        </a>
+
+    {% endfor %}
+    {% if movies.has_next %}
+        <div class="py-3" hx-get="/search/page/{{(movies.page+1)}}"
+            hx-trigger="intersect once delay:250ms"
+            hx-swap="outerHTML"
+            hx-target="this"
+            hx-include="[name='query']">
+            <div class="dot dot-div"></div>
+        </div>
+    {% endif %}
+{% else %}
+    {% if request.args.query %}
+        <h5 class="text-center text-muted mt-3 mb-2 py-0">Brak Filmów</h5>
+    {% endif %}
+{% endif %}

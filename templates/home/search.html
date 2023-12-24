@@ -1,7 +1,7 @@
 {% extends './shared/site_base.html' %}
 
 {% block title%}
-    Strona główna
+    Szukaj
 {% endblock %}
 
 {% block nav %}
@@ -10,15 +10,68 @@
 
 {% block content %}
     <div class="content-wrapper">
-    <div class="container log-alert px-0">
-             {% for category, message in get_flashed_messages(with_categories=true) %}
-                <div class="{{ category }} alert-dismissible fade show" role="alert">
-                    {{ message | safe }}
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endfor %}
-        </div>
-strona główna
+        <div class="container mb-5" style="max-width: 1000px">
+            <div class="my-3 mx-md-2 content-box">
 
+                <div class="search-box">
+                    <div class="input-group ">
+                        <div class="form-floating">
+                            <input type="text" class="form-control custom_input" id="search-box"
+                               placeholder=" " name="query" maxlength="360"
+                               value = "{{ request.args.query }}"
+                                hx-get="/search"
+                                hx-trigger="keyup changed delay:250ms"
+                                hx-target="#search-result"
+                                hx-push-url="true">
+                            <label class="ms-3 formlab">Znajdź Film</label>
+                        </div>
+                        <i class="bx bx-x position-absolute d-none search-icon"
+                           hx-get="/search"
+                           hx-trigger="click"
+                           hx-target="#search-result"
+                           hx-push-url="true"
+                           id="search-icon">
+                        </i>
+                    </div>
+                </div>
+
+                <div class="m-0 p-0 " id="search-result" hx-get="/search" hx-trigger="load"
+                hx-include="[name='query']">
+
+                </div>
+
+            </div>
+        </div>
     </div>
+{% endblock %}
+
+
+{% block script %}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) {
+            const searchBox = document.getElementById("search-box")
+            const searchIcon = document.getElementById("search-icon")
+
+            show_query_cleaner(searchBox)
+
+            searchBox.addEventListener("keyup", function(){show_query_cleaner(this)})
+
+            searchIcon.addEventListener("click", function(){
+                searchBox.value = "";
+                this.classList.add("d-none")
+            })
+
+            function show_query_cleaner(searchbox){
+                if(searchbox.value!==""){
+                    if (document.getElementById('search-result').innerHTML.trim() !== `<div class="dot dot-div my-3"></div>`){
+                        document.getElementById('search-result').innerHTML = `<div class="dot dot-div my-3"></div>`}
+                    searchIcon.classList.remove("d-none")
+                }else{
+                    searchIcon.classList.add("d-none")
+                }
+            }
+
+        })
+    </script>
 {% endblock %}
