@@ -1,10 +1,10 @@
 {% if movies %}
     {% for movie in movies %}
-        <a class="m-0 p-0 text-dark" href="https://www.youtube.com/watch?v=033Z3Flb58A">
+        <a class="m-0 p-0 text-dark" href="/movie/{{ movie.id }}">
             <div class="row my-2 p-0">
 
                 <div class="col-auto">
-                    <img  src="{{ images[loop.index0]}}" width="120px">
+                    <img  src="{{ images[loop.index0]}}" width="120px" style="border-radius: 0.25em">
                 </div>
                 <div class="col-auto">
                     <h5>{{ movie.title }}</h5>

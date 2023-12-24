@@ -1,3 +1,5 @@
+import os
+
 from flask import Blueprint, render_template, redirect, session, request
 from services import home_service
 from utils.other_utilities import htmx_request
@@ -37,3 +39,17 @@ def next_page(page):
     if movies:
         images = home_service.get_images(movies)
     return render_template("home/partials/movie_search_result.html", movies=movies, images=images)
+
+
+@home.get("/movie/<int:m_id>")
+def movie_page(m_id):
+
+    movie = home_service.get_movie(m_id)
+
+    image_path = os.path.join('static', 'media', 'posters', f'{m_id}.png')
+    if not os.path.isfile(image_path):
+        image_path = "/static/media/placeholder.png"
+    else:
+        image_path = "/" + image_path
+
+    return render_template("home/movie_page.html", movie=movie, image=image_path)

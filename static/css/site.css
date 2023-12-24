@@ -81,7 +81,11 @@ body{
     border: 0 !important;
 }
 
-
+.review-card{
+    box-shadow: 0px 1.6px 3.6px rgba(0, 0, 0, 0.2) ,0px 0.3px 0.9px rgba(0, 0, 0, 0.2)!important;
+    border-radius: 0.35rem !important;
+    background: linear-gradient(180deg, rgba(52,191,52,1) 0%, rgba(0,207,0,1) 85%) !important;
+}
 
 .form-icon{
     max-width: 50px;

@@ -1,0 +1,56 @@
+{% extends './shared/site_base.html' %}
+
+{% block title%}
+    {{ movie.title }}
+{% endblock %}
+
+{% block nav %}
+    {%  include './shared/navbar.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="content-wrapper">
+        <div class="container-lg mb-5">
+            <div class="row">
+
+                    <div class="col-12 col-md-9 my-3">
+                        <div class=" mx-md-2 content-box">
+                            <div class="row my-2 p-0">
+
+                                <div class="col-auto">
+                                    <img  src="{{ image }}" width="200px" style="border-radius: 0.25em">
+                                </div>
+                                <div class="col-auto">
+                                    <h5>{{ movie.title }}</h5>
+                                    <p>Premiera {{ movie.release if  movie.release else 'TBA'}} </p>
+                                    {% if movie.desc %}
+                                        <h6>Opis</h6>
+                                        <p>{{ movie.desc }}</p>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-3 my-3">
+                        <div class="card text-white bg-success mb-3 review-card" style="max-width: 18rem;">
+                          <div class="card-header">Header</div>
+                          <div class="card-body">
+                            <h5 class="card-title">Success card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          </div>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+
+{% endblock %}
+
+
+{% block script %}
+
+    <script>
+    </script>
+{% endblock %}

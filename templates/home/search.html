@@ -49,6 +49,12 @@
 {% block script %}
 
     <script>
+    var auxBack = performance.getEntriesByType("navigation");
+
+    if (auxBack[0].type === "back_forward") {
+        location.reload(true);
+    }
+
         document.addEventListener("DOMContentLoaded", function (event) {
             const searchBox = document.getElementById("search-box")
             const searchIcon = document.getElementById("search-icon")
