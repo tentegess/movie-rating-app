@@ -11,5 +11,6 @@ class Movies(db.Model):
     release = db.Column(db.Date, nullable=False)
     created_at = db.Column(db.DateTime, server_default=func.now())
     updated_at = db.Column(db.DateTime, onupdate=func.now())
+    reviews = db.relationship('Reviews', backref='movie', cascade="all, delete-orphan", passive_deletes=True, lazy="dynamic")
 
 

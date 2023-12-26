@@ -1,0 +1,19 @@
+{% if movie.release%}
+    {% if movie.release <= today%}
+
+        {% if current_user.is_authenticated %}
+
+            <h5 class="text-center text-muted mb-0">Tu będzie okienko recenzji</h5>
+
+        {% else %}
+            <p class="text-center m-0 p-0"><a href="{{url_for('auth.login')}}">Zaloguj się</a> aby ocenić film</p>
+        {% endif %}
+
+
+
+    {% else %}
+        <h5 class="text-center text-muted mb-0">Ocenanie filmu możliwe po premierze</h5>
+    {% endif %}
+{% else %}
+    <h5 class="text-center text-muted mb-0">Ocenanie filmu możliwe po premierze</h5>
+{% endif %}

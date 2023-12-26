@@ -1,6 +1,8 @@
 import os
 
 from models.Movies import Movies
+from models.Users import Users
+from models.Reviews import Reviews
 
 
 def get_movies(query_req, page=1):

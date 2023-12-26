@@ -3,6 +3,7 @@ import os
 from flask import Blueprint, render_template, redirect, session, request
 from services import home_service
 from utils.other_utilities import htmx_request
+from datetime import date
 
 home = Blueprint("home", __name__, static_folder="static", template_folder="templates")
 
@@ -53,3 +54,12 @@ def movie_page(m_id):
         image_path = "/" + image_path
 
     return render_template("home/movie_page.html", movie=movie, image=image_path)
+
+
+@home.get("/get_review_box/<int:m_id>")
+@htmx_request
+def get_review(m_id):
+
+    movie = home_service.get_movie(m_id)
+    today = date.today()
+    return render_template("home/partials/add_review.html", movie=movie, today=today)
