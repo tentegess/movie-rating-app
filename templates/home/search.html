@@ -49,11 +49,7 @@
 {% block script %}
 
     <script>
-        window.onpageshow = function(event) {
-        if (event.persisted) {
-            window.location.reload();
-        }
-    };
+
 
         document.addEventListener("DOMContentLoaded", function (event) {
             const searchBox = document.getElementById("search-box")

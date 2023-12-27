@@ -1,9 +1,11 @@
 import os
 
-from flask import Blueprint, render_template, redirect, session, request
+import flask
+from flask import Blueprint, render_template, redirect, session, request, Response
 from services import home_service
 from utils.other_utilities import htmx_request
 from datetime import date
+from view_models.home.add_review_view_model import AddReviewViewModel
 
 home = Blueprint("home", __name__, static_folder="static", template_folder="templates")
 
@@ -47,13 +49,18 @@ def movie_page(m_id):
 
     movie = home_service.get_movie(m_id)
 
+    if not movie:
+        flask.abort(404)
+
+    avg, rev_count = home_service.get_movie_stats(m_id)
+
     image_path = os.path.join('static', 'media', 'posters', f'{m_id}.png')
     if not os.path.isfile(image_path):
         image_path = "/static/media/placeholder.png"
     else:
         image_path = "/" + image_path
 
-    return render_template("home/movie_page.html", movie=movie, image=image_path)
+    return render_template("home/movie_page.html", movie=movie, image=image_path,  avg=avg, count=rev_count)
 
 
 @home.get("/get_review_box/<int:m_id>")
@@ -63,3 +70,13 @@ def get_review(m_id):
     movie = home_service.get_movie(m_id)
     today = date.today()
     return render_template("home/partials/add_review.html", movie=movie, today=today)
+
+@home.post("/add_review/<int:m_id>")
+@htmx_request
+def add_review(m_id):
+    review = AddReviewViewModel()
+    home_service.add_review(review, m_id)
+    response = Response(status=204)
+    return response
+
+

@@ -1,3 +1,11 @@
+    <script>
+         var auxBack = performance.getEntriesByType("navigation");
+
+    if (auxBack[0].type === "back_forward") {
+        location.reload(true);
+    }
+    </script>
+
 {% if movies %}
     {% for movie in movies %}
         <a class="m-0 p-0 text-dark" href="/movie/{{ movie.id }}">
@@ -29,3 +37,7 @@
         <h5 class="text-center text-muted mt-3 mb-2 py-0">Brak Filmów</h5>
     {% endif %}
 {% endif %}
+
+
+
+

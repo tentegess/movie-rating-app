@@ -1,8 +1,11 @@
 import os
+from flask_login import current_user
+from sqlalchemy import func
 
 from models.Movies import Movies
 from models.Users import Users
 from models.Reviews import Reviews
+from utils.db_config import db
 
 
 def get_movies(query_req, page=1):
@@ -29,3 +32,41 @@ def get_images(movies):
 def get_movie(movie_id):
     movie = Movies.query.filter(Movies.id == movie_id).first()
     return movie
+
+def get_movie_stats(movie_id):
+
+    rating_stats = db.session.query(
+        func.avg(Reviews.rating).label('average_rating'),
+        func.count(Reviews.id).label('total_reviews')
+    ).filter(Reviews.movie_id == movie_id).first()
+
+    if rating_stats.total_reviews == 0:
+        av_rating = None
+        reviews_count = 0
+    else:
+        av_rating = float(rating_stats.average_rating)
+        reviews_count = rating_stats.total_reviews
+
+    return av_rating, reviews_count
+
+
+
+
+def add_review(review_vm, movie_id):
+    try:
+        review = Reviews()
+        review.header = review_vm.header
+        review.review_text = review_vm.review
+        review.rating = review_vm.rating
+        review.user_id = current_user.id
+        review.movie_id = movie_id
+        db.session.add(review)
+        db.session.commit()
+    except Exception as e:
+        print(e)
+
+
+
+
+
+

@@ -84,7 +84,33 @@ body{
 .review-card{
     box-shadow: 0px 1.6px 3.6px rgba(0, 0, 0, 0.2) ,0px 0.3px 0.9px rgba(0, 0, 0, 0.2)!important;
     border-radius: 0.35rem !important;
+
+}
+
+.review-color-good{
     background: linear-gradient(180deg, rgba(52,191,52,1) 0%, rgba(0,207,0,1) 85%) !important;
+}
+
+.review-color-average{
+    background: linear-gradient(180deg, rgba(242,165,0,1) 0%, rgba(255,174,0,1) 85%) !important;
+}
+
+.review-color-bad{
+    background: linear-gradient(180deg, rgba(226,0,0,1) 0%, rgba(255,0,0,1) 85%) !important;
+}
+
+.no-review{
+    background: linear-gradient(180deg, rgba(169,169,169,1) 0%, rgba(191,191,191,1) 26%);
+}
+
+.no-avg{
+    font-weight: bold;
+    font-size: 36px;
+}
+
+.avg{
+    font-weight: bold;
+    font-size: 112px;
 }
 
 .form-icon{
@@ -154,4 +180,10 @@ body{
     transform: translateY(-2px);
     color: var(--white-color);
     text-decoration: underline;
+}
+
+@media screen and (max-width: 992px) {
+    .review-card{
+        max-width: 100%!important;
+    }
 }
