@@ -1,10 +1,13 @@
 import os
+
+from flask import flash
 from flask_login import current_user
 from sqlalchemy import func
 
 from models.Movies import Movies
 from models.Users import Users
 from models.Reviews import Reviews
+from utils import LANG
 from utils.db_config import db
 
 
@@ -59,6 +62,7 @@ def add_review(review_vm, movie_id):
     review.movie_id = movie_id
     db.session.add(review)
     db.session.commit()
+    flash(LANG.REVIEW_ADD, "alert alert-success")
     return review
 
 
@@ -87,6 +91,7 @@ def edit_review(review_vm, review_id):
     review.review_text = review_vm.review
     review.rating = review_vm.rating
     db.session.commit()
+    flash(LANG.REVIEW_EDITED, "alert alert-success")
     return review
 
 
@@ -95,4 +100,5 @@ def delete_review(review_id):
     idd = review.movie_id
     db.session.delete(review)
     db.session.commit()
+    flash(LANG.REVIEW_DELETED, "alert alert-success")
     return idd

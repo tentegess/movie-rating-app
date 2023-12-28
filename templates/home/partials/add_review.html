@@ -3,6 +3,13 @@
 
         {% if current_user.is_authenticated %}
 
+            {% for category, message in get_flashed_messages(with_categories=true) %}
+                <div class="{{ category }} alert-dismissible fade show px-3" role="alert">
+                    {{ message | safe }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+
             <form hx-post="/add_review/{{ movie.id }}" autocomplete="off" enctype="multipart/form-data" hx-target="#my_review">
             <div class="row mx-3">
                 <input type="hidden" name="rating" id="rating">
