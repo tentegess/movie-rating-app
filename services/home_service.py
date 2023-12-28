@@ -50,23 +50,49 @@ def get_movie_stats(movie_id):
     return av_rating, reviews_count
 
 
-
-
 def add_review(review_vm, movie_id):
+    review = Reviews()
+    review.header = review_vm.header
+    review.review_text = review_vm.review
+    review.rating = review_vm.rating
+    review.user_id = current_user.id
+    review.movie_id = movie_id
+    db.session.add(review)
+    db.session.commit()
+    return review
+
+
+
+def find_user_review(movie_id, user_id):
     try:
-        review = Reviews()
-        review.header = review_vm.header
-        review.review_text = review_vm.review
-        review.rating = review_vm.rating
-        review.user_id = current_user.id
-        review.movie_id = movie_id
-        db.session.add(review)
-        db.session.commit()
+        review = Reviews.query.filter_by(movie_id=movie_id, user_id=user_id).first()
+
+        if review:
+            return review
+        else:
+            return None
     except Exception as e:
-        print(e)
+        print(f"Błąd podczas wyszukiwania recenzji: {e}")
+        return None
 
 
+def get_review(review_id):
+    review = Reviews.query.filter(Reviews.id == review_id).first()
+    return review
 
 
+def edit_review(review_vm, review_id):
+    review = Reviews.query.filter(Reviews.id == review_id).first()
+    review.header = review_vm.header
+    review.review_text = review_vm.review
+    review.rating = review_vm.rating
+    db.session.commit()
+    return review
 
 
+def delete_review(review_id):
+    review = Reviews.query.filter(Reviews.id == review_id).first()
+    idd = review.movie_id
+    db.session.delete(review)
+    db.session.commit()
+    return idd

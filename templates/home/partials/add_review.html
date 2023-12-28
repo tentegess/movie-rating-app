@@ -3,14 +3,14 @@
 
         {% if current_user.is_authenticated %}
 
-            <form hx-post="/add_review/{{ movie.id }}" autocomplete="off" enctype="multipart/form-data">
+            <form hx-post="/add_review/{{ movie.id }}" autocomplete="off" enctype="multipart/form-data" hx-target="#my_review">
             <div class="row mx-3">
                 <input type="hidden" name="rating" id="rating">
                 <div id="stars" class="d-flex py-2" onmouseleave="resetRating()">
                 </div>
             </div>
 
-            <div class="forms-inputs mb-2 mx-3">
+            <div class="forms-inputs mb-2 mx-3 px-2">
                     <div class="form-floating ">
                             <input type="text" class="form-control custom_input
                             {% if errors %}
@@ -44,8 +44,8 @@
             <script>
 
 
-    let globalRating = 1
-    let gHoverRating = 0
+    globalRating = 1
+    gHoverRating = 0
 
      updateRating(1)
 
@@ -57,7 +57,7 @@
             if (rating>=i)
                 icon = "bx bxs-star"
             html += `<div onclick="savedRating(`+i+`)" onmouseenter="hoverRating(`+i+`)">
-                        <i class="`+icon+` px-1 fs-2 text-warning"></i>
+                        <i class="`+icon+` px-1 fs-2 text-warning star"></i>
                     </div>`
         }
 
@@ -83,24 +83,6 @@
         }
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

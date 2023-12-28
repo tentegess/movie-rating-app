@@ -1,0 +1,20 @@
+<div class="card text-white bg-success mb-3 review-card
+    {% if avg %}
+        {% if avg <= 4.5 %}
+            review-color-bad
+        {% elif avg <= 7.5 %}
+            review-color-average
+        {% else %}
+            review-color-good
+        {% endif %}
+    {% else %}
+    no-review
+    {% endif %}
+    " style="max-width: 18rem;">
+    {% if count %}
+      <div class="card-header">{{ "Liczba ocen: " + count|string}}</div>
+    {% endif %}
+      <div class="card-body px-0">
+        <p class="card-title text-center {{ "avg" if avg else "no-avg"}}">{{ avg if avg else "Brak ocen"}}</p>
+      </div>
+    </div>

@@ -1,0 +1,87 @@
+<script>
+
+
+    globalRating = {{ review.rating }};
+    HoverRating = 0
+
+     updateRating({{ review.rating }})
+
+    function updateRating(rating){
+        let html = ''
+
+        for (let i = 1; i <= 10; i++) {
+            let icon = "bx bx-star"
+            if (rating>=i)
+                icon = "bx bxs-star"
+            html += `<div onclick="savedRating(`+i+`)" onmouseenter="hoverRating(`+i+`)">
+                        <i class="`+icon+` px-1 fs-2 text-warning star"></i>
+                    </div>`
+        }
+
+        document.getElementById('stars').innerHTML = html
+        document.getElementById('rating').value = globalRating
+        }
+
+        function hoverRating(rating){
+            if (rating !== gHoverRating){
+                gHoverRating = rating
+                updateRating(rating)
+            }
+        }
+
+        function savedRating(rating){
+            globalRating = rating
+            updateRating(rating)
+        }
+
+        function resetRating(){
+            gHoverRating = 0
+            updateRating(globalRating)
+        }
+
+</script>
+
+
+<form hx-post="/edit_review/{{ review.id }}" autocomplete="off" enctype="multipart/form-data" hx-target="#my_review">
+
+            <div class="row mx-3">
+                <input type="hidden" name="rating" value={{ review.rating }} id="rating">
+                <div id="stars" class="d-flex py-2" onmouseleave="resetRating()">
+                </div>
+            </div>
+
+            <div class="forms-inputs mb-2 mx-3 px-2">
+                    <div class="form-floating ">
+                            <input type="text" class="form-control custom_input
+                            {% if errors %}
+                                {{ "error" if errors.header else "" }}
+                            {% endif %}
+                            " placeholder=" " name="header" value="{{ review.header }}"  maxlength="128">
+                            <label class="ps-3 formlab
+                            {% if errors %}
+                                {{ "error" if errors.header else "" }}
+                            {% endif %}
+                            ">Nagłówek recenzji</label>
+                    </div>
+                    <span class="error-span error">
+                        {% if errors %}
+                            {{ errors.header if errors.header else "" }}
+                        {% endif %}
+                    </span>
+                </div>
+
+            <div class="row px-2 mb-3 mx-3">
+                <label for="review">Recenzja</label>
+                <textarea id="review" name="review" class="form-control custom_input">{{ review.review_text }}</textarea>
+            </div>
+
+            <div class="forms-inputs mb-2 mx-3 mt-1">
+                    <input type="submit" class="btn btn-dark sub-button py-3" value="Edytuj recenzję">
+            </div>
+            <div class="forms-inputs mb-2 mx-3">
+                <input type="button" class="btn btn-secondary sub-button py-3"
+                   hx-get="/get_my_review/{{ review.id }}" hx-target="#my_review" hx-trigger="click" value="Anuluj">
+            </div>
+
+            </form>
+

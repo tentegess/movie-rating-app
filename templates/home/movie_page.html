@@ -33,7 +33,8 @@
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-3 my-3">
+                    <div class="col-12 col-md-3 my-3" hx-get="/update_reviews/{{ movie.id }}"
+                     hx-trigger="ratingUpdate from:body">
                         <div class="card text-white bg-success mb-3 review-card
                         {% if avg %}
                             {% if avg <= 4.5 %}
@@ -47,7 +48,9 @@
                         no-review
                         {% endif %}
                         " style="max-width: 18rem;">
-                          <div class="card-header">{{ "Liczba ocen: " + count|string if count else "" }}</div>
+                        {% if count %}
+                          <div class="card-header">{{ "Liczba ocen: " + count|string}}</div>
+                        {% endif %}
                           <div class="card-body px-0">
                             <p class="card-title text-center {{ "avg" if avg else "no-avg"}}">{{ avg if avg else "Brak ocen"}}</p>
                           </div>
@@ -58,7 +61,7 @@
 
             <div class="row">
                 <div class="col-12 col-md-9">
-                    <div class=" mx-md-2 content-box" hx-trigger="load" hx-get="/get_review_box/{{ movie.id }}">
+                    <div class=" mx-md-2 content-box" id="my_review" hx-trigger="load" hx-get="/get_review_box/{{ movie.id }}">
                     </div>
                 </div>
             </div>
@@ -71,5 +74,7 @@
 {% block script %}
 
     <script>
+    var globalRating = 1
+    var gHoverRating = 0
     </script>
 {% endblock %}

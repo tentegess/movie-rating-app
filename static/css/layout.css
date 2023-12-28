@@ -149,3 +149,16 @@ input[type="checkbox"]{
     0%, 100% { box-shadow: 0 2em 0 -0.8em }
     50% { box-shadow: 0 2em 0 0 }
 }
+
+.ti-big{
+    font-size: 1.2rem;
+}
+
+.animated-icon{
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.animated-icon:hover{
+    transform: translateY(-2px);
+}

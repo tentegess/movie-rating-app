@@ -113,6 +113,10 @@ body{
     font-size: 112px;
 }
 
+.star{
+    cursor: pointer;
+}
+
 .form-icon{
     max-width: 50px;
 }
