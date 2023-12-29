@@ -2,7 +2,7 @@ import os
 
 from flask import flash
 from flask_login import current_user
-from sqlalchemy import func
+from sqlalchemy import func, or_
 
 from models.Movies import Movies
 from models.Users import Users
@@ -102,3 +102,31 @@ def delete_review(review_id):
     db.session.commit()
     flash(LANG.REVIEW_DELETED, "alert alert-success")
     return idd
+
+
+def count_reviews(movie_id):
+    return db.session.query(Reviews, Users).join(Users, Reviews.user_id == Users.id).filter(
+        Reviews.movie_id == movie_id, or_(Reviews.header != '', Reviews.review_text != '')).count()
+
+
+def get_movie_reviews(movie_id):
+    reviews = db.session.query(Reviews, Users).join(Users, Reviews.user_id == Users.id).filter(
+        Reviews.movie_id == movie_id, or_(Reviews.header != '', Reviews.review_text != '')).all()
+
+    if not reviews:
+        return None
+
+    result = []
+    for review, user in reviews:
+        result.append({
+            "review_id": review.id,
+            "header": review.header,
+            "review_text": review.review_text,
+            "rating": review.rating,
+            "created_at": review.created_at,
+            "user_id": user.id,
+            "user_name": user.name,
+            "user_email": user.email
+        })
+
+    return result

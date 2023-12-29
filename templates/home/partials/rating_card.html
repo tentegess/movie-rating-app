@@ -15,6 +15,6 @@
       <div class="card-header">{{ "Liczba ocen: " + count|string}}</div>
     {% endif %}
       <div class="card-body px-0">
-        <p class="card-title text-center {{ "avg" if avg else "no-avg"}}">{{ avg if avg else "Brak ocen"}}</p>
+        <p class="card-title text-center {{ "avg" if avg else "no-avg"}}">{{ avg|round(1, 'floor') if avg else "Brak ocen"}}</p>
       </div>
     </div>

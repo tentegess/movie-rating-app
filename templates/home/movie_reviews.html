@@ -1,0 +1,71 @@
+{% extends './shared/site_base.html' %}
+
+{% block title%}
+   Recenzje {{ movie.title }}
+{% endblock %}
+
+{% block nav %}
+    {%  include './shared/navbar.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="content-wrapper">
+            <div class="content-box m-2">
+            <div class="row">
+                    <div class="col-auto">
+                        <img  src="{{ image}}" width="120px" style="border-radius: 0.25em">
+                    </div>
+                    <div class="col-auto">
+                        <h5>{{ movie.title }}</h5>
+                        <p>Premiera {{ movie.release if  movie.release else 'TBA'}} </p>
+                        {% if avg %}
+                            <h5>{{ avg }} <i class='bx bxs-star text-warning'></i></h5>
+                        {% else %}
+                            <p>Brak ocen</p>
+                        {% endif %}
+                    </div>
+            </div>
+            </div>
+        <div class="container-fluid mb-5">
+            <div class="row">
+            {% for review in reviews %}
+                <div class="col-12 col-md-6 col-xl-4">
+                    <div class=" content-box d-flex flex-column justify-content-between h-100">
+
+                    <div class="m-0 p-0">
+                        <div id="stars" class="d-flex justify-content-between pt-2" >
+                            <div class="m-0 p-0">
+                                 <p>{{ review.user_name }}</p>
+                            </div>
+                            <div class="m-0 p-0">
+                                 <p>{{ review.rating|int }} <i class='bx bxs-star text-warning'></i></p>
+                            </div>
+                        </div>
+
+                        <h5>{{ review.header }}</h5>
+
+                        <p>
+                            {{ review.review_text }}
+                        </p>
+                    </div>
+
+                    <div class="m-0 p-0">
+                        <p class="text-muted text-sm">Zamieszczono: {{ review.created_at }} </p>
+                    </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block script %}
+
+    <script>
+    var globalRating = 1
+    var gHoverRating = 0
+    </script>
+{% endblock %}

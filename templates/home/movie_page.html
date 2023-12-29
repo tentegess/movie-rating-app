@@ -35,26 +35,7 @@
 
                     <div class="col-12 col-md-3 my-3" hx-get="/update_reviews/{{ movie.id }}"
                      hx-trigger="ratingUpdate from:body">
-                        <div class="card text-white bg-success mb-3 review-card
-                        {% if avg %}
-                            {% if avg <= 4.5 %}
-                                review-color-bad
-                            {% elif avg <= 7.5 %}
-                                review-color-average
-                            {% else %}
-                                review-color-good
-                            {% endif %}
-                        {% else %}
-                        no-review
-                        {% endif %}
-                        " style="max-width: 18rem;">
-                        {% if count %}
-                          <div class="card-header">{{ "Liczba ocen: " + count|string}}</div>
-                        {% endif %}
-                          <div class="card-body px-0">
-                            <p class="card-title text-center {{ "avg" if avg else "no-avg"}}">{{ avg if avg else "Brak ocen"}}</p>
-                          </div>
-                        </div>
+                        {{ render_partial('home/partials/rating_card.html', avg=avg, count=count) }}
                     </div>
 
             </div>
@@ -64,7 +45,14 @@
                     <div class=" mx-md-2 content-box" id="my_review" hx-trigger="load" hx-get="/get_review_box/{{ movie.id }}">
                     </div>
                 </div>
+
+                <div class="col-12 mt-3 col-md-9">
+                     <div class=" mx-md-2 content-box">
+                         <a class="btn btn-dark sub-button py-3 {{ "disabled" if not text_count else "" }}" href="/reviews/{{ movie.id }}" role="button">Sprawdź recenzje filmu</a>
+                     </div>
+                </div>
             </div>
+
         </div>
     </div>
 

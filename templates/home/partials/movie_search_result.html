@@ -17,6 +17,11 @@
                 <div class="col-auto">
                     <h5>{{ movie.title }}</h5>
                     <p>Premiera {{ movie.release if  movie.release else 'TBA'}} </p>
+                    {% if ratings[loop.index0] %}
+                        <h5>{{ ratings[loop.index0] }} <i class='bx bxs-star text-warning'></i></h5>
+                    {% else %}
+                        <p>Brak ocen</p>
+                    {% endif %}
                 </div>
 
             </div>

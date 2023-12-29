@@ -26,9 +26,14 @@ def search():
         if query:
             movies = home_service.get_movies(query)
         images = None
+        ratings = None
         if movies:
             images = home_service.get_images(movies)
-        return render_template("home/partials/movie_search_result.html", movies=movies, images=images)
+            ratings = []
+            for movie in movies:
+                avg, c = home_service.get_movie_stats(movie.id)
+                ratings.append(avg)
+        return render_template("home/partials/movie_search_result.html", movies=movies, images=images, ratings=ratings)
     return render_template("home/search.html")
 
 
@@ -37,12 +42,18 @@ def search():
 def next_page(page):
     query = request.args.get("query", None)
     movies = None
+    ratings = None
     if query:
         movies = home_service.get_movies(query, page)
+
     images = None
     if movies:
         images = home_service.get_images(movies)
-    return render_template("home/partials/movie_search_result.html", movies=movies, images=images)
+        ratings = []
+        for movie in movies:
+            avg, c = home_service.get_movie_stats(movie.id)
+            ratings.append(avg)
+    return render_template("home/partials/movie_search_result.html", movies=movies, images=images, ratings=ratings)
 
 
 @home.get("/movie/<int:m_id>")
@@ -54,6 +65,7 @@ def movie_page(m_id):
         flask.abort(404)
 
     avg, rev_count = home_service.get_movie_stats(m_id)
+    text_count = home_service.count_reviews(m_id)
 
     image_path = os.path.join('static', 'media', 'posters', f'{m_id}.png')
     if not os.path.isfile(image_path):
@@ -61,7 +73,7 @@ def movie_page(m_id):
     else:
         image_path = "/" + image_path
 
-    return render_template("home/movie_page.html", movie=movie, image=image_path,  avg=avg, count=rev_count)
+    return render_template("home/movie_page.html", movie=movie, image=image_path,  avg=avg, count=rev_count, text_count=text_count)
 
 
 @home.get("/get_review_box/<int:m_id>")
@@ -98,6 +110,7 @@ def add_review(m_id):
 def edit_review(r_id):
     review = home_service.get_review(r_id)
     return render_template("home/partials/edit_review.html", review=review)
+
 
 @home.post("/edit_review/<int:r_id>")
 @htmx_request
@@ -139,3 +152,21 @@ def delete_review_post(r_id):
 def update_reviews(m_id):
     avg, rev_count = home_service.get_movie_stats(m_id)
     return render_template("home/partials/rating_card.html", avg=avg, count=rev_count)
+
+
+###################################################
+# Reviews
+###################################################
+
+@home.get("/reviews/<int:m_id>")
+def get_reviews_for_movie(m_id):
+    movie = home_service.get_movie(m_id)
+    reviews = home_service.get_movie_reviews(m_id)
+    avg, rev_count = home_service.get_movie_stats(m_id)
+    image_path = os.path.join('static', 'media', 'posters', f'{m_id}.png')
+    if not os.path.isfile(image_path):
+        image_path = "/static/media/placeholder.png"
+    else:
+        image_path = "/" + image_path
+
+    return render_template("home/movie_reviews.html", movie=movie, reviews=reviews, image=image_path, avg=avg)
