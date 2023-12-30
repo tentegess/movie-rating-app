@@ -16,7 +16,7 @@
                         <img  src="{{ image}}" width="120px" style="border-radius: 0.25em">
                     </div>
                     <div class="col-auto">
-                        <h5>{{ movie.title }}</h5>
+                        <h5><a class="text-dark" href="/movie/{{ movie.id }}">{{ movie.title }}</a></h5>
                         <p>Premiera {{ movie.release if  movie.release else 'TBA'}} </p>
                         {% if avg %}
                             <h5>{{ avg }} <i class='bx bxs-star text-warning'></i></h5>
@@ -26,10 +26,12 @@
                     </div>
             </div>
             </div>
+
+    {% if reviews %}
         <div class="container-fluid mb-5">
             <div class="row">
             {% for review in reviews %}
-                <div class="col-12 col-md-6 col-xl-4">
+                <div class="col-12 col-md-6 my-1 my-lg-0 col-xl-4">
                     <div class=" content-box d-flex flex-column justify-content-between h-100">
 
                     <div class="m-0 p-0">
@@ -45,7 +47,7 @@
                         <h5>{{ review.header }}</h5>
 
                         <p>
-                            {{ review.review_text }}
+                            {{ review.review_text| truncate(200, true, '...') }}
                         </p>
                     </div>
 
@@ -57,6 +59,8 @@
             {% endfor %}
             </div>
         </div>
+
+    {% endif %}
     </div>
 
 {% endblock %}

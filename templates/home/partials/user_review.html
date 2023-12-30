@@ -23,5 +23,27 @@
 
 <div class="row mx-3">
     <h5 class="text-muted">{{ review.header }}</h5>
-    <p class="text-muted">{{ review.review_text }}</p>
+    <p class="text-muted">{{ review.review_text| truncate(200, true, "")  }}
+    {% if review.review_text|length > 200 %}
+        <span id="dots">...</span>
+        <span id="more" style="display: none">
+        {{ review.review_text[200:] }}
+        </span>
+        <a class="text-primary" id="show" onclick="my_rev()" style="cursor: pointer">pokaż więcej</a>
+    </p>
+
+    {% endif %}
 </div>
+
+
+<script>
+function my_rev() {
+  var dots = document.getElementById("dots");
+  var moreText = document.getElementById("more");
+  var show = document.getElementById("show");
+
+  show.style.display = "none";
+  moreText.style.display = "inline";
+  dots.style.display = "none";
+}
+</script>
