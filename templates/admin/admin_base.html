@@ -47,8 +47,6 @@
                     <li><a class="dropdown-item" href="{{url_for('home.index')}}">Strona główna</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="{{url_for('auth.logout')}}">Wyloguj się</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
                   </ul>
             </div>
          </header>
@@ -76,12 +74,14 @@
                   <span class="nav_name">Filmy</span>
                 </a>
 
+              <a href="{{ url_for('admin.admin_reviews') }}" class="nav_link" id="reviews_link">
+                  <i class='bx bx-edit'></i>
+                  <span class="nav_name">Recenzje</span>
+                </a>
+
               </div>
             </div>
-            <a href="#" class="nav_link">
-              <i class="bx bx-log-out nav_icon"></i>
-              <span class="nav_name">Test</span>
-            </a>
+
           </nav>
         </div>
 

@@ -18,6 +18,7 @@
                 <h6>Informacje o Filmie</h6>
                 <p>Tytuł: {{ movie.title }}</p>
                 <p>Premiera: {{ movie.release if  movie.release else 'TBA'}}</p>
+                <p><a href="/admin/reviews?query={{movie.title}}">Recenzje Filmu</a></p>
 
             </div>
         </div>

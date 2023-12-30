@@ -2,11 +2,13 @@ import os
 from datetime import datetime, timedelta
 
 from werkzeug.security import generate_password_hash
+from sqlalchemy.orm import aliased
 
 from utils.db_config import db
 from models.Users import Users
 from models.user_tokens import Tokens
 from models.Movies import Movies
+from models.Reviews import Reviews
 from utils.mail_service import mail_sender
 from utils.other_utilities import generate_token
 
@@ -20,6 +22,7 @@ def get_site_stats():
         "admins": Users.query.filter_by(is_admin=True).count(),
         "banned": Users.query.filter_by(suspended=True).count(),
         "movie_count": Movies.query.count(),
+        "review_count": Reviews.query.count()
     }
     return stats
 
@@ -236,3 +239,21 @@ def delete_movie(movie_id):
         if os.path.isfile(poster_path):
             os.remove(poster_path)
         db.session.commit()
+
+
+def get_reviews(query_model, page=1):
+    query = f'%{query_model.query}%'
+
+    user_alias = aliased(Users)
+    movie_alias = aliased(Movies)
+
+    reviews_query = (
+        db.session.query(Reviews, user_alias.name.label('user'), movie_alias.title.label('movie'),
+                         Reviews.created_at, Reviews.rating)
+        .join(user_alias, Reviews.user_id == user_alias.id)
+        .join(movie_alias, Reviews.movie_id == movie_alias.id)
+        .filter(user_alias.name.ilike(query) | movie_alias.title.ilike(query)))
+
+    result = reviews_query.paginate(per_page=20, page=page, error_out=False)
+
+    return result if result.items else None

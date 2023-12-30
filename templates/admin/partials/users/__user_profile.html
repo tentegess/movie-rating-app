@@ -25,6 +25,7 @@
 
         <div class="row mx-3">
             <h6>Dodatkowe informacje</h6>
+            <p><a href="/admin/reviews?query={{user.name}}">Recenzje użytkownika</a></p>
             <p>Dołączył: {{ user.created_at }}</p>
             <p>Zawieszony: {{'Tak' if user.suspended else 'Nie' }}</p>
             {% if user.suspended %}

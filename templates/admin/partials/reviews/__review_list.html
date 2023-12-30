@@ -1,0 +1,69 @@
+<div class="d-none" hx-get="/admin/reviews/page/{{reviews.page}}"
+     hx-trigger="listRefresh from:body"
+     hx-include="[name='query']"
+     hx-target="#user_table">
+</div>
+
+{% for category, message in get_flashed_messages(with_categories=true) %}
+    <div class="{{ category }} alert-dismissible fade show" role="alert">
+        {{ message | safe }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+
+{% if reviews %}
+    <table class="table table-responsive text-center">
+      <thead>
+        <tr>
+          <td>użytkownik</td>
+          <td>film</td>
+          <td>ocena</td>
+           <td></td>
+        </tr>
+      </thead>
+      <tbody>
+            {% for review in reviews %}
+                <tr>
+                    <td> {{ review.user }} </td>
+                    <td> {{ review.movie }} </td>
+                    <td> {{ review.rating }} </td>
+                    <td class="d-sm-table-cell px-0"><i class='table-icon bx bx-search-alt animated-icon'
+                      hx-get="/admin/get_reviews/{{ review.id }}" hx-target="#dialog" hx-trigger="click"></i></td>
+                </tr>
+            {% endfor %}
+      </tbody>
+    </table>
+    <nav>
+          <ul class="pagination justify-content-center mb-1">
+                <li class="page-item {{ 'disabled' if not reviews.has_prev else ''}}"
+                    {% if reviews.has_prev %}
+                        hx-get="/admin/reviews/page/{{ (reviews.page-1) }}"
+                        hx-trigger="click" hx-swap="innerHTML" hx-target="#user_table"
+                        hx-push-url="true" hx-include="[name='query']"
+                    {% endif %}>
+                  <a class="page-link paginator page-nav" href="#" tabindex="-1"><i class='bx bx-arrow-back'></i></a>
+                </li>
+
+             {% for page in reviews.iter_pages(left_edge=1, left_current=1, right_current=1, right_edge=1) %}
+                 {% if page %}
+                    <li class="page-item" hx-get="/admin/reviews/page/{{ page }}"
+                        hx-trigger="click" hx-swap="innerHTML" hx-target="#user_table"
+                        hx-push-url="true" hx-include="[name='query']">
+                        <a class="page-link paginator {{ 'curr-page' if reviews.page == page else ''}}" href="#">{{ page }}</a></li>
+
+                 {% endif %}
+
+             {% endfor %}
+            <li class="page-item {{ 'disabled' if not reviews.has_next else ''}}"
+                {% if reviews.has_next %}
+                    hx-get="/admin/reviews/page/{{ (reviews.page+1) }}"
+                    hx-trigger="click" hx-swap="innerHTML" hx-target="#user_table"
+                    hx-push-url="true" hx-include="[name='query']"
+                {% endif %}>
+              <a class="page-link paginator page-nav" href="#"><i class='bx bx-arrow-back bx-rotate-180'></i></a>
+            </li>
+          </ul>
+    </nav>
+{% else %}
+    <h5 class="text-center text-muted mb-0">Brak Recenzji</h5>
+{% endif %}

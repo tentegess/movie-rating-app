@@ -278,3 +278,17 @@ def delete_movie_post(movie_id):
     response = Response(status=204)
     response.headers["HX-Trigger"] = "listRefresh"
     return response
+
+
+@admin.get("/reviews/page/<int:page>")
+@admin.get("/reviews/page/")
+@admin.get("/reviews")
+# @admin_required
+def admin_reviews(page=1):
+    query_vm = SearchUserViewModel()
+    reviews = admin_service.get_reviews(query_vm, page)
+
+    if query_vm.htmx_req:
+        return render_template("admin/partials/reviews/__review_list.html", reviews=reviews)
+
+    return render_template("admin/adm_reviews.html", reviews=reviews)

@@ -99,6 +99,15 @@
     background: #1b9500 !important;
 }
 
+.card-color-3 .card-header{
+    border-color: #e70b0b !important;
+}
+
+.card-color-3 i{
+    background: #e70b0b !important;
+}
+
+
 .f-left {
     float: left;
 }
