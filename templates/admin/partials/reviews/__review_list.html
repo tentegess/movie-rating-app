@@ -28,7 +28,7 @@
                     <td> {{ review.movie }} </td>
                     <td> {{ review.rating }} </td>
                     <td class="d-sm-table-cell px-0"><i class='table-icon bx bx-search-alt animated-icon'
-                      hx-get="/admin/get_reviews/{{ review.id }}" hx-target="#dialog" hx-trigger="click"></i></td>
+                      hx-get="/admin/get_review/{{ review.Reviews.id }}" hx-target="#dialog" hx-trigger="click"></i></td>
                 </tr>
             {% endfor %}
       </tbody>

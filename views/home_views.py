@@ -170,3 +170,5 @@ def get_reviews_for_movie(m_id):
         image_path = "/" + image_path
 
     return render_template("home/movie_reviews.html", movie=movie, reviews=reviews, image=image_path, avg=avg)
+
+

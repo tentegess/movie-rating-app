@@ -257,3 +257,25 @@ def get_reviews(query_model, page=1):
     result = reviews_query.paginate(per_page=20, page=page, error_out=False)
 
     return result if result.items else None
+
+
+def get_review(review_id):
+    user_alias = aliased(Users)
+    movie_alias = aliased(Movies)
+
+    result = (
+        db.session.query(Reviews, user_alias.name.label('user'), movie_alias.title.label('movie'),
+                         Reviews.created_at, Reviews.rating)
+        .join(user_alias, Reviews.user_id == user_alias.id)
+        .join(movie_alias, Reviews.movie_id == movie_alias.id)
+        .filter(Reviews.id==review_id).first())
+
+    return result
+
+
+def delete_review(review_id):
+    review = Reviews.query.filter(Reviews.id == review_id).first()
+    if review:
+        db.session.delete(review)
+        flash(LANG.REVIEW_DELETED, "alert alert-success")
+        db.session.commit()

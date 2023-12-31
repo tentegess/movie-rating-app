@@ -1,0 +1,39 @@
+<div class="modal-content">
+        {{ render_partial('admin/partials/reviews/__review_modal_header.html', review=review, hd="Recenzja") }}
+      <div class="modal-body">
+         {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="{{ category }} alert-dismissible fade show" role="alert">
+                {{ message | safe }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+
+      <div class="row m-0 p-0">
+        <div class="d-flex justify-content-between py-2" >
+
+
+
+        <div class="m-0 p-0">
+            <h5> {{ review.user }}</h5>
+        </div>
+
+            <div class="m-0 p-0">
+               <h5> {{ review.rating|int }} <i class="bx bxs-star text-warning"></i> </h5>
+            </div>
+        </div>
+
+    </div>
+
+        <div class="row p-2">
+            {% if not review.Reviews.header and not review.Reviews.review_text %}
+                <p class="text-muted text-sm">Recenzja nie zawiera treści</p>
+            {% else %}
+            <h5>{{ review.Reviews.header }}</h5>
+            <p>{{ review.Reviews.review_text }}</p>
+            {% endif %}
+        </div>
+
+      <p class="text-muted text-sm">Zamieszczono: {{ review.created_at }} </p>
+
+      </div>
+    </div>

@@ -292,3 +292,25 @@ def admin_reviews(page=1):
         return render_template("admin/partials/reviews/__review_list.html", reviews=reviews)
 
     return render_template("admin/adm_reviews.html", reviews=reviews)
+
+
+@admin.get("/get_review/<int:review_id>")
+def get_review(review_id):
+    review = admin_service.get_review(review_id)
+
+    return render_template("admin/partials/reviews/__review_profile.html", review=review)
+
+
+@admin.get("/delete_review/<int:review_id>")
+def del_review(review_id):
+    review = admin_service.get_review(review_id)
+
+    return render_template("admin/partials/reviews/__delete_review.html", review=review)
+
+
+@admin.post("/delete_review/<int:review_id>")
+def del_review_post(review_id):
+    admin_service.delete_review(review_id)
+    response = Response(status=204)
+    response.headers["HX-Trigger"] = "listRefresh"
+    return response

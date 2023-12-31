@@ -1,0 +1,24 @@
+<div class="modal-content">
+        {{ render_partial('admin/partials/reviews/__review_modal_header.html', review=review, hd="Usuń Recenzję") }}
+      <div class="modal-body">
+         {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="{{ category }} alert-dismissible fade show" role="alert">
+                {{ message | safe }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+            <div class="row mb-2 mx-3 text-center">
+                <p class="text-muted">Usunąć Recenzję?</p>
+            </div>
+
+          <div class="forms-inputs mb-2 mx-3">
+                <input type="button" class="btn btn-danger sub-button py-3" value="Usuń recenzję"
+                hx-post="/admin/delete_review/{{ review.Reviews.id }}">
+            </div>
+
+            <div class="forms-inputs mb-2 mx-3">
+                <input type="button" class="btn btn-secondary sub-button py-3"
+                   hx-get="/admin/get_review/{{ review.Reviews.id }}" hx-target="#dialog" hx-trigger="click" value="Anuluj">
+            </div>
+      </div>
+    </div>
