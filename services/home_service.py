@@ -85,6 +85,11 @@ def get_review(review_id):
     return review
 
 
+def get_user(user_id):
+    user = Users.query.filter(Users.id == user_id).first()
+    return user
+
+
 def edit_review(review_vm, review_id):
     review = Reviews.query.filter(Reviews.id == review_id).first()
     review.header = review_vm.header

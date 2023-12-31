@@ -172,3 +172,19 @@ def get_reviews_for_movie(m_id):
     return render_template("home/movie_reviews.html", movie=movie, reviews=reviews, image=image_path, avg=avg)
 
 
+@home.get("/review/<int:r_id>")
+def review_page(r_id):
+    review = home_service.get_review(r_id)
+    if not review:
+        flask.abort(404)
+    movie = home_service.get_movie(review.movie_id)
+    user = home_service.get_user(review.user_id)
+    avg, rev_count = home_service.get_movie_stats(movie.id)
+    image_path = os.path.join('static', 'media', 'posters', f'{movie.id}.png')
+    if not os.path.isfile(image_path):
+        image_path = "/static/media/placeholder.png"
+    else:
+        image_path = "/" + image_path
+
+    return render_template("home/review_page.html", movie=movie, review=review, image=image_path, avg=avg, user=user)
+

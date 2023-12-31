@@ -43,17 +43,19 @@
                                  <p>{{ review.rating|int }} <i class='bx bxs-star text-warning'></i></p>
                             </div>
                         </div>
+                        <a class="text-dark" href="/review/{{ review.review_id }}">
+                            <h5>{{ review.header }}</h5>
 
-                        <h5>{{ review.header }}</h5>
-
-                        <p>
-                            {{ review.review_text| truncate(200, true, '...') }}
-                        </p>
+                            <p>
+                                {{ review.review_text| truncate(200, true, '...') }}
+                            </p>
+                        </a>
                     </div>
 
                     <div class="m-0 p-0">
                         <p class="text-muted text-sm">Zamieszczono: {{ review.created_at }} </p>
                     </div>
+
                     </div>
                 </div>
             {% endfor %}
