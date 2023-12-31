@@ -188,3 +188,20 @@ def review_page(r_id):
 
     return render_template("home/review_page.html", movie=movie, review=review, image=image_path, avg=avg, user=user)
 
+
+@home.get("/user/<int:u_id>")
+def user_profile(u_id):
+    user = home_service.get_user(u_id)
+    user_reviews = home_service.get_user_reviews(u_id)
+    images=[]
+    if user_reviews:
+        for review in user_reviews:
+            image_path = os.path.join('static', 'media', 'posters', f"{review['movie_id']}.png")
+            if not os.path.isfile(image_path):
+                image_path = "/static/media/placeholder.png"
+            else:
+                image_path = "/" + image_path
+            images.append(image_path)
+
+
+    return render_template("home/user_profile.html", user=user, reviews=user_reviews, images=images)

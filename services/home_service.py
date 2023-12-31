@@ -137,3 +137,21 @@ def get_movie_reviews(movie_id):
     return result
 
 
+def get_user_reviews(user_id):
+    user_reviews = db.session.query(
+        Reviews.id, Movies.id.label('movie_id'), Movies.title, Reviews.review_text, Reviews.rating, Reviews.created_at
+    ).join(Movies, Reviews.movie_id == Movies.id
+           ).filter(Reviews.user_id == user_id).all()
+
+    result = []
+    for review_id, movie_id, movie_title, review_text, rating, created_at in user_reviews:
+        result.append({
+            "review_id": review_id,
+            "movie_id": movie_id,
+            "movie_title": movie_title,
+            "review_text": review_text,
+            "rating": rating,
+            "created_at": created_at,
+        })
+
+    return result

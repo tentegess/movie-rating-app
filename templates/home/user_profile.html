@@ -1,0 +1,51 @@
+{% extends './shared/site_base.html' %}
+
+{% block title%}
+   Profil {{ user.name }}
+{% endblock %}
+
+{% block nav %}
+    {%  include './shared/navbar.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="content-wrapper ">
+          <div class="container ">
+              <div class="content-box my-2">
+
+                  <h5 class="text-muted m-3">Recenzje użytkownika {{ user.name }}</h5>
+                    {% if reviews %}
+                        {% for review in reviews %}
+                            <div class="row m-2 p-0">
+
+                            <div class="col-auto">
+                                <a class="text-dark" href="/movie/{{ review.movie_id }}">
+                                    <img  src="{{ images[loop.index0]}}" width="120px" style="border-radius: 0.25em">
+                                </a>
+                            </div>
+                            <div class="col-auto">
+                                <div class="d-flex flex-column justify-content-between h-100 pt-2" >
+                                    <div class="m-0 p-0">
+                                        <a class="text-dark" href="/movie/{{ review.movie_id }}"> <h5>{{ review.movie_title }}</h5></a>
+                                        <a href="/review/{{ review.review_id }}"> <h5 class="text-dark">{{ review.rating|int }} <i class='bx bxs-star text-warning'></i></h5></a>
+                                    </div>
+                                    <div class="m-0 p-0">
+                                         <p class="text-muted">Zamieszczono {{ review.created_at }}</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                    <h6 class="text-muted text-center">brak recenzji</h6>
+                    {% endif %}
+
+
+              </div>
+          </div>
+    </div>
+{% endblock %}
+
+

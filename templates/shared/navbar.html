@@ -20,9 +20,11 @@
                       <li><a class="dropdown-item" href="{{url_for('admin.admin_main')}}">Panel Administratora</a></li>
                         <li><hr class="dropdown-divider"></li>
                     {% endif %}
-                    <li><a class="dropdown-item" href="{{url_for('auth.logout')}}">Wyloguj się</a></li>
+
+
+                    <li><a class="dropdown-item" href="/user/{{ current_user.id }}">Moje recenzje</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><a class="dropdown-item" href="{{url_for('auth.logout')}}">Wyloguj się</a></li>
                   </ul>
               {% else %}
                   <a class="nav-link" href="{{url_for('auth.login')}}">Zaloguj się</a>

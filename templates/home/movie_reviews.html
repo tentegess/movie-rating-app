@@ -19,7 +19,7 @@
                         <h5><a class="text-dark" href="/movie/{{ movie.id }}">{{ movie.title }}</a></h5>
                         <p>Premiera {{ movie.release if  movie.release else 'TBA'}} </p>
                         {% if avg %}
-                            <h5>{{ avg }} <i class='bx bxs-star text-warning'></i></h5>
+                            <h5>{{ avg|round(1, 'floor') }} <i class='bx bxs-star text-warning'></i></h5>
                         {% else %}
                             <p>Brak ocen</p>
                         {% endif %}
@@ -37,7 +37,7 @@
                     <div class="m-0 p-0">
                         <div id="stars" class="d-flex justify-content-between pt-2" >
                             <div class="m-0 p-0">
-                                 <p>{{ review.user_name }}</p>
+                                <a class="text-dark" href="/user/{{ review.user_id }}"> <p>{{ review.user_name }}</p></a>
                             </div>
                             <div class="m-0 p-0">
                                  <p>{{ review.rating|int }} <i class='bx bxs-star text-warning'></i></p>
