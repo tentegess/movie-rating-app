@@ -10,15 +10,25 @@
 
 {% block content %}
     <div class="content-wrapper">
-    <div class="container log-alert px-0">
+    <div class="container-fluid px-0">
              {% for category, message in get_flashed_messages(with_categories=true) %}
                 <div class="{{ category }} alert-dismissible fade show" role="alert">
                     {{ message | safe }}
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {% endfor %}
+    <section class="jumbotron text-center" style="margin-top:200px">
+        <div class="container">
+          <h1 class="jumbotron-heading">WatchScore</h1>
+          <p class="lead text-muted">Filmy, jakie lubisz</p>
+          <p>
+            <a href="/search" class="btn btn-primary my-2" style="border-radius: 45px">Przeglądaj</a>
+            <a href="/register" class="btn btn-secondary my-2" style="border-radius: 45px">Zarejestruj się</a>
+          </p>
         </div>
-strona główna
+      </section>
 
+
+        </div>
     </div>
 {% endblock %}
