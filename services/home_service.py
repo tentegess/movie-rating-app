@@ -1,4 +1,5 @@
 import os
+from datetime import date
 
 from flask import flash
 from flask_login import current_user
@@ -153,5 +154,43 @@ def get_user_reviews(user_id):
             "rating": rating,
             "created_at": created_at,
         })
+
+    return result
+
+
+def get_top_rated_movies():
+    top_movies = (db.session.query(
+        Movies.id, Movies.title, func.avg(Reviews.rating).label('average_rating')
+    ).join(Reviews, Movies.id == Reviews.movie_id)
+                  .group_by(Movies.id, Movies.title)
+                  .order_by(func.avg(Reviews.rating).desc())
+                  .limit(10)
+                  .all())
+
+    result = [{'movie_id': movie_id, 'title': title, 'average_rating': round(average_rating, 2)} for
+              movie_id, title, average_rating in top_movies]
+
+    return result
+
+
+def get_new_movies():
+    newest_movies = (db.session.query(
+        Movies.id,
+        Movies.title,
+        Movies.release,
+        func.avg(Reviews.rating).label('average_rating')
+    ).outerjoin(Reviews, Movies.id == Reviews.movie_id)
+                     .filter(Movies.release <= date.today())
+                     .group_by(Movies.id, Movies.title, Movies.release)
+                     .order_by(Movies.release.desc())
+                     .limit(10)
+                     .all())
+
+    result = [{
+        'movie_id': movie_id,
+        'title': title,
+        'release_date': release_date,
+        'average_rating': round(average_rating, 2) if average_rating is not None else None
+    } for movie_id, title, release_date, average_rating in newest_movies]
 
     return result

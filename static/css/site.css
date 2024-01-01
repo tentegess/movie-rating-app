@@ -191,3 +191,12 @@ body{
         max-width: 100%!important;
     }
 }
+
+.center_i{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 230px;
+    background-position: center center;
+    background-repeat: no-repeat;
+}

@@ -13,7 +13,32 @@ home = Blueprint("home", __name__, static_folder="static", template_folder="temp
 
 @home.get("/")
 def index():
-    return render_template("home/index.html")
+    top_rated = home_service.get_top_rated_movies()
+    top_rated_images = []
+
+    if top_rated:
+        for movie in top_rated:
+            image_path = os.path.join('static', 'media', 'posters', f"{movie['movie_id']}.png")
+            if not os.path.isfile(image_path):
+                image_path = "/static/media/placeholder.png"
+            else:
+                image_path = "/" + image_path
+            top_rated_images.append(image_path)
+
+    new_images = []
+    new_movies = home_service.get_new_movies()
+    if new_movies:
+        for movie in new_movies:
+            image_path = os.path.join('static', 'media', 'posters', f"{movie['movie_id']}.png")
+            if not os.path.isfile(image_path):
+                image_path = "/static/media/placeholder.png"
+            else:
+                image_path = "/" + image_path
+            new_images.append(image_path)
+
+
+    return render_template("home/index.html", top_images=top_rated_images, top_movies=top_rated,
+                           new_images=new_images, new_movies=new_movies)
 
 
 

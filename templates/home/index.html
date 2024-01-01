@@ -10,24 +10,67 @@
 
 {% block content %}
     <div class="content-wrapper">
-    <div class="container-fluid px-0">
+    <div class="container-fluid">
              {% for category, message in get_flashed_messages(with_categories=true) %}
                 <div class="{{ category }} alert-dismissible fade show" role="alert">
                     {{ message | safe }}
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {% endfor %}
-    <section class="jumbotron text-center" style="margin-top:200px">
+    <section class="jumbotron text-center" style="margin-top:200px;margin-bottom:200px">
         <div class="container">
           <h1 class="jumbotron-heading">WatchScore</h1>
           <p class="lead text-muted">Filmy, jakie lubisz</p>
           <p>
             <a href="/search" class="btn btn-primary my-2" style="border-radius: 45px">Przeglądaj</a>
-            <a href="/register" class="btn btn-secondary my-2" style="border-radius: 45px">Zarejestruj się</a>
+              {% if current_user.is_authenticated %}
+                    <a href="/user/{{ current_user.id }}" class="btn btn-secondary my-2" style="border-radius: 45px">Moje recenzje</a>
+              {% else %}
+                  <a href="/register" class="btn btn-secondary my-2" style="border-radius: 45px">Zarejestruj się</a>
+              {% endif %}
           </p>
         </div>
       </section>
 
+        {% if top_movies %}
+        <div class="content-box">
+            <h5>Najwyżej oceniane</h5>
+             <div class="d-flex flex-wrap justify-content-center">
+                {% for movie in top_movies %}
+                        <a class="text-dark" href="/movie/{{ movie.movie_id }}">
+                            <div class="mx-2" style="max-width: 180px!important;">
+                                <img src="{{ top_images[loop.index0] }}" class="center_i" height="210px" style="border-radius: 0.25em">
+                                <h6 class="text-center" style=" word-wrap: break-word; ">{{ movie.title }}</h6>
+                                <h5 class="text-center">{{ movie.average_rating }} <i class='bx bxs-star text-warning'></i></h5>
+                            </div>
+                        </a>
+
+                {% endfor %}
+             </div>
+        </div>
+        {% endif %}
+
+        {% if new_movies %}
+        <div class="content-box mt-3 mb-5">
+            <h5>Najnowsze</h5>
+             <div class="d-flex flex-wrap justify-content-center">
+                {% for movie in new_movies %}
+                        <a class="text-dark" href="/movie/{{ movie.movie_id }}">
+                            <div class="mx-2" style="max-width: 180px!important;">
+                                <img src="{{ new_images[loop.index0] }}" class="center_i" height="210px" style="border-radius: 0.25em">
+                                <h6 class="text-center" style=" word-wrap: break-word; ">{{ movie.title }}</h6>
+                                {% if movie.average_rating %}
+                                    <h5 class="text-center">{{ movie.average_rating }} <i class='bx bxs-star text-warning'></i></h5>
+                                {% else %}
+                                    <h6 class="text-center">Brak Ocen</h6>
+                                {% endif %}
+                            </div>
+                        </a>
+
+                {% endfor %}
+             </div>
+        </div>
+        {% endif %}
 
         </div>
     </div>

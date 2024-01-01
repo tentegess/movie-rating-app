@@ -124,7 +124,7 @@
     right: 10px;
     bottom: 5px;
     cursor: pointer;
-    z-index: 2000
+    z-index: 999
 }
 
 .table-icon{

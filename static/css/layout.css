@@ -162,3 +162,7 @@ input[type="checkbox"]{
 .animated-icon:hover{
     transform: translateY(-2px);
 }
+
+.modal-body p {
+    word-wrap: break-word;
+}
