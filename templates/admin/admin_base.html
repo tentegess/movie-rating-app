@@ -111,7 +111,7 @@
             })
 
             htmx.on('htmx:beforeSwap', (e) => {
-                if (e.detail.target.id === 'dialog' && !e.detail.xhr.response)
+                if (e.detail.target.id === 'dialog' && !e.detail.xhr.response && e.detail.xhr.status !== 250)
                     modal.hide()
                 if (e.detail.xhr.status === 500){
                     modal.hide()

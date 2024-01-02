@@ -1,11 +1,12 @@
 import os
 
 import flask
-from flask import Blueprint, render_template, request, make_response
+from flask import Blueprint, render_template, request, make_response, Response
 from services import home_service
 from utils.other_utilities import htmx_request
 from datetime import date
 from view_models.home.add_review_view_model import AddReviewViewModel
+from view_models.home.add_reply_view_model import AddReplyViewModel
 from flask_login import current_user
 
 home = Blueprint("home", __name__, static_folder="static", template_folder="templates")
@@ -230,3 +231,41 @@ def user_profile(u_id):
 
 
     return render_template("home/user_profile.html", user=user, reviews=user_reviews, images=images)
+
+
+@home.get("/reply_box/<int:r_id>")
+@htmx_request
+def get_reply_box(r_id):
+    return render_template("home/partials/add_reply.html", r_id=r_id)
+
+@home.post("/add_reply/<int:r_id>")
+@htmx_request
+def add_reply(r_id):
+    reply_vm = AddReplyViewModel.validate()
+
+    if reply_vm.errors:
+        return render_template("home/partials/add_reply.html", r_id=r_id, errors=reply_vm.to_dict().get("errors"))
+
+    home_service.add_reply(reply_vm,r_id)
+    response = make_response(render_template("home/partials/add_reply.html", r_id=r_id, errors=reply_vm.to_dict().get("errors")))
+    response.headers["HX-Trigger"] = "repliesUpdate"
+    return response
+
+
+@home.get("/get_replies/<int:r_id>")
+@htmx_request
+def get_replies(r_id):
+    replies = home_service.get_replies_for_review(r_id)
+
+    return render_template("home/partials/replies_for_review.html", replies=replies, rid=r_id)
+
+@home.post("/delete_reply/<int:r_id>")
+@htmx_request
+def delete_reply(r_id):
+
+    home_service.delete_reply(r_id)
+    response = Response(status = 204)
+    response.headers["HX-Trigger"] = "repliesUpdate"
+    return response
+
+

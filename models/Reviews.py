@@ -9,5 +9,6 @@ class Reviews(db.Model):
     rating = db.Column(db.Float, nullable=False)
     user_id = db.Column(db.BigInteger, db.ForeignKey('users.id', ondelete='CASCADE', onupdate='CASCADE'),nullable=False)
     movie_id = db.Column(db.BigInteger, db.ForeignKey('movies.id', ondelete='CASCADE', onupdate='CASCADE'),nullable=False)
+    replies = db.relationship('Replies', backref='review', cascade="all, delete-orphan", passive_deletes=True, lazy="dynamic")
     created_at = db.Column(db.DateTime, server_default=func.now())
     updated_at = db.Column(db.DateTime, onupdate=func.now())

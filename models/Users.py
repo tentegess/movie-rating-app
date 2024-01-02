@@ -18,5 +18,6 @@ class Users(UserMixin, db.Model):
     updated_at = db.Column(db.DateTime, onupdate=func.now())
     tokens = db.relationship('Tokens', backref='user', cascade="all, delete-orphan", passive_deletes=True, lazy="dynamic")
     reviews = db.relationship('Reviews', backref='user', cascade="all, delete-orphan", passive_deletes=True, lazy="dynamic")
+    replies = db.relationship('Replies', backref='user', cascade="all, delete-orphan", passive_deletes=True, lazy="dynamic")
 
 

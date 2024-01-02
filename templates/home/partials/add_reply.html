@@ -1,0 +1,27 @@
+{% if current_user.is_authenticated %}
+    <form hx-post="/add_reply/{{ r_id }}" autocomplete="off" enctype="multipart/form-data" hx-target="#reply_box">
+        <div class="row px-2 mb-3 mx-3">
+            <label class="ps-3 formlab
+                {% if errors %}
+                    {{ "error" if errors.reply else "" }}
+                {% endif %} for="review">komentarz</label>
+            <textarea id="reply" name="reply" class="form-control custom_input
+            {% if errors %}
+                {{ "error" if errors.reply else "" }}
+            {% endif %}
+            "></textarea>
+
+            <span class="error-span error">
+                {% if errors %}
+                    {{ errors.reply if errors.reply else "" }}
+                {% endif %}
+            </span>
+        </div>
+
+        <div class="forms-inputs mb-2 mx-3 mt-1">
+                <input type="submit" class="btn btn-dark sub-button py-3"  value="Dodaj Komentarz">
+        </div>
+    </form>
+{% else %}
+    <p class="text-center m-0 p-0"><a href="{{url_for('auth.login')}}">Zaloguj się</a> aby dodać komentarz</p>
+{% endif %}

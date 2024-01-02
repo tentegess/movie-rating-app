@@ -1,0 +1,36 @@
+<div class="d-none" hx-get="/get_replies/{{ rid }}"
+     hx-trigger="repliesUpdate from:body"
+     hx-target="#replies">
+</div>
+
+
+{% if replies %}
+
+    {% for reply in replies %}
+    <div class="row mx-3 mt-2">
+        <div id="stars" class="d-flex justify-content-between py-2 pb-0" >
+        <div class="m-0 p-0">
+            <a class="text-dark" href="/user/{{ reply.user_id }}"> <h6>{{ reply.user_name }}</h6> </a>
+        </div>
+
+            <div class="px-2">
+                {% if current_user.is_authenticated %}
+                    {% if current_user.id == reply.user_id  %}
+                        <i class='bx bx-trash ti-big  animated-icon text-danger' hx-post="/delete_reply/{{ reply.comment_id }}"  hx-trigger="click"></i>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+
+
+        <div class="row mt-0 pt-0">
+            <p class="mb-0">{{ reply.reply_text  }} </p>
+            <p class="text-muted">Zamieszczono {{ reply.created_at}} </p>
+        </div>
+    </div>
+
+    {% endfor %}
+
+{% else %}
+    <h5 class="text-center text-muted mb-0">Brak Komentarzy</h5>
+{% endif %}

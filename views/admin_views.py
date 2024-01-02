@@ -55,7 +55,7 @@ def htmx_request(f):
 
 
 @admin.get("/")
-# @admin_required
+@admin_required
 def admin_main():
     stats = admin_service.get_site_stats()
     return render_template("admin/adm_index.html", stats=stats)
@@ -64,7 +64,7 @@ def admin_main():
 @admin.get("/users/page/<int:page>")
 @admin.get("/users/page/")
 @admin.get("/users")
-# @admin_required
+@admin_required
 def admin_users(page=1):
     query_vm = SearchUserViewModel()
     users = admin_service.get_users(query_vm, page)
@@ -78,14 +78,14 @@ def admin_users(page=1):
 
 @admin.get("/add_user")
 @htmx_request
-# @admin_required
+@admin_required
 def add_user():
     return render_template("admin/partials/users/__add_user_form.html")
 
 
 @admin.post("/add_user")
 @htmx_request
-# @admin_required
+@admin_required
 def add_user_post():
     user_vm = AddUserViewModel.validate()
     if user_vm.errors:
@@ -98,16 +98,21 @@ def add_user_post():
 
 @admin.get("/get_user/<int:user_id>")
 @htmx_request
+@admin_required
 def get_user(user_id):
     user = admin_service.get_user(user_id)
     return render_template("admin/partials/users/__user_profile.html", user=user)
 
 @admin.get("/suspend_user/<int:user_id>")
+@htmx_request
+@admin_required
 def suspend_user(user_id):
     user = admin_service.get_user(user_id)
     return render_template("admin/partials/users/__suspend_user.html", user=user)
 
 @admin.post("/suspend_user/<int:user_id>")
+@htmx_request
+@admin_required
 def suspend_user_post(user_id):
     user_vm = SuspendUserViewModel.validate()
     if user_vm.errors:
@@ -120,12 +125,16 @@ def suspend_user_post(user_id):
 
 
 @admin.get("/unban_user/<int:user_id>")
+@htmx_request
+@admin_required
 def unban_user(user_id):
     user = admin_service.get_user(user_id)
     return render_template("admin/partials/users/__unban_user.html", user=user)
 
 
 @admin.post("/unban_user/<int:user_id>")
+@htmx_request
+@admin_required
 def unban_user_post(user_id):
     admin_service.unban_user(user_id)
     response = Response(status=204)
@@ -134,12 +143,16 @@ def unban_user_post(user_id):
 
 
 @admin.get("/edit_user/<int:user_id>")
+@htmx_request
+@admin_required
 def edit_user(user_id):
     user = admin_service.get_user(user_id)
     return render_template("admin/partials/users/__edit_user.html", user=user)
 
 
 @admin.post("/edit_user/<int:user_id>")
+@htmx_request
+@admin_required
 def edit_user_post(user_id):
     user_vm = EditUserViewModel.validate()
     if user_vm.errors:
@@ -159,12 +172,15 @@ def edit_user_post(user_id):
     return response
 
 @admin.get("/delete_user/<int:user_id>")
+@htmx_request
+@admin_required
 def delete_user(user_id):
     user = admin_service.get_user(user_id)
     return render_template("admin/partials/users/__delete_user.html", user=user)
 
 
 @admin.post("/delete_user/<int:user_id>")
+@htmx_request
 def delete_user_post(user_id):
     admin_service.delete_user(user_id)
     response = Response(status=204)
@@ -172,16 +188,13 @@ def delete_user_post(user_id):
     return response
 
 
-@admin.get("/debug1")
-def aaa():
-    admin_service.db_filler()
-    return redirect("admin/users")
+
 
 
 @admin.get("/movies/page/<int:page>")
 @admin.get("/movies/page/")
 @admin.get("/movies")
-# @admin_required
+@admin_required
 def admin_movies(page=1):
     query_vm = SearchUserViewModel()
     movies = admin_service.get_movies(query_vm, page)
@@ -194,14 +207,14 @@ def admin_movies(page=1):
 
 @admin.get("/add_movie")
 @htmx_request
-# @admin_required
+@admin_required
 def add_movie():
     return render_template("admin/partials/movies/__add_movie_form.html")
 
 
 @admin.post("/add_movie")
 @htmx_request
-# @admin_required
+@admin_required
 def add_movie_post():
     movie_vm = AddMovieViewModel.validate()
     if movie_vm.errors:
@@ -213,6 +226,7 @@ def add_movie_post():
 
 @admin.get("/get_movie/<int:movie_id>")
 @htmx_request
+@admin_required
 def get_movie(movie_id):
     movie = admin_service.get_movie(movie_id)
     image_path = os.path.join('static', 'media', 'posters', f'{movie_id}.png')
@@ -226,6 +240,7 @@ def get_movie(movie_id):
 
 @admin.get("/edit_movie/<int:movie_id>")
 @htmx_request
+@admin_required
 def edit_movie(movie_id):
     movie = admin_service.get_movie(movie_id)
     image_path = os.path.join('static', 'media', 'posters', f'{movie_id}.png')
@@ -238,6 +253,8 @@ def edit_movie(movie_id):
 
 
 @admin.post("/edit_movie/<int:movie_id>")
+@htmx_request
+@admin_required
 def edit_movie_post(movie_id):
     movie_vm = AddMovieViewModel.validate()
     if movie_vm.errors:
@@ -259,6 +276,8 @@ def edit_movie_post(movie_id):
 
 
 @admin.get("/delete_movie/<int:movie_id>")
+@htmx_request
+@admin_required
 def delete_movie(movie_id):
     movie = admin_service.get_movie(movie_id)
 
@@ -273,6 +292,8 @@ def delete_movie(movie_id):
 
 
 @admin.post("/delete_movie/<int:movie_id>")
+@htmx_request
+@admin_required
 def delete_movie_post(movie_id):
     admin_service.delete_movie(movie_id)
     response = Response(status=204)
@@ -283,7 +304,7 @@ def delete_movie_post(movie_id):
 @admin.get("/reviews/page/<int:page>")
 @admin.get("/reviews/page/")
 @admin.get("/reviews")
-# @admin_required
+@admin_required
 def admin_reviews(page=1):
     query_vm = SearchUserViewModel()
     reviews = admin_service.get_reviews(query_vm, page)
@@ -295,6 +316,8 @@ def admin_reviews(page=1):
 
 
 @admin.get("/get_review/<int:review_id>")
+@htmx_request
+@admin_required
 def get_review(review_id):
     review = admin_service.get_review(review_id)
 
@@ -302,6 +325,8 @@ def get_review(review_id):
 
 
 @admin.get("/delete_review/<int:review_id>")
+@htmx_request
+@admin_required
 def del_review(review_id):
     review = admin_service.get_review(review_id)
 
@@ -309,8 +334,35 @@ def del_review(review_id):
 
 
 @admin.post("/delete_review/<int:review_id>")
+@htmx_request
+@admin_required
 def del_review_post(review_id):
     admin_service.delete_review(review_id)
     response = Response(status=204)
     response.headers["HX-Trigger"] = "listRefresh"
     return response
+
+
+@admin.get("/get_replies/<int:review_id>")
+@htmx_request
+@admin_required
+def get_replies(review_id):
+    review = admin_service.get_review(review_id)
+    replies = admin_service.get_replies_for_review(review_id)
+    return render_template("admin/partials/reviews/__get_replies.html", review=review, replies=replies)
+
+
+
+@admin.post("/delete_reply/<int:reply_id>")
+@htmx_request
+@admin_required
+def del_reply_post(reply_id):
+    admin_service.delete_reply(reply_id)
+    response = Response(status=250)
+    response.headers["HX-Trigger"] = "repliesUpdate"
+    return response
+
+
+
+
+

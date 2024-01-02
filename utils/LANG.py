@@ -50,6 +50,8 @@ REVIEW_ADD = "Pomyślnie dodano recenzję"
 REVIEW_EDITED = "Pomyślnie zedytowano recenzję"
 REVIEW_DELETED = "Pomyślnie usunięto recenzję"
 
+REPLY_REQUIRED = "Należy podać treść komentarza"
+
 
 
 

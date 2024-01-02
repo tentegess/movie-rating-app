@@ -8,6 +8,8 @@ from sqlalchemy import func, or_
 from models.Movies import Movies
 from models.Users import Users
 from models.Reviews import Reviews
+from models.Replies import Replies
+
 from utils import LANG
 from utils.db_config import db
 
@@ -65,6 +67,16 @@ def add_review(review_vm, movie_id):
     db.session.commit()
     flash(LANG.REVIEW_ADD, "alert alert-success")
     return review
+
+
+def add_reply(reply_vm, review_id):
+    reply = Replies()
+    reply.reply_text = reply_vm.reply
+    reply.user_id = current_user.id
+    reply.review_id = review_id
+    db.session.add(reply)
+    db.session.commit()
+
 
 
 
@@ -194,3 +206,33 @@ def get_new_movies():
     } for movie_id, title, release_date, average_rating in newest_movies]
 
     return result
+
+
+def get_replies_for_review(review_id):
+    comments_query = db.session.query(
+        Replies.id,
+        Replies.reply_text,
+        Users.id.label('user_id'),
+        Users.name,
+        Replies.created_at
+    ).join(Users, Replies.user_id == Users.id
+    ).filter(Replies.review_id == review_id
+    ).order_by(Replies.created_at.asc()).all()
+
+    comments = []
+    for comment_id, reply_text, user_id, user_name, created_at in comments_query:
+        comments.append({
+            "comment_id": comment_id,
+            "reply_text": reply_text,
+            "user_id": user_id,
+            "user_name": user_name,
+            "created_at": created_at
+        })
+
+    return comments
+
+
+def delete_reply(r_id):
+    reply = Replies.query.filter(Replies.id == r_id).first()
+    db.session.delete(reply)
+    db.session.commit()

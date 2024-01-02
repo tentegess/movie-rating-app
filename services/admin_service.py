@@ -9,6 +9,7 @@ from models.Users import Users
 from models.user_tokens import Tokens
 from models.Movies import Movies
 from models.Reviews import Reviews
+from models.Replies import Replies
 from utils.mail_service import mail_sender
 from utils.other_utilities import generate_token
 
@@ -279,3 +280,33 @@ def delete_review(review_id):
         db.session.delete(review)
         flash(LANG.REVIEW_DELETED, "alert alert-success")
         db.session.commit()
+
+
+def get_replies_for_review(review_id):
+    comments_query = db.session.query(
+        Replies.id,
+        Replies.reply_text,
+        Users.id.label('user_id'),
+        Users.name,
+        Replies.created_at
+    ).join(Users, Replies.user_id == Users.id
+    ).filter(Replies.review_id == review_id
+    ).order_by(Replies.created_at.asc()).all()
+
+    comments = []
+    for comment_id, reply_text, user_id, user_name, created_at in comments_query:
+        comments.append({
+            "comment_id": comment_id,
+            "reply_text": reply_text,
+            "user_id": user_id,
+            "user_name": user_name,
+            "created_at": created_at
+        })
+
+    return comments
+
+
+def delete_reply(r_id):
+    reply = Replies.query.filter(Replies.id == r_id).first()
+    db.session.delete(reply)
+    db.session.commit()
