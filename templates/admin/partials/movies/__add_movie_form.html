@@ -24,7 +24,7 @@
                                     {% if errors %}
                                         {{ "error" if errors.title else "" }}
                                     {% endif %}
-                                    " placeholder=" " name="title" value="{{ request.form.title | trim}}"  maxlength="64">
+                                    " placeholder=" " name="title" value="{{ request.form.title | trim}}"  maxlength="32">
                                     <label class="ps-3 formlab
                                     {% if errors %}
                                         {{ "error" if errors.title else "" }}

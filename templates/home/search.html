@@ -17,7 +17,7 @@
                     <div class="input-group ">
                         <div class="form-floating">
                             <input type="text" class="form-control custom_input" id="search-box"
-                               placeholder=" " name="query" maxlength="360"
+                               placeholder=" " name="query" maxlength="32"
                                value = "{{ request.args.query }}"
                                 hx-get="/search"
                                 hx-trigger="keyup changed delay:250ms"
