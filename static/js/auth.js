@@ -7,6 +7,7 @@
         input.classList.remove("error");
         $(input).closest(".form-floating").find(".formlab").removeClass("error")
         $(input).closest(".forms-inputs").find(".error-span").removeClass("error")
+          $(input).closest(".forms-inputs").find(".error-span").html("")
           $(input).closest(".form-check-label").find("span").removeClass("error")
       });
     });
