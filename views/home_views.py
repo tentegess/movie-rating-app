@@ -7,7 +7,7 @@ from utils.other_utilities import htmx_request
 from datetime import date
 from view_models.home.add_review_view_model import AddReviewViewModel
 from view_models.home.add_reply_view_model import AddReplyViewModel
-from flask_login import current_user
+from flask_login import current_user, login_required
 
 home = Blueprint("home", __name__, static_folder="static", template_folder="templates")
 
@@ -122,6 +122,7 @@ def get_review_box(m_id):
 
 @home.post("/add_review/<int:m_id>")
 @htmx_request
+@login_required
 def add_review(m_id):
     review = AddReviewViewModel()
     user_review=home_service.add_review(review, m_id)
@@ -133,6 +134,7 @@ def add_review(m_id):
 
 @home.get("/edit_review/<int:r_id>")
 @htmx_request
+@login_required
 def edit_review(r_id):
     review = home_service.get_review(r_id)
     return render_template("home/partials/edit_review.html", review=review)
@@ -140,6 +142,7 @@ def edit_review(r_id):
 
 @home.post("/edit_review/<int:r_id>")
 @htmx_request
+@login_required
 def edit_review_post(r_id):
     review_vm = AddReviewViewModel()
     review = home_service.edit_review(review_vm, r_id)
@@ -150,6 +153,7 @@ def edit_review_post(r_id):
 
 @home.get("/get_my_review/<int:r_id>")
 @htmx_request
+@login_required
 def get_my_rev(r_id):
     review = home_service.get_review(r_id)
     return render_template("home/partials/user_review.html", review=review)
@@ -157,6 +161,7 @@ def get_my_rev(r_id):
 
 @home.get("/delete_review/<int:r_id>")
 @htmx_request
+@login_required
 def delete_review(r_id):
     review = home_service.get_review(r_id)
     return render_template("home/partials/delete_review.html", review=review)
@@ -164,6 +169,7 @@ def delete_review(r_id):
 
 @home.post("/delete_review/<int:r_id>")
 @htmx_request
+@login_required
 def delete_review_post(r_id):
     m_id = home_service.delete_review(r_id)
     today = date.today()
@@ -240,6 +246,7 @@ def get_reply_box(r_id):
 
 @home.post("/add_reply/<int:r_id>")
 @htmx_request
+@login_required
 def add_reply(r_id):
     reply_vm = AddReplyViewModel.validate()
 
@@ -261,6 +268,7 @@ def get_replies(r_id):
 
 @home.post("/delete_reply/<int:r_id>")
 @htmx_request
+@login_required
 def delete_reply(r_id):
 
     home_service.delete_reply(r_id)
