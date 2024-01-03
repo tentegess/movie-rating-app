@@ -4,7 +4,7 @@
             <label class="ps-3 formlab
                 {% if errors %}
                     {{ "error" if errors.reply else "" }}
-                {% endif %} for="review">komentarz</label>
+                {% endif %}" for="reply" id="reply_label">komentarz</label>
             <textarea id="reply" name="reply" class="form-control custom_input
             {% if errors %}
                 {{ "error" if errors.reply else "" }}
@@ -25,3 +25,19 @@
 {% else %}
     <p class="text-center m-0 p-0"><a href="{{url_for('auth.login')}}">Zaloguj się</a> aby dodać komentarz</p>
 {% endif %}
+
+
+{% block script %}
+    <script>
+      inputs = document.querySelectorAll('.custom_input, .form-check-input');
+
+    inputs.forEach(input => {
+      input.addEventListener('click', function handleClick(event) {
+        input.classList.remove("error");
+        $("#reply_label").removeClass("error")
+        $(".error-span").removeClass("error")
+
+      });
+    });
+    </script>
+{% endblock %}
